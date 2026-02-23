@@ -1,0 +1,4 @@
+package-lock.json
+apps/backend/drizzle/*.sql
+*.mp3
+dist/

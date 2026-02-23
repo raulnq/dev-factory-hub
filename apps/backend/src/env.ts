@@ -1,0 +1,37 @@
+import { config } from 'dotenv';
+import { expand } from 'dotenv-expand';
+import { ZodError, z } from 'zod';
+
+const ENVSchema = z.object({
+  NODE_ENV: z
+    .enum(['development', 'production', 'test'])
+    .default('development'),
+  PORT: z.coerce.number().default(5000),
+  DATABASE_URL: z.string(),
+  SEQ_URL: z.string().optional(),
+  LOG_LEVEL: z
+    .enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal'])
+    .default('info'),
+  CORS_ORIGIN: z.string().optional().default('http://localhost:5173'),
+  CLERK_SECRET_KEY: z.string().optional(),
+  CLERK_PUBLISHABLE_KEY: z.string().optional(),
+});
+
+expand(config());
+
+try {
+  ENVSchema.parse(process.env);
+} catch (error) {
+  if (error instanceof ZodError) {
+    const e = new Error(
+      `Environment validation failed:\n ${z.treeifyError(error)}`
+    );
+    e.stack = '';
+    throw e;
+  } else {
+    console.error('Unexpected error during environment validation:', error);
+    throw error;
+  }
+}
+
+export const ENV = ENVSchema.parse(process.env);

@@ -1,0 +1,47 @@
+{
+  "name": "node-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "dev:backend": "npm run dev -w @node-monorepo/backend",
+    "dev:frontend": "npm run dev -w @node-monorepo/frontend",
+    "build:backend": "npm run build -w @node-monorepo/backend",
+    "build:frontend": "npm run build -w @node-monorepo/frontend",
+    "build": "npm run build:backend && npm run build:frontend",
+    "start:backend": "npm run start -w @node-monorepo/backend",
+    "preview:frontend": "npm run preview -w @node-monorepo/frontend",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:format": "npm run lint:fix && npm run format",
+    "prepare": "husky || true",
+    "commit": "commit",
+    "database:up": "docker-compose up database -d",
+    "database:down": "docker-compose down database",
+    "database:stop": "docker-compose stop database",
+    "seq:up": "docker-compose up seq -d"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.3.1",
+    "@commitlint/config-conventional": "^20.3.1",
+    "@commitlint/prompt-cli": "^20.3.1",
+    "@eslint/js": "^9.18.0",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.18",
+    "globals": "^17.0.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0"
+  }
+}
