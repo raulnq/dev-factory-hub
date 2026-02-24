@@ -26,6 +26,9 @@
     "database:up": "docker-compose up database -d",
     "database:down": "docker-compose down database",
     "database:stop": "docker-compose stop database",
+    "storage:up": "docker-compose up storage -d",
+    "storage:down": "docker-compose down storage",
+    "storage:stop": "docker-compose stop storage",
     "seq:up": "docker-compose up seq -d"
   },
   "devDependencies": {

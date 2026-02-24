@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { todoRoute } from './features/todos/routes.js';
+import { clientRoute } from './features/clients/routes.js';
 import { onError } from './middlewares/on-error.js';
 import { onNotFound } from './middlewares/on-not-found.js';
 import { conditionalClerkMiddleware, requireAuth } from './middlewares/auth.js';
@@ -27,7 +27,7 @@ export const app = new Hono({ strict: false })
   .use(secureHeaders())
   .use('*', conditionalClerkMiddleware())
   .use('/api/*', requireAuth)
-  .route('/api', todoRoute)
+  .route('/api', clientRoute)
   .get('/live', c =>
     c.json({
       status: 'healthy',

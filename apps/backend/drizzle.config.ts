@@ -8,6 +8,6 @@ export default defineConfig({
     url: ENV.DATABASE_URL,
   },
   migrations: {
-    schema: 'app_schema',
+    schema: 'dev-factory-hub',
   },
 });

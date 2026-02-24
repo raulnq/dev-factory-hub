@@ -1,34 +1,142 @@
 {
-  "id": "b50a4e82-4add-4fbb-afdf-74758a975b01",
+  "id": "d63fd3df-6cc3-4768-8c1a-9b1bb8dcdb51",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "todos_schema.todos": {
-      "name": "todos",
-      "schema": "todos_schema",
+    "dev-factory-hub.clients": {
+      "name": "clients",
+      "schema": "dev-factory-hub",
       "columns": {
-        "todoId": {
-          "name": "todoId",
+        "clientId": {
+          "name": "clientId",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true
         },
         "name": {
           "name": "name",
-          "type": "varchar(1024)",
+          "type": "varchar(500)",
           "primaryKey": false,
           "notNull": true
         },
-        "completed": {
-          "name": "completed",
-          "type": "boolean",
+        "documentNumber": {
+          "name": "documentNumber",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "address": {
+          "name": "address",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.contacts": {
+      "name": "contacts",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "contactId": {
+          "name": "contactId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "clientId": {
+          "name": "clientId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "contacts_clientId_clients_clientId_fk": {
+          "name": "contacts_clientId_clients_clientId_fk",
+          "tableFrom": "contacts",
+          "tableTo": "clients",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["clientId"],
+          "columnsTo": ["clientId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.projects": {
+      "name": "projects",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "projectId": {
+          "name": "projectId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "clientId": {
+          "name": "clientId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
           "primaryKey": false,
           "notNull": true
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "projects_clientId_clients_clientId_fk": {
+          "name": "projects_clientId_clients_clientId_fk",
+          "tableFrom": "projects",
+          "tableTo": "clients",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["clientId"],
+          "columnsTo": ["clientId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},

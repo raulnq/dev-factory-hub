@@ -1,9 +1,8 @@
 import { createBrowserRouter } from 'react-router';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { ListTodoPage } from './features/todos/pages/ListTodoPage';
-import { AddTodoPage } from './features/todos/pages/AddTodoPage';
-import { EditTodoPage } from './features/todos/pages/EditTodoPage';
-import { ViewTodoPage } from './features/todos/pages/ViewTodoPage';
+import { ListClientPage } from './features/clients/pages/ListClientPage';
+import { AddClientPage } from './features/clients/pages/AddClientPage';
+import { EditClientPage } from './features/clients/pages/EditClientPage';
 
 export const router = createBrowserRouter([
   {
@@ -12,12 +11,11 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <div>Hello World!!</div> },
       {
-        path: 'todos',
+        path: 'clients',
         children: [
-          { index: true, element: <ListTodoPage /> },
-          { path: 'new', element: <AddTodoPage /> },
-          { path: ':todoId', element: <ViewTodoPage /> },
-          { path: ':todoId/edit', element: <EditTodoPage /> },
+          { index: true, element: <ListClientPage /> },
+          { path: 'new', element: <AddClientPage /> },
+          { path: ':clientId/edit', element: <EditClientPage /> },
         ],
       },
     ],
