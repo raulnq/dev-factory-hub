@@ -26,6 +26,7 @@ const NAV_ITEMS: NavItem[] = [
   { title: 'Dashboard', to: '/', icon: LayoutDashboard, end: true },
   { title: 'Clients', to: '/clients', icon: Users },
   { title: 'Collaborators', to: '/collaborators', icon: Briefcase },
+  { title: 'Collaborator Roles', to: '/collaborator-roles', icon: Users },
 ];
 
 export function AppSidebar() {

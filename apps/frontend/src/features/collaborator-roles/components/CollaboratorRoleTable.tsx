@@ -1,0 +1,114 @@
+import { Link, useSearchParams } from 'react-router';
+import { Search, Pencil } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { useCollaboratorRolesSuspense } from '../stores/useCollaboratorRoles';
+import { Pagination } from '@/components/Pagination';
+import { NoMatchingItems } from '@/components/NoMatchingItems';
+
+export function CollaboratorRolesSkeleton() {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Currency</TableHead>
+          <TableHead>Fee Rate</TableHead>
+          <TableHead>Cost Rate</TableHead>
+          <TableHead className="w-[100px]">Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {Array.from({ length: 10 }).map((_, index) => (
+          <TableRow key={index}>
+            <TableCell>
+              <Skeleton className="h-8 w-[50%]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[30%]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[40%]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[40%]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8" />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+
+export function CollaboratorRoleTable() {
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get('name') ?? '';
+  const page = searchParams.get('page') ?? '1';
+  const pageNumber = Math.max(1, Math.floor(Number(page)) || 1);
+  const { data } = useCollaboratorRolesSuspense({ name, pageNumber });
+
+  if (data.items.length === 0) return <NoMatchingItems />;
+
+  return (
+    <>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Currency</TableHead>
+            <TableHead>Fee Rate</TableHead>
+            <TableHead>Cost Rate</TableHead>
+            <TableHead className="w-[100px]">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data?.items.map(item => (
+            <TableRow key={item.collaboratorRoleId}>
+              <TableCell className="font-medium">
+                <Link
+                  to={`/collaborator-roles/${item.collaboratorRoleId}`}
+                  className="hover:underline"
+                >
+                  {item.name}
+                </Link>
+              </TableCell>
+              <TableCell>{item.currency}</TableCell>
+              <TableCell>{item.feeRate}</TableCell>
+              <TableCell>{item.costRate}</TableCell>
+              <TableCell>
+                <div className="flex gap-2">
+                  <Button variant="ghost" size="icon" asChild>
+                    <Link to={`/collaborator-roles/${item.collaboratorRoleId}`}>
+                      <Search className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" size="icon" asChild>
+                    <Link
+                      to={`/collaborator-roles/${item.collaboratorRoleId}/edit`}
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <div className="mt-4">
+        <Pagination totalPages={data.totalPages} />
+      </div>
+    </>
+  );
+}

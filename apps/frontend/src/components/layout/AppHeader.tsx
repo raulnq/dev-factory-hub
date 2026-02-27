@@ -9,6 +9,7 @@ const TITLE_BY_PATH: Record<string, string> = {
   '/': 'Dashboard',
   '/clients': 'Clients',
   '/collaborators': 'Collaborators',
+  '/collaborator-roles': 'Collaborator Roles',
 };
 
 function usePageTitle() {

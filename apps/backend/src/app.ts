@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { clientRoute } from './features/clients/routes.js';
 import { collaboratorRoute } from './features/collaborators/routes.js';
+import { collaboratorRoleRoute } from './features/collaborator-roles/routes.js';
 import { onError } from './middlewares/on-error.js';
 import { onNotFound } from './middlewares/on-not-found.js';
 import { conditionalClerkMiddleware, requireAuth } from './middlewares/auth.js';
@@ -30,6 +31,7 @@ export const app = new Hono({ strict: false })
   .use('/api/*', requireAuth)
   .route('/api', clientRoute)
   .route('/api', collaboratorRoute)
+  .route('/api', collaboratorRoleRoute)
   .get('/live', c =>
     c.json({
       status: 'healthy',

@@ -15,6 +15,13 @@
       "when": 1772210626071,
       "tag": "0001_awesome_silk_fever",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1772214106417,
+      "tag": "0002_adorable_scarlet_spider",
+      "breakpoints": true
     }
   ]
 }
