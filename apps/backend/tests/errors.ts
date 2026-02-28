@@ -75,3 +75,10 @@ export const createNotFoundError = (detail: string): ProblemDocument => {
     status: StatusCodes.NOT_FOUND,
   });
 };
+
+export const createConflictError = (detail: string): ProblemDocument => {
+  return new ProblemDocument({
+    detail,
+    status: StatusCodes.CONFLICT,
+  });
+};

@@ -4,7 +4,7 @@ import { Field } from './ui/field';
 
 type FormCardFooterProps = {
   isPending?: boolean;
-  formId: string;
+  formId?: string;
   saveText?: string;
   cancelText?: string;
   onCancel?: () => void;
@@ -23,9 +23,11 @@ export function FormCardFooter({
         <Button type="button" variant="outline" onClick={onCancel}>
           {cancelText}
         </Button>
-        <Button type="submit" form={formId} disabled={isPending}>
-          {saveText}
-        </Button>
+        {formId && (
+          <Button type="submit" form={formId} disabled={isPending}>
+            {saveText}
+          </Button>
+        )}
       </Field>
     </CardFooter>
   );

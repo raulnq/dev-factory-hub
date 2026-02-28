@@ -1,5 +1,7 @@
 import {
+  keepPreviousData,
   useMutation,
+  useQuery,
   useQueryClient,
   useSuspenseQuery,
 } from '@tanstack/react-query';
@@ -16,6 +18,7 @@ import {
   addContact,
   editContact,
   deleteContact,
+  listAllProjects,
 } from './clientsClient';
 import { useAuth } from '@clerk/clerk-react';
 import type {
@@ -100,6 +103,32 @@ export function useProjectsSuspense(
       const token = await getToken();
       return listProjects(clientId, pageNumber, pageSize, token);
     },
+  });
+}
+
+export function useProjects({
+  clientId,
+  name,
+  enabled,
+  pageNumber = 1,
+  pageSize = 10,
+}: {
+  clientId?: string;
+  name?: string;
+  enabled: boolean;
+  pageNumber?: number;
+  pageSize?: number;
+}) {
+  const { getToken } = useAuth();
+  const params = { pageNumber, pageSize, name, clientId };
+  return useQuery({
+    queryKey: ['projects-search', params],
+    queryFn: async () => {
+      const token = await getToken();
+      return listAllProjects(params, token);
+    },
+    placeholderData: keepPreviousData,
+    enabled,
   });
 }
 

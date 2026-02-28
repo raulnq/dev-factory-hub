@@ -1,0 +1,425 @@
+{
+  "id": "12dbeec9-8d10-4bde-aefd-588509a6e79e",
+  "prevId": "e2581af1-8cac-49fc-be91-4d28ce8fac5b",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "dev-factory-hub.clients": {
+      "name": "clients",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "clientId": {
+          "name": "clientId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "documentNumber": {
+          "name": "documentNumber",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "address": {
+          "name": "address",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.collaborator_roles": {
+      "name": "collaborator_roles",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "collaboratorRoleId": {
+          "name": "collaboratorRoleId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "currency": {
+          "name": "currency",
+          "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "feeRate": {
+          "name": "feeRate",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "costRate": {
+          "name": "costRate",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.collaborators": {
+      "name": "collaborators",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "collaboratorId": {
+          "name": "collaboratorId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "withholdingPercentage": {
+          "name": "withholdingPercentage",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.contacts": {
+      "name": "contacts",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "contactId": {
+          "name": "contactId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "clientId": {
+          "name": "clientId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "contacts_clientId_clients_clientId_fk": {
+          "name": "contacts_clientId_clients_clientId_fk",
+          "tableFrom": "contacts",
+          "tableTo": "clients",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["clientId"],
+          "columnsTo": ["clientId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.projects": {
+      "name": "projects",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "projectId": {
+          "name": "projectId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "clientId": {
+          "name": "clientId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "projects_clientId_clients_clientId_fk": {
+          "name": "projects_clientId_clients_clientId_fk",
+          "tableFrom": "projects",
+          "tableTo": "clients",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["clientId"],
+          "columnsTo": ["clientId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.timesheet_projects": {
+      "name": "timesheet_projects",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "timesheetId": {
+          "name": "timesheetId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "projectId": {
+          "name": "projectId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "timesheet_projects_timesheetId_timesheets_timesheetId_fk": {
+          "name": "timesheet_projects_timesheetId_timesheets_timesheetId_fk",
+          "tableFrom": "timesheet_projects",
+          "tableTo": "timesheets",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["timesheetId"],
+          "columnsTo": ["timesheetId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "timesheet_projects_projectId_projects_projectId_fk": {
+          "name": "timesheet_projects_projectId_projects_projectId_fk",
+          "tableFrom": "timesheet_projects",
+          "tableTo": "projects",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["projectId"],
+          "columnsTo": ["projectId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "timesheet_projects_timesheetId_projectId_pk": {
+          "name": "timesheet_projects_timesheetId_projectId_pk",
+          "columns": ["timesheetId", "projectId"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.timesheets": {
+      "name": "timesheets",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "timesheetId": {
+          "name": "timesheetId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "collaboratorId": {
+          "name": "collaboratorId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "collaboratorRoleId": {
+          "name": "collaboratorRoleId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar(25)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "startDate": {
+          "name": "startDate",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "endDate": {
+          "name": "endDate",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "completedAt": {
+          "name": "completedAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "timesheets_collaboratorId_collaborators_collaboratorId_fk": {
+          "name": "timesheets_collaboratorId_collaborators_collaboratorId_fk",
+          "tableFrom": "timesheets",
+          "tableTo": "collaborators",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["collaboratorId"],
+          "columnsTo": ["collaboratorId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "timesheets_collaboratorRoleId_collaborator_roles_collaboratorRoleId_fk": {
+          "name": "timesheets_collaboratorRoleId_collaborator_roles_collaboratorRoleId_fk",
+          "tableFrom": "timesheets",
+          "tableTo": "collaborator_roles",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["collaboratorRoleId"],
+          "columnsTo": ["collaboratorRoleId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.worklogs": {
+      "name": "worklogs",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "timesheetId": {
+          "name": "timesheetId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "projectId": {
+          "name": "projectId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "name": "date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hours": {
+          "name": "hours",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "worklogs_timesheetId_projectId_timesheet_projects_timesheetId_projectId_fk": {
+          "name": "worklogs_timesheetId_projectId_timesheet_projects_timesheetId_projectId_fk",
+          "tableFrom": "worklogs",
+          "tableTo": "timesheet_projects",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["timesheetId", "projectId"],
+          "columnsTo": ["timesheetId", "projectId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "worklogs_timesheetId_projectId_date_pk": {
+          "name": "worklogs_timesheetId_projectId_date_pk",
+          "columns": ["timesheetId", "projectId", "date"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

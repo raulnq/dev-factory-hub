@@ -11,7 +11,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { LayoutDashboard, Users, Briefcase } from 'lucide-react';
+import { LayoutDashboard, Users, Briefcase, Clock } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { UserButton } from '@clerk/clerk-react';
 
@@ -27,6 +27,7 @@ const NAV_ITEMS: NavItem[] = [
   { title: 'Clients', to: '/clients', icon: Users },
   { title: 'Collaborators', to: '/collaborators', icon: Briefcase },
   { title: 'Collaborator Roles', to: '/collaborator-roles', icon: Users },
+  { title: 'Timesheets', to: '/timesheets', icon: Clock },
 ];
 
 export function AppSidebar() {

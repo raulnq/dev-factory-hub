@@ -12,6 +12,10 @@ import type {
   EditContact,
   Contact,
 } from '#/features/clients/schemas';
+import type {
+  ListProjectsQuery,
+  ProjectWithClient,
+} from '#/features/projects/schemas';
 
 export async function listClients(
   params?: ListClients,
@@ -101,6 +105,28 @@ export async function listProjects(
     throw new Error(error.detail || 'Failed to fetch projects');
   }
   return response.json();
+}
+
+export async function listAllProjects(
+  params?: ListProjectsQuery,
+  token?: string | null
+): Promise<Page<ProjectWithClient>> {
+  const response = await client.api.projects.$get(
+    {
+      query: {
+        pageNumber: params?.pageNumber?.toString(),
+        pageSize: params?.pageSize?.toString(),
+        name: params?.name,
+        clientId: params?.clientId,
+      },
+    },
+    { headers: token ? { Authorization: `Bearer ${token}` } : {} }
+  );
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.detail || 'Failed to fetch projects');
+  }
+  return response.json() as Promise<Page<ProjectWithClient>>;
 }
 
 export async function addProject(
