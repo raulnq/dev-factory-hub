@@ -32,6 +32,9 @@ import { EditTransactionPage } from './features/transactions/pages/EditTransacti
 import { ListMoneyExchangePage } from './features/money-exchanges/pages/ListMoneyExchangePage';
 import { AddMoneyExchangePage } from './features/money-exchanges/pages/AddMoneyExchangePage';
 import { EditMoneyExchangePage } from './features/money-exchanges/pages/EditMoneyExchangePage';
+import { ListPayrollPaymentPage } from './features/payroll-payments/pages/ListPayrollPaymentPage';
+import { AddPayrollPaymentPage } from './features/payroll-payments/pages/AddPayrollPaymentPage';
+import { EditPayrollPaymentPage } from './features/payroll-payments/pages/EditPayrollPaymentPage';
 
 export const router = createBrowserRouter([
   {
@@ -128,6 +131,17 @@ export const router = createBrowserRouter([
           { index: true, element: <ListMoneyExchangePage /> },
           { path: 'new', element: <AddMoneyExchangePage /> },
           { path: ':moneyExchangeId/edit', element: <EditMoneyExchangePage /> },
+        ],
+      },
+      {
+        path: 'payroll-payments',
+        children: [
+          { index: true, element: <ListPayrollPaymentPage /> },
+          { path: 'new', element: <AddPayrollPaymentPage /> },
+          {
+            path: ':payrollPaymentId/edit',
+            element: <EditPayrollPaymentPage />,
+          },
         ],
       },
     ],

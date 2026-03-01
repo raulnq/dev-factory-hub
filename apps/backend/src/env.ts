@@ -30,6 +30,10 @@ const ENVSchema = z.object({
     .string()
     .optional()
     .default('money-exchanges'),
+  S3_PAYROLL_PAYMENTS_BUCKET_NAME: z
+    .string()
+    .optional()
+    .default('payroll-payments'),
 });
 
 expand(config());
