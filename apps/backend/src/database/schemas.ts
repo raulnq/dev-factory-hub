@@ -11,3 +11,4 @@ export {
 export { proformas, proformaItems } from '#/features/proformas/proforma.js';
 export { collaboratorPayments } from '#/features/collaborator-payments/collaborator-payment.js';
 export { collections } from '#/features/collections/collection.js';
+export { invoices } from '#/features/invoices/invoice.js';

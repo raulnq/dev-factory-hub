@@ -23,6 +23,9 @@ import { EditCollaboratorPaymentPage } from './features/collaborator-payments/pa
 import { ListCollectionPage } from './features/collections/pages/ListCollectionPage';
 import { AddCollectionPage } from './features/collections/pages/AddCollectionPage';
 import { EditCollectionPage } from './features/collections/pages/EditCollectionPage';
+import { ListInvoicePage } from './features/invoices/pages/ListInvoicePage';
+import { AddInvoicePage } from './features/invoices/pages/AddInvoicePage';
+import { EditInvoicePage } from './features/invoices/pages/EditInvoicePage';
 
 export const router = createBrowserRouter([
   {
@@ -95,6 +98,14 @@ export const router = createBrowserRouter([
           { index: true, element: <ListCollectionPage /> },
           { path: 'new', element: <AddCollectionPage /> },
           { path: ':collectionId/edit', element: <EditCollectionPage /> },
+        ],
+      },
+      {
+        path: 'invoices',
+        children: [
+          { index: true, element: <ListInvoicePage /> },
+          { path: 'new', element: <AddInvoicePage /> },
+          { path: ':invoiceId/edit', element: <EditInvoicePage /> },
         ],
       },
     ],
