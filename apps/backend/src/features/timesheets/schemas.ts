@@ -10,6 +10,8 @@ export const timesheetSchema = z.object({
   status: z.string(),
   startDate: z.iso.date(),
   endDate: z.iso.date(),
+  feeRate: z.number().nonnegative().nullable(),
+  costRate: z.number().nonnegative().nullable(),
   completedAt: z.date().nullable(),
   createdAt: z.date(),
 });

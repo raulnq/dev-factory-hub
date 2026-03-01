@@ -46,6 +46,8 @@ export const addRoute = new Hono().post(
         ...data,
         timesheetId: v7(),
         status: 'Pending',
+        feeRate: existingRole.feeRate,
+        costRate: existingRole.costRate,
         createdAt: new Date(),
       })
       .returning();

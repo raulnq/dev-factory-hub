@@ -25,6 +25,16 @@ export const timesheets = dbSchema.table('timesheets', {
   status: varchar('status', { length: 25 }).notNull(),
   startDate: date('startDate', { mode: 'string' }).notNull(),
   endDate: date('endDate', { mode: 'string' }).notNull(),
+  feeRate: numeric('feeRate', {
+    precision: 10,
+    scale: 2,
+    mode: 'number',
+  }),
+  costRate: numeric('costRate', {
+    precision: 10,
+    scale: 2,
+    mode: 'number',
+  }),
   completedAt: timestamp('completedAt', {
     mode: 'date',
     withTimezone: true,
