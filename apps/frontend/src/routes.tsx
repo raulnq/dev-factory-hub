@@ -38,6 +38,7 @@ import { EditPayrollPaymentPage } from './features/payroll-payments/pages/EditPa
 import { ListTaxPaymentPage } from './features/tax-payments/pages/ListTaxPaymentPage';
 import { AddTaxPaymentPage } from './features/tax-payments/pages/AddTaxPaymentPage';
 import { EditTaxPaymentPage } from './features/tax-payments/pages/EditTaxPaymentPage';
+import { BankBalancePage } from './features/bank-balance/pages/BankBalancePage';
 
 export const router = createBrowserRouter([
   {
@@ -157,6 +158,10 @@ export const router = createBrowserRouter([
             element: <EditTaxPaymentPage />,
           },
         ],
+      },
+      {
+        path: 'bank-balance',
+        children: [{ index: true, element: <BankBalancePage /> }],
       },
     ],
   },

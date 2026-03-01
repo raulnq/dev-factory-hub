@@ -12,6 +12,7 @@ import { transactionRoute } from './features/transactions/routes.js';
 import { moneyExchangeRoute } from './features/money-exchanges/routes.js';
 import { payrollPaymentRoute } from './features/payroll-payments/routes.js';
 import { taxPaymentRoute } from './features/tax-payments/routes.js';
+import { bankBalanceRoute } from './features/bank-balance/routes.js';
 import { onError } from './middlewares/on-error.js';
 import { onNotFound } from './middlewares/on-not-found.js';
 import { conditionalClerkMiddleware, requireAuth } from './middlewares/auth.js';
@@ -52,6 +53,7 @@ export const app = new Hono({ strict: false })
   .route('/api', moneyExchangeRoute)
   .route('/api', payrollPaymentRoute)
   .route('/api', taxPaymentRoute)
+  .route('/api', bankBalanceRoute)
   .get('/live', c =>
     c.json({
       status: 'healthy',

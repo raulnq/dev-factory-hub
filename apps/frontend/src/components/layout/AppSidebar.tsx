@@ -24,6 +24,7 @@ import {
   RefreshCw,
   BadgeDollarSign,
   Landmark,
+  PiggyBank,
 } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { UserButton } from '@clerk/clerk-react';
@@ -49,6 +50,7 @@ const NAV_ITEMS: NavItem[] = [
   { title: 'Money Exchanges', to: '/money-exchanges', icon: RefreshCw },
   { title: 'Payroll Payments', to: '/payroll-payments', icon: BadgeDollarSign },
   { title: 'Tax Payments', to: '/tax-payments', icon: Landmark },
+  { title: 'Bank Balance', to: '/bank-balance', icon: PiggyBank },
 ];
 
 export function AppSidebar() {
