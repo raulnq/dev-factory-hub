@@ -25,6 +25,7 @@ const ENVSchema = z.object({
   S3_ACCESS_KEY_ID: z.string().optional().default(''),
   S3_SECRET_ACCESS_KEY: z.string().optional().default(''),
   S3_COLLECTIONS_BUCKET_NAME: z.string().optional().default('collections'),
+  S3_TRANSACTIONS_BUCKET_NAME: z.string().optional().default('transactions'),
 });
 
 expand(config());

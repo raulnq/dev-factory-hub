@@ -26,6 +26,9 @@ import { EditCollectionPage } from './features/collections/pages/EditCollectionP
 import { ListInvoicePage } from './features/invoices/pages/ListInvoicePage';
 import { AddInvoicePage } from './features/invoices/pages/AddInvoicePage';
 import { EditInvoicePage } from './features/invoices/pages/EditInvoicePage';
+import { ListTransactionPage } from './features/transactions/pages/ListTransactionPage';
+import { AddTransactionPage } from './features/transactions/pages/AddTransactionPage';
+import { EditTransactionPage } from './features/transactions/pages/EditTransactionPage';
 
 export const router = createBrowserRouter([
   {
@@ -106,6 +109,14 @@ export const router = createBrowserRouter([
           { index: true, element: <ListInvoicePage /> },
           { path: 'new', element: <AddInvoicePage /> },
           { path: ':invoiceId/edit', element: <EditInvoicePage /> },
+        ],
+      },
+      {
+        path: 'transactions',
+        children: [
+          { index: true, element: <ListTransactionPage /> },
+          { path: 'new', element: <AddTransactionPage /> },
+          { path: ':transactionId/edit', element: <EditTransactionPage /> },
         ],
       },
     ],

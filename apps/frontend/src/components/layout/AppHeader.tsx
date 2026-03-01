@@ -15,6 +15,7 @@ const TITLE_BY_PATH: Record<string, string> = {
   '/collaborator-payments': 'Payments',
   '/collections': 'Collections',
   '/invoices': 'Invoices',
+  '/transactions': 'Transactions',
 };
 
 function usePageTitle() {

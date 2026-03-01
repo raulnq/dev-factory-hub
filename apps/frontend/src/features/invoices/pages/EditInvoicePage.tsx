@@ -115,7 +115,7 @@ function EditInvoiceInner({
   return (
     <Card>
       <FormCardHeader
-        title={`Edit Invoice ${invoice.number ?? invoice.invoiceId.slice(0, 8)}`}
+        title={`Edit Invoice`}
         description="Update invoice details."
         renderAction={
           <Badge variant={statusVariant(invoice.status)}>

@@ -20,6 +20,7 @@ import {
   Wallet,
   CircleDollarSign,
   Receipt,
+  ArrowLeftRight,
 } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { UserButton } from '@clerk/clerk-react';
@@ -41,6 +42,7 @@ const NAV_ITEMS: NavItem[] = [
   { title: 'Payments', to: '/collaborator-payments', icon: Wallet },
   { title: 'Collections', to: '/collections', icon: CircleDollarSign },
   { title: 'Invoices', to: '/invoices', icon: Receipt },
+  { title: 'Transactions', to: '/transactions', icon: ArrowLeftRight },
 ];
 
 export function AppSidebar() {

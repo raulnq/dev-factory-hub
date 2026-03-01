@@ -57,6 +57,13 @@
       "when": 1772345972952,
       "tag": "0007_concerned_blacklash",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1772374774647,
+      "tag": "0008_stormy_typhoid_mary",
+      "breakpoints": true
     }
   ]
 }
