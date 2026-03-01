@@ -8,3 +8,4 @@ export {
   timesheetProjects,
   worklogs,
 } from '#/features/timesheets/timesheet.js';
+export { proformas, proformaItems } from '#/features/proformas/proforma.js';

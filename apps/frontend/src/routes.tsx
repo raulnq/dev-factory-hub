@@ -14,6 +14,9 @@ import { ViewCollaboratorRolePage } from './features/collaborator-roles/pages/Vi
 import { ListTimesheetPage } from './features/timesheets/pages/ListTimesheetPage';
 import { AddTimesheetPage } from './features/timesheets/pages/AddTimesheetPage';
 import { EditTimesheetPage } from './features/timesheets/pages/EditTimesheetPage';
+import { ListProformaPage } from './features/proformas/pages/ListProformaPage';
+import { AddProformaPage } from './features/proformas/pages/AddProformaPage';
+import { EditProformaPage } from './features/proformas/pages/EditProformaPage';
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +62,14 @@ export const router = createBrowserRouter([
           { index: true, element: <ListTimesheetPage /> },
           { path: 'new', element: <AddTimesheetPage /> },
           { path: ':timesheetId/edit', element: <EditTimesheetPage /> },
+        ],
+      },
+      {
+        path: 'proformas',
+        children: [
+          { index: true, element: <ListProformaPage /> },
+          { path: 'new', element: <AddProformaPage /> },
+          { path: ':proformaId/edit', element: <EditProformaPage /> },
         ],
       },
     ],

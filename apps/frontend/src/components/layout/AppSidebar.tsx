@@ -11,23 +11,30 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { LayoutDashboard, Users, Briefcase, Clock } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Users,
+  Briefcase,
+  Clock,
+  FileText,
+} from 'lucide-react';
 import { useLocation } from 'react-router';
 import { UserButton } from '@clerk/clerk-react';
 
 type NavItem = {
   title: string;
   to: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ElementType;
   end?: boolean;
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { title: 'Dashboard', to: '/', icon: LayoutDashboard, end: true },
+  { title: 'Dashboard', to: '/', icon: LayoutDashboard },
   { title: 'Clients', to: '/clients', icon: Users },
   { title: 'Collaborators', to: '/collaborators', icon: Briefcase },
   { title: 'Collaborator Roles', to: '/collaborator-roles', icon: Users },
   { title: 'Timesheets', to: '/timesheets', icon: Clock },
+  { title: 'Proformas', to: '/proformas', icon: FileText },
 ];
 
 export function AppSidebar() {
