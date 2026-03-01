@@ -17,6 +17,7 @@ import {
   Briefcase,
   Clock,
   FileText,
+  Wallet,
 } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { UserButton } from '@clerk/clerk-react';
@@ -35,6 +36,7 @@ const NAV_ITEMS: NavItem[] = [
   { title: 'Collaborator Roles', to: '/collaborator-roles', icon: Users },
   { title: 'Timesheets', to: '/timesheets', icon: Clock },
   { title: 'Proformas', to: '/proformas', icon: FileText },
+  { title: 'Payments', to: '/collaborator-payments', icon: Wallet },
 ];
 
 export function AppSidebar() {
