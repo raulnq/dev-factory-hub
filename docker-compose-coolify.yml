@@ -13,8 +13,8 @@ services:
       context: .
       dockerfile: apps/backend/Dockerfile
       target: api
-    ports:
-      - '5000:5000'
+    expose:
+      - '5000'
     environment:
       - NODE_ENV=production
       - PORT=5000
