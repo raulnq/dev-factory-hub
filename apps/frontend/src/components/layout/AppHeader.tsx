@@ -13,6 +13,7 @@ const TITLE_BY_PATH: Record<string, string> = {
   '/timesheets': 'Timesheets',
   '/proformas': 'Proformas',
   '/collaborator-payments': 'Payments',
+  '/collections': 'Collections',
 };
 
 function usePageTitle() {

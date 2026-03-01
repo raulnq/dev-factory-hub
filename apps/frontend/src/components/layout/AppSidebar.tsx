@@ -18,6 +18,7 @@ import {
   Clock,
   FileText,
   Wallet,
+  CircleDollarSign,
 } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { UserButton } from '@clerk/clerk-react';
@@ -37,6 +38,7 @@ const NAV_ITEMS: NavItem[] = [
   { title: 'Timesheets', to: '/timesheets', icon: Clock },
   { title: 'Proformas', to: '/proformas', icon: FileText },
   { title: 'Payments', to: '/collaborator-payments', icon: Wallet },
+  { title: 'Collections', to: '/collections', icon: CircleDollarSign },
 ];
 
 export function AppSidebar() {

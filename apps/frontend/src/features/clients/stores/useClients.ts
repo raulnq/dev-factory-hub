@@ -91,6 +91,30 @@ export function useEditClient(clientId: string) {
   });
 }
 
+export function useClients({
+  name,
+  enabled,
+  pageNumber = 1,
+  pageSize = 10,
+}: {
+  name?: string;
+  enabled: boolean;
+  pageNumber?: number;
+  pageSize?: number;
+}) {
+  const { getToken } = useAuth();
+  const params = { pageNumber, pageSize, name };
+  return useQuery({
+    queryKey: ['clients', 'search', params],
+    queryFn: async () => {
+      const token = await getToken();
+      return listClients(params, token);
+    },
+    placeholderData: keepPreviousData,
+    enabled,
+  });
+}
+
 export function useProjectsSuspense(
   clientId: string,
   pageNumber: number = 1,

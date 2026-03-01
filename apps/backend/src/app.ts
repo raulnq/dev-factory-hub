@@ -6,6 +6,7 @@ import { collaboratorRoleRoute } from './features/collaborator-roles/routes.js';
 import { timesheetRoute } from './features/timesheets/routes.js';
 import { proformaRoute } from './features/proformas/routes.js';
 import { collaboratorPaymentRoute } from './features/collaborator-payments/routes.js';
+import { collectionRoute } from './features/collections/routes.js';
 import { onError } from './middlewares/on-error.js';
 import { onNotFound } from './middlewares/on-not-found.js';
 import { conditionalClerkMiddleware, requireAuth } from './middlewares/auth.js';
@@ -40,6 +41,7 @@ export const app = new Hono({ strict: false })
   .route('/api', timesheetRoute)
   .route('/api', proformaRoute)
   .route('/api', collaboratorPaymentRoute)
+  .route('/api', collectionRoute)
   .get('/live', c =>
     c.json({
       status: 'healthy',

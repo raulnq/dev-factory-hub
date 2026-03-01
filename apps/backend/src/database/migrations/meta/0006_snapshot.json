@@ -1,0 +1,796 @@
+{
+  "id": "94c2349a-8d8d-48af-90e7-07142174fe4c",
+  "prevId": "8776a03f-3ec7-4ead-9f6f-0057109f77fa",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "dev-factory-hub.clients": {
+      "name": "clients",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "clientId": {
+          "name": "clientId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "documentNumber": {
+          "name": "documentNumber",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "address": {
+          "name": "address",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.collaborator_payments": {
+      "name": "collaborator_payments",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "collaboratorPaymentId": {
+          "name": "collaboratorPaymentId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "collaboratorId": {
+          "name": "collaboratorId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "currency": {
+          "name": "currency",
+          "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "grossSalary": {
+          "name": "grossSalary",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "withholding": {
+          "name": "withholding",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "netSalary": {
+          "name": "netSalary",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar(25)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Pending'"
+        },
+        "paidAt": {
+          "name": "paidAt",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "confirmedAt": {
+          "name": "confirmedAt",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "canceledAt": {
+          "name": "canceledAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "number": {
+          "name": "number",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "collaborator_payments_collaboratorId_collaborators_collaboratorId_fk": {
+          "name": "collaborator_payments_collaboratorId_collaborators_collaboratorId_fk",
+          "tableFrom": "collaborator_payments",
+          "tableTo": "collaborators",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["collaboratorId"],
+          "columnsTo": ["collaboratorId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.collaborator_roles": {
+      "name": "collaborator_roles",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "collaboratorRoleId": {
+          "name": "collaboratorRoleId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "currency": {
+          "name": "currency",
+          "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "feeRate": {
+          "name": "feeRate",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "costRate": {
+          "name": "costRate",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.collaborators": {
+      "name": "collaborators",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "collaboratorId": {
+          "name": "collaboratorId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "withholdingPercentage": {
+          "name": "withholdingPercentage",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.collections": {
+      "name": "collections",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "collectionId": {
+          "name": "collectionId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "clientId": {
+          "name": "clientId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "currency": {
+          "name": "currency",
+          "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total": {
+          "name": "total",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "commission": {
+          "name": "commission",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "taxes": {
+          "name": "taxes",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar(25)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "confirmedAt": {
+          "name": "confirmedAt",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "canceledAt": {
+          "name": "canceledAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "filePath": {
+          "name": "filePath",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contentType": {
+          "name": "contentType",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "collections_clientId_clients_clientId_fk": {
+          "name": "collections_clientId_clients_clientId_fk",
+          "tableFrom": "collections",
+          "tableTo": "clients",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["clientId"],
+          "columnsTo": ["clientId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.contacts": {
+      "name": "contacts",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "contactId": {
+          "name": "contactId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "clientId": {
+          "name": "clientId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "contacts_clientId_clients_clientId_fk": {
+          "name": "contacts_clientId_clients_clientId_fk",
+          "tableFrom": "contacts",
+          "tableTo": "clients",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["clientId"],
+          "columnsTo": ["clientId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.proforma_items": {
+      "name": "proforma_items",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "proformaItemId": {
+          "name": "proformaItemId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "proformaId": {
+          "name": "proformaId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount": {
+          "name": "amount",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "proforma_items_proformaId_proformas_proformaId_fk": {
+          "name": "proforma_items_proformaId_proformas_proformaId_fk",
+          "tableFrom": "proforma_items",
+          "tableTo": "proformas",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["proformaId"],
+          "columnsTo": ["proformaId"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.proformas": {
+      "name": "proformas",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "proformaId": {
+          "name": "proformaId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "projectId": {
+          "name": "projectId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "currency": {
+          "name": "currency",
+          "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "startDate": {
+          "name": "startDate",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "endDate": {
+          "name": "endDate",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subtotal": {
+          "name": "subtotal",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expenses": {
+          "name": "expenses",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discount": {
+          "name": "discount",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "taxes": {
+          "name": "taxes",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total": {
+          "name": "total",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "number": {
+          "name": "number",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar(25)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Pending'"
+        },
+        "issuedAt": {
+          "name": "issuedAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cancelledAt": {
+          "name": "cancelledAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "proformas_projectId_projects_projectId_fk": {
+          "name": "proformas_projectId_projects_projectId_fk",
+          "tableFrom": "proformas",
+          "tableTo": "projects",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["projectId"],
+          "columnsTo": ["projectId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "proformas_number_unique": {
+          "name": "proformas_number_unique",
+          "nullsNotDistinct": false,
+          "columns": ["number"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.projects": {
+      "name": "projects",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "projectId": {
+          "name": "projectId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "clientId": {
+          "name": "clientId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "projects_clientId_clients_clientId_fk": {
+          "name": "projects_clientId_clients_clientId_fk",
+          "tableFrom": "projects",
+          "tableTo": "clients",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["clientId"],
+          "columnsTo": ["clientId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.timesheet_projects": {
+      "name": "timesheet_projects",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "timesheetId": {
+          "name": "timesheetId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "projectId": {
+          "name": "projectId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "timesheet_projects_timesheetId_timesheets_timesheetId_fk": {
+          "name": "timesheet_projects_timesheetId_timesheets_timesheetId_fk",
+          "tableFrom": "timesheet_projects",
+          "tableTo": "timesheets",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["timesheetId"],
+          "columnsTo": ["timesheetId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "timesheet_projects_projectId_projects_projectId_fk": {
+          "name": "timesheet_projects_projectId_projects_projectId_fk",
+          "tableFrom": "timesheet_projects",
+          "tableTo": "projects",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["projectId"],
+          "columnsTo": ["projectId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "timesheet_projects_timesheetId_projectId_pk": {
+          "name": "timesheet_projects_timesheetId_projectId_pk",
+          "columns": ["timesheetId", "projectId"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.timesheets": {
+      "name": "timesheets",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "timesheetId": {
+          "name": "timesheetId",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "collaboratorId": {
+          "name": "collaboratorId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "collaboratorRoleId": {
+          "name": "collaboratorRoleId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar(25)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "startDate": {
+          "name": "startDate",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "endDate": {
+          "name": "endDate",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "completedAt": {
+          "name": "completedAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "timesheets_collaboratorId_collaborators_collaboratorId_fk": {
+          "name": "timesheets_collaboratorId_collaborators_collaboratorId_fk",
+          "tableFrom": "timesheets",
+          "tableTo": "collaborators",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["collaboratorId"],
+          "columnsTo": ["collaboratorId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "timesheets_collaboratorRoleId_collaborator_roles_collaboratorRoleId_fk": {
+          "name": "timesheets_collaboratorRoleId_collaborator_roles_collaboratorRoleId_fk",
+          "tableFrom": "timesheets",
+          "tableTo": "collaborator_roles",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["collaboratorRoleId"],
+          "columnsTo": ["collaboratorRoleId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "dev-factory-hub.worklogs": {
+      "name": "worklogs",
+      "schema": "dev-factory-hub",
+      "columns": {
+        "timesheetId": {
+          "name": "timesheetId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "projectId": {
+          "name": "projectId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "name": "date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hours": {
+          "name": "hours",
+          "type": "numeric(10, 4)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "worklogs_timesheetId_projectId_timesheet_projects_timesheetId_projectId_fk": {
+          "name": "worklogs_timesheetId_projectId_timesheet_projects_timesheetId_projectId_fk",
+          "tableFrom": "worklogs",
+          "tableTo": "timesheet_projects",
+          "schemaTo": "dev-factory-hub",
+          "columnsFrom": ["timesheetId", "projectId"],
+          "columnsTo": ["timesheetId", "projectId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "worklogs_timesheetId_projectId_date_pk": {
+          "name": "worklogs_timesheetId_projectId_date_pk",
+          "columns": ["timesheetId", "projectId", "date"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
