@@ -21,6 +21,7 @@ import {
   CircleDollarSign,
   Receipt,
   ArrowLeftRight,
+  RefreshCw,
 } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { UserButton } from '@clerk/clerk-react';
@@ -43,6 +44,7 @@ const NAV_ITEMS: NavItem[] = [
   { title: 'Collections', to: '/collections', icon: CircleDollarSign },
   { title: 'Invoices', to: '/invoices', icon: Receipt },
   { title: 'Transactions', to: '/transactions', icon: ArrowLeftRight },
+  { title: 'Money Exchanges', to: '/money-exchanges', icon: RefreshCw },
 ];
 
 export function AppSidebar() {

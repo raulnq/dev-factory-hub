@@ -29,6 +29,9 @@ import { EditInvoicePage } from './features/invoices/pages/EditInvoicePage';
 import { ListTransactionPage } from './features/transactions/pages/ListTransactionPage';
 import { AddTransactionPage } from './features/transactions/pages/AddTransactionPage';
 import { EditTransactionPage } from './features/transactions/pages/EditTransactionPage';
+import { ListMoneyExchangePage } from './features/money-exchanges/pages/ListMoneyExchangePage';
+import { AddMoneyExchangePage } from './features/money-exchanges/pages/AddMoneyExchangePage';
+import { EditMoneyExchangePage } from './features/money-exchanges/pages/EditMoneyExchangePage';
 
 export const router = createBrowserRouter([
   {
@@ -117,6 +120,14 @@ export const router = createBrowserRouter([
           { index: true, element: <ListTransactionPage /> },
           { path: 'new', element: <AddTransactionPage /> },
           { path: ':transactionId/edit', element: <EditTransactionPage /> },
+        ],
+      },
+      {
+        path: 'money-exchanges',
+        children: [
+          { index: true, element: <ListMoneyExchangePage /> },
+          { path: 'new', element: <AddMoneyExchangePage /> },
+          { path: ':moneyExchangeId/edit', element: <EditMoneyExchangePage /> },
         ],
       },
     ],

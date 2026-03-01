@@ -13,3 +13,4 @@ export { collaboratorPayments } from '#/features/collaborator-payments/collabora
 export { collections } from '#/features/collections/collection.js';
 export { invoices } from '#/features/invoices/invoice.js';
 export { transactions } from '#/features/transactions/transaction.js';
+export { moneyExchanges } from '#/features/money-exchanges/money-exchange.js';

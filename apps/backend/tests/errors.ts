@@ -62,6 +62,11 @@ export const validationError = {
     message: 'Too small: expected number to be >0',
     code: 'too_small',
   }),
+  nonNegative: (path: string): ValidationError => ({
+    path,
+    message: 'Too small: expected number to be >=0',
+    code: 'too_small',
+  }),
   requiredNumber: (path: string): ValidationError => ({
     path,
     message: 'Invalid input: expected number, received undefined',
