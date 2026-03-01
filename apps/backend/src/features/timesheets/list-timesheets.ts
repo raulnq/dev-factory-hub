@@ -42,6 +42,9 @@ export const listRoute = new Hono().get(
         status: timesheets.status,
         startDate: timesheets.startDate,
         endDate: timesheets.endDate,
+        feeRate: timesheets.feeRate,
+        costRate: timesheets.costRate,
+        currency: timesheets.currency,
         createdAt: timesheets.createdAt,
         completedAt: timesheets.completedAt,
       })

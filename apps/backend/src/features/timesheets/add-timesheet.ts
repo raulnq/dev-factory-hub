@@ -48,6 +48,7 @@ export const addRoute = new Hono().post(
         status: 'Pending',
         feeRate: existingRole.feeRate,
         costRate: existingRole.costRate,
+        currency: existingRole.currency,
         createdAt: new Date(),
       })
       .returning();

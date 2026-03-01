@@ -37,6 +37,9 @@ export function getTimesheetWithRelations() {
       status: timesheets.status,
       startDate: timesheets.startDate,
       endDate: timesheets.endDate,
+      feeRate: timesheets.feeRate,
+      costRate: timesheets.costRate,
+      currency: timesheets.currency,
       createdAt: timesheets.createdAt,
       completedAt: timesheets.completedAt,
     })

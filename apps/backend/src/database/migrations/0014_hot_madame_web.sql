@@ -1,0 +1,1 @@
+ALTER TABLE "dev-factory-hub"."timesheets" ADD COLUMN "currency" varchar(3);
