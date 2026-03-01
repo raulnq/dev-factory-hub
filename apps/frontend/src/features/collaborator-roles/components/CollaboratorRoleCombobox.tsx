@@ -1,7 +1,5 @@
 import { useId, useState } from 'react';
-import { useAuth } from '@clerk/clerk-react';
-import { useQuery } from '@tanstack/react-query';
-import { listCollaboratorRoles } from '../stores/collaboratorRolesClient';
+import { useCollaboratorRoles } from '../stores/useCollaboratorRoles';
 import { Check, ChevronDownIcon, Loader2, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -37,21 +35,14 @@ export function CollaboratorRoleCombobox({
 }: Props) {
   const listId = useId();
   const [open, setOpen] = useState(false);
-  const { getToken } = useAuth();
   const [display, setDisplay] = useState(label || DEFAULT_LABEL);
   const [search, setSearch] = useState('');
   const [debouncedSearch] = useDebounce(search, 300);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['collaborator-roles-search', debouncedSearch],
-    queryFn: async () => {
-      const token = await getToken();
-      return listCollaboratorRoles(
-        { pageNumber: 1, pageSize: 100, name: debouncedSearch || undefined },
-        token
-      );
-    },
-  });
+  const { data, isLoading, isError } = useCollaboratorRoles(
+    debouncedSearch,
+    open
+  );
 
   const displayValue = !value ? DEFAULT_LABEL : display;
 

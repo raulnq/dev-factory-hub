@@ -44,4 +44,23 @@ describe('Issue/Cancel Proforma Endpoints', () => {
     const canceled = await cancelProforma(proforma.proformaId);
     assertProforma(canceled).hasStatus('Canceled');
   });
+
+  test('should cancel pending proforma', async () => {
+    const proforma = await addProforma(await createProforma());
+
+    const canceled = await cancelProforma(proforma.proformaId);
+    assertProforma(canceled).hasStatus('Canceled');
+  });
+
+  test('should fail to cancel already canceled proforma', async () => {
+    const proforma = await addProforma(await createProforma());
+    await cancelProforma(proforma.proformaId);
+
+    await cancelProforma(
+      proforma.proformaId,
+      createConflictError(
+        `Cannot cancel proforma with status "Canceled". Must be "Pending" or "Issued".`
+      )
+    );
+  });
 });

@@ -124,12 +124,11 @@ export async function editProforma(
   } else {
     const problemDocument = await response.json();
     assert.ok(problemDocument);
-    if (expectedProblemDocument) {
-      assertStrictEqualProblemDocument(
-        problemDocument,
-        expectedProblemDocument
-      );
-    }
+    assert.ok(
+      expectedProblemDocument,
+      `Expected OK status but received ${response.status}`
+    );
+    assertStrictEqualProblemDocument(problemDocument, expectedProblemDocument);
     return problemDocument;
   }
 }
@@ -160,12 +159,11 @@ export async function getProforma(
   } else {
     const problemDocument = await response.json();
     assert.ok(problemDocument);
-    if (expectedProblemDocument) {
-      assertStrictEqualProblemDocument(
-        problemDocument,
-        expectedProblemDocument
-      );
-    }
+    assert.ok(
+      expectedProblemDocument,
+      `Expected OK status but received ${response.status}`
+    );
+    assertStrictEqualProblemDocument(problemDocument, expectedProblemDocument);
     return problemDocument;
   }
 }
@@ -206,12 +204,11 @@ export async function listProformas(
   } else {
     const problemDocument = await response.json();
     assert.ok(problemDocument);
-    if (expectedProblemDocument) {
-      assertStrictEqualProblemDocument(
-        problemDocument,
-        expectedProblemDocument
-      );
-    }
+    assert.ok(
+      expectedProblemDocument,
+      `Expected OK status but received ${response.status}`
+    );
+    assertStrictEqualProblemDocument(problemDocument, expectedProblemDocument);
     return problemDocument;
   }
 }
@@ -242,12 +239,11 @@ export async function issueProforma(
   } else {
     const problemDocument = await response.json();
     assert.ok(problemDocument);
-    if (expectedProblemDocument) {
-      assertStrictEqualProblemDocument(
-        problemDocument,
-        expectedProblemDocument
-      );
-    }
+    assert.ok(
+      expectedProblemDocument,
+      `Expected success status but received ${response.status}`
+    );
+    assertStrictEqualProblemDocument(problemDocument, expectedProblemDocument);
     return problemDocument;
   }
 }
@@ -278,12 +274,11 @@ export async function cancelProforma(
   } else {
     const problemDocument = await response.json();
     assert.ok(problemDocument);
-    if (expectedProblemDocument) {
-      assertStrictEqualProblemDocument(
-        problemDocument,
-        expectedProblemDocument
-      );
-    }
+    assert.ok(
+      expectedProblemDocument,
+      `Expected success status but received ${response.status}`
+    );
+    assertStrictEqualProblemDocument(problemDocument, expectedProblemDocument);
     return problemDocument;
   }
 }
@@ -315,12 +310,11 @@ export async function addProformaItem(
   } else {
     const problemDocument = await response.json();
     assert.ok(problemDocument);
-    if (expectedProblemDocument) {
-      assertStrictEqualProblemDocument(
-        problemDocument,
-        expectedProblemDocument
-      );
-    }
+    assert.ok(
+      expectedProblemDocument,
+      `Expected success status but received ${response.status}`
+    );
+    assertStrictEqualProblemDocument(problemDocument, expectedProblemDocument);
     return problemDocument;
   }
 }
@@ -352,12 +346,11 @@ export async function deleteProformaItem(
   } else {
     const problemDocument = await response.json();
     assert.ok(problemDocument);
-    if (expectedProblemDocument) {
-      assertStrictEqualProblemDocument(
-        problemDocument,
-        expectedProblemDocument
-      );
-    }
+    assert.ok(
+      expectedProblemDocument,
+      `Expected success status but received ${response.status}`
+    );
+    assertStrictEqualProblemDocument(problemDocument, expectedProblemDocument);
     return problemDocument;
   }
 }
@@ -392,12 +385,11 @@ export async function listProformaItems(
   } else {
     const problemDocument = await response.json();
     assert.ok(problemDocument);
-    if (expectedProblemDocument) {
-      assertStrictEqualProblemDocument(
-        problemDocument,
-        expectedProblemDocument
-      );
-    }
+    assert.ok(
+      expectedProblemDocument,
+      `Expected success status but received ${response.status}`
+    );
+    assertStrictEqualProblemDocument(problemDocument, expectedProblemDocument);
     return problemDocument;
   }
 }

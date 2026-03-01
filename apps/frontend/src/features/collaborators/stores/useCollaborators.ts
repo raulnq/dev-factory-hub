@@ -1,5 +1,7 @@
 import {
+  keepPreviousData,
   useMutation,
+  useQuery,
   useQueryClient,
   useSuspenseQuery,
 } from '@tanstack/react-query';
@@ -15,6 +17,22 @@ import type {
   EditCollaborator,
   ListCollaborators,
 } from '#/features/collaborators/schemas';
+
+export function useCollaborators(search: string, enabled: boolean) {
+  const { getToken } = useAuth();
+  return useQuery({
+    queryKey: ['collaborators-search', search],
+    queryFn: async () => {
+      const token = await getToken();
+      return listCollaborators(
+        { pageNumber: 1, pageSize: 100, name: search || undefined },
+        token
+      );
+    },
+    enabled,
+    placeholderData: keepPreviousData,
+  });
+}
 
 export function useCollaboratorsSuspense({
   pageNumber,

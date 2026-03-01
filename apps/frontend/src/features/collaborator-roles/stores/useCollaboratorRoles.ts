@@ -1,5 +1,7 @@
 import {
+  keepPreviousData,
   useMutation,
+  useQuery,
   useQueryClient,
   useSuspenseQuery,
 } from '@tanstack/react-query';
@@ -15,6 +17,22 @@ import type {
   EditCollaboratorRole,
   ListCollaboratorRoles,
 } from '#/features/collaborator-roles/schemas';
+
+export function useCollaboratorRoles(search: string, enabled: boolean) {
+  const { getToken } = useAuth();
+  return useQuery({
+    queryKey: ['collaborator-roles-search', search],
+    queryFn: async () => {
+      const token = await getToken();
+      return listCollaboratorRoles(
+        { pageNumber: 1, pageSize: 100, name: search || undefined },
+        token
+      );
+    },
+    enabled,
+    placeholderData: keepPreviousData,
+  });
+}
 
 export function useCollaboratorRolesSuspense({
   pageNumber,

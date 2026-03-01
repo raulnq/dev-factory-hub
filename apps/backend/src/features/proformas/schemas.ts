@@ -2,13 +2,13 @@ import { z } from 'zod';
 import { paginationSchema } from '#/pagination.js';
 
 export const proformaSchema = z.object({
-  proformaId: z.string().uuid(),
-  projectId: z.string().uuid(),
+  proformaId: z.uuidv7(),
+  projectId: z.uuidv7(),
   projectName: z.string().optional(),
   currency: z.string().length(3),
 
-  startDate: z.string().date(),
-  endDate: z.string().date(),
+  startDate: z.iso.date(),
+  endDate: z.iso.date(),
   subtotal: z.number().min(0),
   expenses: z.number().min(0),
   discount: z.number().min(0),

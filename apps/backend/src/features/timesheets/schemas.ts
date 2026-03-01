@@ -60,7 +60,7 @@ export const editWorklogSchema = worklogSchema.pick({
 export type EditWorklog = z.infer<typeof editWorklogSchema>;
 
 export const timesheetProjectWithWorklogsSchema = z.object({
-  projectId: z.string().uuid(),
+  projectId: z.uuidv7(),
   projectName: z.string(),
   worklogs: z.array(worklogSchema),
 });

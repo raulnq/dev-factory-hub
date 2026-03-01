@@ -26,10 +26,10 @@ export const cancelRoute = new Hono().post(
       return notFoundError(c, `Proforma ${proformaId} not found`);
     }
 
-    if (existing.status !== 'Issued') {
+    if (existing.status !== 'Pending' && existing.status !== 'Issued') {
       return conflictError(
         c,
-        `Cannot cancel proforma with status "${existing.status}". Must be "Issued".`
+        `Cannot cancel proforma with status "${existing.status}". Must be "Pending" or "Issued".`
       );
     }
 

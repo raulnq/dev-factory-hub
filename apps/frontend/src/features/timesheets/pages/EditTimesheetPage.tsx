@@ -12,10 +12,8 @@ import { TimesheetGrid } from '../components/TimesheetGrid';
 import { Card, CardContent } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
-import {
-  EditTimesheetForm,
-  TimesheetEditSkeleton,
-} from '../components/EditTimesheetForm';
+import { EditTimesheetForm } from '../components/EditTimesheetForm';
+import { TimesheetSkeleton } from '../components/TimesheetSkeleton';
 import { FormCardFooter } from '@/components/FormCardFooter';
 import { TimesheetToolbar } from '../components/TimesheetToolbar';
 import { getStatusVariant } from '../utils/status-variants';
@@ -51,7 +49,7 @@ export function EditTimesheetPage() {
               />
             )}
           >
-            <Suspense fallback={<TimesheetEditSkeleton />}>
+            <Suspense fallback={<TimesheetSkeleton />}>
               <InnerEditTimesheet
                 timesheetId={timesheetId!}
                 onComplete={handleComplete}

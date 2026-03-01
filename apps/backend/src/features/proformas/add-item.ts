@@ -31,7 +31,7 @@ export const addItemRoute = new Hono().post(
     if (proforma.status !== 'Pending') {
       return conflictError(
         c,
-        `Cannot add items to proforma with status. Must be "Pending".`
+        `Cannot add items to proforma with status "${proforma.status}". Must be "Pending".`
       );
     }
 

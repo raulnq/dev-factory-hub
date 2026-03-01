@@ -5,6 +5,8 @@ import { proformas } from './proforma.js';
 import { zValidator } from '#/validator.js';
 import { client } from '#/database/client.js';
 import { addProformaSchema } from './schemas.js';
+import { notFoundError } from '#/extensions.js';
+import { projects } from '../clients/project.js';
 import { count, eq } from 'drizzle-orm';
 
 export const addRoute = new Hono().post(
@@ -12,6 +14,16 @@ export const addRoute = new Hono().post(
   zValidator('json', addProformaSchema),
   async c => {
     const data = c.req.valid('json');
+
+    const [existingProject] = await client
+      .select()
+      .from(projects)
+      .where(eq(projects.projectId, data.projectId))
+      .limit(1);
+
+    if (!existingProject) {
+      return notFoundError(c, `Project ${data.projectId} not found`);
+    }
 
     const yyyymmdd = data.endDate.replace(/-/g, '');
 
