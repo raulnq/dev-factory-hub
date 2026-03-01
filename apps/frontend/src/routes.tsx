@@ -40,6 +40,7 @@ import { AddTaxPaymentPage } from './features/tax-payments/pages/AddTaxPaymentPa
 import { EditTaxPaymentPage } from './features/tax-payments/pages/EditTaxPaymentPage';
 import { BankBalancePage } from './features/bank-balance/pages/BankBalancePage';
 import { CollaboratorBalancePage } from './features/collaborator-balance/pages/CollaboratorBalancePage';
+import { ClientBalancePage } from './features/client-balance/pages/ClientBalancePage';
 
 export const router = createBrowserRouter([
   {
@@ -167,6 +168,10 @@ export const router = createBrowserRouter([
       {
         path: 'collaborator-balance',
         children: [{ index: true, element: <CollaboratorBalancePage /> }],
+      },
+      {
+        path: 'client-balance',
+        children: [{ index: true, element: <ClientBalancePage /> }],
       },
     ],
   },

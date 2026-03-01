@@ -26,6 +26,7 @@ import {
   Landmark,
   PiggyBank,
   Scale,
+  BarChart2,
 } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { UserButton } from '@clerk/clerk-react';
@@ -53,6 +54,7 @@ const NAV_ITEMS: NavItem[] = [
   { title: 'Tax Payments', to: '/tax-payments', icon: Landmark },
   { title: 'Bank Balance', to: '/bank-balance', icon: PiggyBank },
   { title: 'Collaborator Balance', to: '/collaborator-balance', icon: Scale },
+  { title: 'Client Balance', to: '/client-balance', icon: BarChart2 },
 ];
 
 export function AppSidebar() {
