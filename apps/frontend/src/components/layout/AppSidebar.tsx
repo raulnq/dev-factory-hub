@@ -45,7 +45,11 @@ const NAV_ITEMS: NavItem[] = [
   { title: 'Collaborator Roles', to: '/collaborator-roles', icon: Users },
   { title: 'Timesheets', to: '/timesheets', icon: Clock },
   { title: 'Proformas', to: '/proformas', icon: FileText },
-  { title: 'Payments', to: '/collaborator-payments', icon: Wallet },
+  {
+    title: 'Collaborator Payments',
+    to: '/collaborator-payments',
+    icon: Wallet,
+  },
   { title: 'Collections', to: '/collections', icon: CircleDollarSign },
   { title: 'Invoices', to: '/invoices', icon: Receipt },
   { title: 'Transactions', to: '/transactions', icon: ArrowLeftRight },

@@ -12,7 +12,7 @@ const TITLE_BY_PATH: Record<string, string> = {
   '/collaborator-roles': 'Collaborator Roles',
   '/timesheets': 'Timesheets',
   '/proformas': 'Proformas',
-  '/collaborator-payments': 'Payments',
+  '/collaborator-payments': 'Collaborator Payments',
   '/collections': 'Collections',
   '/invoices': 'Invoices',
   '/transactions': 'Transactions',
