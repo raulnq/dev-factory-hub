@@ -15,3 +15,7 @@ export { invoices } from '#/features/invoices/invoice.js';
 export { transactions } from '#/features/transactions/transaction.js';
 export { moneyExchanges } from '#/features/money-exchanges/money-exchange.js';
 export { payrollPayments } from '#/features/payroll-payments/payroll-payment.js';
+export {
+  taxPayments,
+  taxPaymentItems,
+} from '#/features/tax-payments/tax-payment.js';

@@ -23,6 +23,7 @@ import {
   ArrowLeftRight,
   RefreshCw,
   BadgeDollarSign,
+  Landmark,
 } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { UserButton } from '@clerk/clerk-react';
@@ -47,6 +48,7 @@ const NAV_ITEMS: NavItem[] = [
   { title: 'Transactions', to: '/transactions', icon: ArrowLeftRight },
   { title: 'Money Exchanges', to: '/money-exchanges', icon: RefreshCw },
   { title: 'Payroll Payments', to: '/payroll-payments', icon: BadgeDollarSign },
+  { title: 'Tax Payments', to: '/tax-payments', icon: Landmark },
 ];
 
 export function AppSidebar() {

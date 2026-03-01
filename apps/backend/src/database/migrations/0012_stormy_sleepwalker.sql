@@ -1,0 +1,1 @@
+ALTER TABLE "dev-factory-hub"."tax_payments" ALTER COLUMN "number" DROP NOT NULL;

@@ -18,6 +18,7 @@ const TITLE_BY_PATH: Record<string, string> = {
   '/transactions': 'Transactions',
   '/money-exchanges': 'Money Exchanges',
   '/payroll-payments': 'Payroll Payments',
+  '/tax-payments': 'Tax Payments',
 };
 
 function usePageTitle() {
