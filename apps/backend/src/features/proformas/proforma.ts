@@ -46,7 +46,7 @@ export const proformas = dbSchema.table('proformas', {
   }).notNull(),
   number: varchar('number', { length: 20 }).notNull().unique(),
   status: varchar('status', { length: 25 }).notNull().default('Pending'),
-  issuedAt: timestamp('issuedAt', { mode: 'date', withTimezone: true }),
+  issuedAt: date('issuedAt', { mode: 'string' }),
   cancelledAt: timestamp('cancelledAt', { mode: 'date', withTimezone: true }),
   createdAt: timestamp('createdAt', {
     mode: 'date',

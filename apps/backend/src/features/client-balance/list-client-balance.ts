@@ -34,12 +34,10 @@ export const listRoute = new Hono().get(
     ];
 
     if (startDate) {
-      pfFilters.push(gte(proformas.issuedAt, new Date(startDate)));
+      pfFilters.push(gte(proformas.issuedAt, startDate));
     }
     if (endDate) {
-      const endDateTime = new Date(endDate);
-      endDateTime.setHours(23, 59, 59, 999);
-      pfFilters.push(lte(proformas.issuedAt, endDateTime));
+      pfFilters.push(lte(proformas.issuedAt, endDate));
     }
 
     const pfRows = await client
@@ -59,7 +57,7 @@ export const listRoute = new Hono().get(
       if (!pf.issuedAt || pf.total <= 0) continue;
       const clientName = pf.clientName ?? 'Unknown';
       entries.push({
-        issuedAt: pf.issuedAt.toISOString().split('T')[0],
+        issuedAt: pf.issuedAt,
         type: 'Income',
         name: clientName,
         description: `Proforma for ${clientName} from ${pf.startDate} to ${pf.endDate}`,

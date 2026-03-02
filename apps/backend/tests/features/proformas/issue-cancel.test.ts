@@ -18,8 +18,23 @@ describe('Issue/Cancel Proforma Endpoints', () => {
       createProformaItem({ amount: 100 })
     );
 
-    const issued = await issueProforma(proforma.proformaId);
-    assertProforma(issued).hasStatus('Issued');
+    const issued = await issueProforma(proforma.proformaId, {
+      issuedAt: '2025-06-15',
+    });
+    assertProforma(issued).hasStatus('Issued').hasIssuedAt('2025-06-15');
+  });
+
+  test('should store the provided issuedAt date', async () => {
+    const proforma = await addProforma(await createProforma());
+    await addProformaItem(
+      proforma.proformaId,
+      createProformaItem({ amount: 50 })
+    );
+
+    const issued = await issueProforma(proforma.proformaId, {
+      issuedAt: '2024-03-01',
+    });
+    assertProforma(issued).hasIssuedAt('2024-03-01');
   });
 
   test('should fail to issue empty proforma', async () => {
@@ -27,6 +42,7 @@ describe('Issue/Cancel Proforma Endpoints', () => {
     // Total 0
     await issueProforma(
       proforma.proformaId,
+      { issuedAt: '2025-06-15' },
       createConflictError(
         `Cannot issue proforma with total "0". Must be greater than 0.`
       )
@@ -39,7 +55,7 @@ describe('Issue/Cancel Proforma Endpoints', () => {
       proforma.proformaId,
       createProformaItem({ amount: 100 })
     );
-    await issueProforma(proforma.proformaId);
+    await issueProforma(proforma.proformaId, { issuedAt: '2025-06-15' });
 
     const canceled = await cancelProforma(proforma.proformaId);
     assertProforma(canceled).hasStatus('Canceled');

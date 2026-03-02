@@ -4,7 +4,7 @@ import { proformas } from './proforma.js';
 import { zValidator } from '#/validator.js';
 import { client } from '#/database/client.js';
 import { eq } from 'drizzle-orm';
-import { proformaSchema } from './schemas.js';
+import { proformaSchema, issueProformaSchema } from './schemas.js';
 import { notFoundError, conflictError } from '#/extensions.js';
 import { getProformaWithRelations } from './get-proforma.js';
 
@@ -13,8 +13,10 @@ const paramSchema = proformaSchema.pick({ proformaId: true });
 export const issueRoute = new Hono().post(
   '/:proformaId/issue',
   zValidator('param', paramSchema),
+  zValidator('json', issueProformaSchema),
   async c => {
     const { proformaId } = c.req.valid('param');
+    const { issuedAt } = c.req.valid('json');
 
     const [existing] = await client
       .select()
@@ -44,7 +46,7 @@ export const issueRoute = new Hono().post(
       .update(proformas)
       .set({
         status: 'Issued',
-        issuedAt: new Date(),
+        issuedAt,
       })
       .where(eq(proformas.proformaId, proformaId));
 

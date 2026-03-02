@@ -3,6 +3,7 @@ import type { Page } from '#/pagination';
 import type {
   AddProforma,
   EditProforma,
+  IssueProforma,
   Proforma,
   ProformaItem,
   AddProformaItem,
@@ -15,7 +16,7 @@ function mapProforma(item: any): Proforma {
   return {
     ...item,
     createdAt: new Date(item.createdAt),
-    issuedAt: item.issuedAt ? new Date(item.issuedAt) : null,
+    issuedAt: item.issuedAt ?? null,
     cancelledAt: item.cancelledAt ? new Date(item.cancelledAt) : null,
   };
 }
@@ -99,10 +100,11 @@ export async function editProforma(
 
 export async function issueProforma(
   proformaId: string,
+  data: IssueProforma,
   token?: string | null
 ): Promise<Proforma> {
   const response = await client.api.proformas[':proformaId'].issue.$post(
-    { param: { proformaId } },
+    { param: { proformaId }, json: data },
     { headers: token ? { Authorization: `Bearer ${token}` } : {} }
   );
   if (!response.ok) {

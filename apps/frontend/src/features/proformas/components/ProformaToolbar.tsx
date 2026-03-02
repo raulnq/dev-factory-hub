@@ -1,12 +1,14 @@
 import { Button } from '@/components/ui/button';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { XCircle } from 'lucide-react';
+import { IssueProformaDialog } from './IssueProformaDialog';
+import type { IssueProforma } from '#/features/proformas/schemas';
 
 type ProformaToolbarProps = {
   status: string;
   isPending: boolean;
   total: number;
   onCancel: () => void;
-  onIssue: () => void;
+  onIssue: (data: IssueProforma) => void;
 };
 
 export function ProformaToolbar({
@@ -20,14 +22,11 @@ export function ProformaToolbar({
   const canCancel = status !== 'Canceled';
   return (
     <>
-      <Button
-        onClick={onIssue}
-        disabled={isPending || total <= 0 || !canIssue}
-        size="sm"
-      >
-        <CheckCircle className="h-4 w-4 mr-2" />
-        Issue
-      </Button>
+      <IssueProformaDialog
+        onIssue={onIssue}
+        isPending={isPending}
+        disabled={total <= 0 || !canIssue}
+      />
       <Button
         onClick={onCancel}
         variant="destructive"

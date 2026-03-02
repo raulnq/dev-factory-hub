@@ -18,6 +18,7 @@ import { useAuth } from '@clerk/clerk-react';
 import type {
   AddProforma,
   EditProforma,
+  IssueProforma,
   ListProforma,
   AddProformaItem,
 } from '#/features/proformas/schemas';
@@ -86,9 +87,9 @@ export function useIssueProforma(proformaId: string) {
   const queryClient = useQueryClient();
   const { getToken } = useAuth();
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async (data: IssueProforma) => {
       const token = await getToken();
-      return issueProforma(proformaId, token);
+      return issueProforma(proformaId, data, token);
     },
     onSuccess: data => {
       queryClient.invalidateQueries({ queryKey: ['proformas'] });

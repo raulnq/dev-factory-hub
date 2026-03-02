@@ -16,7 +16,7 @@ export const proformaSchema = z.object({
   total: z.number().min(0),
   number: z.string().max(20),
   status: z.string(),
-  issuedAt: z.date().nullable(),
+  issuedAt: z.iso.date().nullable(),
   cancelledAt: z.date().nullable(),
   createdAt: z.date(),
   notes: z.string().nullable(),
@@ -35,6 +35,10 @@ export const editProformaSchema = z.object({
   discount: z.number().min(0),
   taxes: z.number().min(0),
   notes: z.string().optional(),
+});
+
+export const issueProformaSchema = z.object({
+  issuedAt: z.iso.date(),
 });
 
 export const proformaItemSchema = z.object({
@@ -60,5 +64,6 @@ export type ProformaItem = z.infer<typeof proformaItemSchema>;
 export type AddProforma = z.infer<typeof addProformaSchema>;
 export type EditProforma = z.infer<typeof editProformaSchema>;
 export type AddProformaItem = z.infer<typeof addProformaItemSchema>;
+export type IssueProforma = z.infer<typeof issueProformaSchema>;
 export type ListProforma = z.infer<typeof listProformaSchema>;
 export type ListProformaItems = z.infer<typeof listProformaItemsSchema>;

@@ -16,7 +16,7 @@ import {
   useCancelProforma,
 } from '../stores/useProformas';
 import { toast } from 'sonner';
-import type { EditProforma } from '#/features/proformas/schemas';
+import type { EditProforma, IssueProforma } from '#/features/proformas/schemas';
 import { Badge } from '@/components/ui/badge';
 import { getStatusVariant } from '../utils/status-variants';
 import { ProformaToolbar } from '../components/ProformaToolbar';
@@ -72,9 +72,9 @@ function EditProformaInner({
     }
   };
 
-  const handleIssue = async () => {
+  const handleIssue = async (data: IssueProforma) => {
     try {
-      await issue.mutateAsync();
+      await issue.mutateAsync(data);
       toast.success('Project issued');
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Failed to issue');

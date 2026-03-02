@@ -1,0 +1,1 @@
+ALTER TABLE "dev-factory-hub"."proformas" ALTER COLUMN "issuedAt" SET DATA TYPE date;

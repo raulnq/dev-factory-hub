@@ -9,6 +9,7 @@ import type { Page } from '#/pagination.js';
 import type {
   AddProforma,
   EditProforma,
+  IssueProforma,
   Proforma,
   ProformaItem,
   AddProformaItem,
@@ -77,7 +78,7 @@ export async function addProforma(
     return {
       ...item,
       createdAt: new Date(item.createdAt),
-      issuedAt: item.issuedAt != null ? new Date(item.issuedAt) : null,
+      issuedAt: item.issuedAt ?? null,
       cancelledAt: item.cancelledAt != null ? new Date(item.cancelledAt) : null,
     };
   } else {
@@ -118,7 +119,7 @@ export async function editProforma(
     return {
       ...item,
       createdAt: new Date(item.createdAt),
-      issuedAt: item.issuedAt != null ? new Date(item.issuedAt) : null,
+      issuedAt: item.issuedAt ?? null,
       cancelledAt: item.cancelledAt != null ? new Date(item.cancelledAt) : null,
     };
   } else {
@@ -153,7 +154,7 @@ export async function getProforma(
     return {
       ...item,
       createdAt: new Date(item.createdAt),
-      issuedAt: item.issuedAt ? new Date(item.issuedAt) : null,
+      issuedAt: item.issuedAt ?? null,
       cancelledAt: item.cancelledAt ? new Date(item.cancelledAt) : null,
     };
   } else {
@@ -197,7 +198,7 @@ export async function listProformas(
       items: data.items.map((item: any) => ({
         ...item,
         createdAt: new Date(item.createdAt),
-        issuedAt: item.issuedAt ? new Date(item.issuedAt) : null,
+        issuedAt: item.issuedAt ?? null,
         cancelledAt: item.cancelledAt ? new Date(item.cancelledAt) : null,
       })),
     };
@@ -213,18 +214,24 @@ export async function listProformas(
   }
 }
 
-export async function issueProforma(proformaId: string): Promise<Proforma>;
 export async function issueProforma(
   proformaId: string,
+  input: IssueProforma
+): Promise<Proforma>;
+export async function issueProforma(
+  proformaId: string,
+  input: IssueProforma,
   expectedProblemDocument: ProblemDocument
 ): Promise<ProblemDocument>;
 export async function issueProforma(
   proformaId: string,
+  input: IssueProforma,
   expectedProblemDocument?: ProblemDocument
 ): Promise<Proforma | ProblemDocument> {
   const client = testClient(app);
   const response = await client.api.proformas[':proformaId'].issue.$post({
     param: { proformaId },
+    json: input,
   });
 
   if (response.status === StatusCodes.OK) {
@@ -233,7 +240,7 @@ export async function issueProforma(
     return {
       ...item,
       createdAt: new Date(item.createdAt),
-      issuedAt: item.issuedAt != null ? new Date(item.issuedAt) : null,
+      issuedAt: item.issuedAt ?? null,
       cancelledAt: item.cancelledAt != null ? new Date(item.cancelledAt) : null,
     };
   } else {
@@ -268,7 +275,7 @@ export async function cancelProforma(
     return {
       ...item,
       createdAt: new Date(item.createdAt),
-      issuedAt: item.issuedAt != null ? new Date(item.issuedAt) : null,
+      issuedAt: item.issuedAt ?? null,
       cancelledAt: item.cancelledAt != null ? new Date(item.cancelledAt) : null,
     };
   } else {
@@ -405,6 +412,10 @@ export const assertProforma = (item: Proforma) => ({
   },
   hasSubtotal(expected: number) {
     assert.strictEqual(Number(item.subtotal), expected);
+    return this;
+  },
+  hasIssuedAt(expected: string) {
+    assert.strictEqual(item.issuedAt, expected);
     return this;
   },
 });
