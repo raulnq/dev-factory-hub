@@ -1,9 +1,10 @@
 import { CompleteButton } from './CompleteButton';
+import type { CompleteTimesheet } from '#/features/timesheets/schemas';
 
 type TimesheetToolbarProps = {
   status: string;
   isPending: boolean;
-  onComplete: () => void;
+  onComplete: (data: CompleteTimesheet) => void;
 };
 
 export function TimesheetToolbar({

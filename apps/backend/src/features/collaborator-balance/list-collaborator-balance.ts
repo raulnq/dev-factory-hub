@@ -50,13 +50,8 @@ export const listRoute = new Hono().get(
       ...(tsCurrencyFilter ? [tsCurrencyFilter] : []),
     ];
 
-    if (startDate)
-      tsFilters.push(gte(timesheets.completedAt, new Date(startDate)));
-    if (endDate) {
-      const endDateTime = new Date(endDate);
-      endDateTime.setHours(23, 59, 59, 999);
-      tsFilters.push(lte(timesheets.completedAt, endDateTime));
-    }
+    if (startDate) tsFilters.push(gte(timesheets.completedAt, startDate));
+    if (endDate) tsFilters.push(lte(timesheets.completedAt, endDate));
 
     const tsRows = await client
       .select({
@@ -96,7 +91,7 @@ export const listRoute = new Hono().get(
       const amount = ts.totalHours * (ts.costRate ?? 0);
       if (amount <= 0) continue;
       entries.push({
-        issuedAt: ts.completedAt.toISOString().split('T')[0],
+        issuedAt: ts.completedAt,
         type: 'Income',
         name: collaboratorName,
         description: `Timesheet for ${collaboratorName} with the ${roleName} from ${ts.startDate} to ${ts.endDate}`,

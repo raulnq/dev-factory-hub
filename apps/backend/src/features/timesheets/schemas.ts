@@ -13,7 +13,7 @@ export const timesheetSchema = z.object({
   feeRate: z.number().nonnegative().nullable(),
   costRate: z.number().nonnegative().nullable(),
   currency: z.string().max(3).nullable(),
-  completedAt: z.date().nullable(),
+  completedAt: z.iso.date().nullable(),
   createdAt: z.date(),
 });
 
@@ -61,6 +61,11 @@ export const editWorklogSchema = worklogSchema.pick({
   hours: true,
 });
 export type EditWorklog = z.infer<typeof editWorklogSchema>;
+
+export const completeTimesheetSchema = z.object({
+  completedAt: z.iso.date(),
+});
+export type CompleteTimesheet = z.infer<typeof completeTimesheetSchema>;
 
 export const timesheetProjectWithWorklogsSchema = z.object({
   projectId: z.uuidv7(),

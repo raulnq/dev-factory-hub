@@ -2,6 +2,7 @@ import { client } from '../../../client';
 import type { Page } from '#/pagination';
 import type {
   AddTimesheet,
+  CompleteTimesheet,
   Timesheet,
   ListTimesheets,
   EditWorklog,
@@ -34,7 +35,7 @@ export async function listTimesheets(
     items: data.items.map((item: any) => ({
       ...item,
       createdAt: new Date(item.createdAt),
-      completedAt: item.completedAt ? new Date(item.completedAt) : null,
+      completedAt: item.completedAt ?? null,
     })),
   };
 }
@@ -55,7 +56,7 @@ export async function getTimesheet(
   return {
     ...item,
     createdAt: new Date(item.createdAt),
-    completedAt: item.completedAt ? new Date(item.completedAt) : null,
+    completedAt: item.completedAt ?? null,
   };
 }
 
@@ -75,7 +76,7 @@ export async function addTimesheet(
   return {
     ...item,
     createdAt: new Date(item.createdAt),
-    completedAt: item.completedAt ? new Date(item.completedAt) : null,
+    completedAt: item.completedAt ?? null,
   };
 }
 
@@ -150,10 +151,11 @@ export async function editWorklog(
 
 export async function completeTimesheet(
   timesheetId: string,
+  data: CompleteTimesheet,
   token?: string | null
 ): Promise<Timesheet> {
   const response = await client.api.timesheets[':timesheetId'].complete.$post(
-    { param: { timesheetId } },
+    { param: { timesheetId }, json: data },
     { headers: token ? { Authorization: `Bearer ${token}` } : {} }
   );
   if (!response.ok) {
@@ -164,6 +166,6 @@ export async function completeTimesheet(
   return {
     ...item,
     createdAt: new Date(item.createdAt),
-    completedAt: item.completedAt ? new Date(item.completedAt) : null,
+    completedAt: item.completedAt ?? null,
   };
 }

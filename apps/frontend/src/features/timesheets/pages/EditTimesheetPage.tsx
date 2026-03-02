@@ -8,6 +8,7 @@ import {
   useCompleteTimesheet,
   useAddProjectToTimesheet,
 } from '../stores/useTimesheets';
+import type { CompleteTimesheet } from '#/features/timesheets/schemas';
 import { TimesheetGrid } from '../components/TimesheetGrid';
 import { Card, CardContent } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
@@ -25,9 +26,9 @@ export function EditTimesheetPage() {
   const { timesheetId } = useParams<{ timesheetId: string }>();
   const complete = useCompleteTimesheet(timesheetId ?? '');
 
-  const handleComplete = async () => {
+  const handleComplete = async (data: CompleteTimesheet) => {
     try {
-      await complete.mutateAsync();
+      await complete.mutateAsync(data);
       toast.success('Timesheet completed');
     } catch (error) {
       toast.error(
@@ -65,7 +66,7 @@ export function EditTimesheetPage() {
 
 type InnerEditTimesheetProp = {
   timesheetId: string;
-  onComplete: () => void;
+  onComplete: (data: CompleteTimesheet) => void;
   isPending: boolean;
 };
 

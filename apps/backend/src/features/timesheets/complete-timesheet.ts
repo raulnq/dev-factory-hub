@@ -4,7 +4,7 @@ import { timesheets } from './timesheet.js';
 import { zValidator } from '#/validator.js';
 import { client } from '#/database/client.js';
 import { eq } from 'drizzle-orm';
-import { timesheetSchema } from './schemas.js';
+import { timesheetSchema, completeTimesheetSchema } from './schemas.js';
 import { notFoundError, conflictError } from '#/extensions.js';
 import { getTimesheetWithRelations } from './get-timesheet.js';
 
@@ -13,8 +13,10 @@ const paramSchema = timesheetSchema.pick({ timesheetId: true });
 export const completeRoute = new Hono().post(
   '/:timesheetId/complete',
   zValidator('param', paramSchema),
+  zValidator('json', completeTimesheetSchema),
   async c => {
     const { timesheetId } = c.req.valid('param');
+    const { completedAt } = c.req.valid('json');
 
     const [timesheet] = await client
       .select()
@@ -34,7 +36,7 @@ export const completeRoute = new Hono().post(
       .update(timesheets)
       .set({
         status: 'Completed',
-        completedAt: new Date(),
+        completedAt,
       })
       .where(eq(timesheets.timesheetId, timesheetId));
 

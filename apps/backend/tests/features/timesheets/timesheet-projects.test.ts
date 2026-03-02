@@ -62,7 +62,7 @@ describe('Timesheet Projects Endpoint', () => {
 
   test('should reject modifications on completed timesheet', async () => {
     const { ts, project } = await setup();
-    await completeTimesheet(ts.timesheetId);
+    await completeTimesheet(ts.timesheetId, { completedAt: '2025-06-15' });
 
     await addProjectToTimesheet(
       ts.timesheetId,

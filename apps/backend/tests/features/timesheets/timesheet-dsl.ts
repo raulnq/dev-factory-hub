@@ -8,6 +8,7 @@ import { assertStrictEqualProblemDocument } from '../../assertions.js';
 import type { Page } from '#/pagination.js';
 import type {
   AddTimesheet,
+  CompleteTimesheet,
   Timesheet,
   ListTimesheets,
   EditWorklog,
@@ -65,7 +66,7 @@ export async function addTimesheet(
     return {
       ...item,
       createdAt: new Date(item.createdAt),
-      completedAt: item.completedAt ? new Date(item.completedAt) : null,
+      completedAt: item.completedAt ?? null,
     };
   } else {
     const problem = await response.json();
@@ -99,7 +100,7 @@ export async function getTimesheet(
     return {
       ...item,
       createdAt: new Date(item.createdAt),
-      completedAt: item.completedAt ? new Date(item.completedAt) : null,
+      completedAt: item.completedAt ?? null,
     };
   } else {
     const problem = await response.json();
@@ -259,20 +260,24 @@ export async function editWorklog(
 }
 
 export async function completeTimesheet(
-  timesheetId: string
+  timesheetId: string,
+  input: CompleteTimesheet
 ): Promise<Timesheet>;
 export async function completeTimesheet(
   timesheetId: string,
+  input: CompleteTimesheet,
   expectedProblemDocument: ProblemDocument
 ): Promise<ProblemDocument>;
 
 export async function completeTimesheet(
   timesheetId: string,
+  input: CompleteTimesheet,
   expectedProblemDocument?: ProblemDocument
 ): Promise<Timesheet | ProblemDocument> {
   const client = testClient(app);
   const response = await client.api.timesheets[':timesheetId'].complete.$post({
     param: { timesheetId },
+    json: input,
   });
 
   if (response.status === StatusCodes.OK) {
@@ -281,7 +286,7 @@ export async function completeTimesheet(
     return {
       ...item,
       createdAt: new Date(item.createdAt),
-      completedAt: item.completedAt ? new Date(item.completedAt) : null,
+      completedAt: item.completedAt ?? null,
     };
   } else {
     const problem = await response.json();
@@ -324,7 +329,7 @@ export async function listTimesheets(
       items: data.items.map((item: any) => ({
         ...item,
         createdAt: new Date(item.createdAt),
-        completedAt: item.completedAt ? new Date(item.completedAt) : null,
+        completedAt: item.completedAt ?? null,
       })),
     };
   } else {
@@ -349,6 +354,10 @@ export const assertTimesheet = (item: Timesheet) => {
     isCompleted() {
       assert.strictEqual(item.status, 'Completed');
       assert.ok(item.completedAt);
+      return this;
+    },
+    hasCompletedAt(expected: string) {
+      assert.strictEqual(item.completedAt, expected);
       return this;
     },
     hasCollaboratorName(expected: string) {

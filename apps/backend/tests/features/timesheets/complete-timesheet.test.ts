@@ -17,8 +17,23 @@ describe('Complete Timesheet Endpoint', () => {
       weekly({ collaboratorId: cid, collaboratorRoleId: rid })
     );
 
-    const completed = await completeTimesheet(ts.timesheetId);
-    assertTimesheet(completed).isCompleted();
+    const completed = await completeTimesheet(ts.timesheetId, {
+      completedAt: '2025-06-15',
+    });
+    assertTimesheet(completed).isCompleted().hasCompletedAt('2025-06-15');
+  });
+
+  test('should store the provided completedAt date', async () => {
+    const cid = await createCollaborator();
+    const rid = await createRole();
+    const ts = await addTimesheet(
+      weekly({ collaboratorId: cid, collaboratorRoleId: rid })
+    );
+
+    const completed = await completeTimesheet(ts.timesheetId, {
+      completedAt: '2024-03-01',
+    });
+    assertTimesheet(completed).hasCompletedAt('2024-03-01');
   });
 
   test('should reject already completed timesheet', async () => {
@@ -28,9 +43,10 @@ describe('Complete Timesheet Endpoint', () => {
       weekly({ collaboratorId: cid, collaboratorRoleId: rid })
     );
 
-    await completeTimesheet(ts.timesheetId);
+    await completeTimesheet(ts.timesheetId, { completedAt: '2025-06-15' });
     await completeTimesheet(
       ts.timesheetId,
+      { completedAt: '2025-06-15' },
       createConflictError('Timesheet is already completed')
     );
   });

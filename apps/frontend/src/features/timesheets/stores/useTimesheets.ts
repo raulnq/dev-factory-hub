@@ -16,6 +16,7 @@ import {
 import { useAuth } from '@clerk/clerk-react';
 import type {
   AddTimesheet,
+  CompleteTimesheet,
   ListTimesheets,
   EditWorklog,
 } from '#/features/timesheets/schemas';
@@ -136,9 +137,9 @@ export function useCompleteTimesheet(timesheetId: string) {
   const queryClient = useQueryClient();
   const { getToken } = useAuth();
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async (data: CompleteTimesheet) => {
       const token = await getToken();
-      return completeTimesheet(timesheetId, token);
+      return completeTimesheet(timesheetId, data, token);
     },
     onSuccess: data => {
       queryClient.setQueryData(['timesheet', timesheetId], data);

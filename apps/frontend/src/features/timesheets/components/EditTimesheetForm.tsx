@@ -31,13 +31,13 @@ export function EditTimesheetForm({ timesheet }: EditTimesheetFormProps) {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Field>
-            <FieldLabel>Approved At</FieldLabel>
+            <FieldLabel>Created At</FieldLabel>
             <Input value={timesheet.createdAt.toISOString()} disabled />
           </Field>
           {timesheet.completedAt && (
             <Field>
-              <FieldLabel>Contract Signed At</FieldLabel>
-              <Input value={timesheet.completedAt.toISOString()} disabled />
+              <FieldLabel>Completed At</FieldLabel>
+              <Input value={timesheet.completedAt} disabled />
             </Field>
           )}
         </div>

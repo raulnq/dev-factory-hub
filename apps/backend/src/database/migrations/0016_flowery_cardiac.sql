@@ -1,0 +1,1 @@
+ALTER TABLE "dev-factory-hub"."timesheets" ALTER COLUMN "completedAt" SET DATA TYPE date;

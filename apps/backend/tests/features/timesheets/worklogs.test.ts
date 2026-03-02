@@ -57,7 +57,7 @@ describe('Worklogs Endpoint', () => {
 
   test('should reject update on completed timesheet', async () => {
     const { ts, project } = await setup();
-    await completeTimesheet(ts.timesheetId);
+    await completeTimesheet(ts.timesheetId, { completedAt: '2025-06-15' });
     await editWorklog(
       ts.timesheetId,
       project.projectId,

@@ -36,10 +36,7 @@ export const timesheets = dbSchema.table('timesheets', {
     mode: 'number',
   }),
   currency: varchar('currency', { length: 3 }),
-  completedAt: timestamp('completedAt', {
-    mode: 'date',
-    withTimezone: true,
-  }),
+  completedAt: date('completedAt', { mode: 'string' }),
   createdAt: timestamp('createdAt', {
     mode: 'date',
     withTimezone: true,
