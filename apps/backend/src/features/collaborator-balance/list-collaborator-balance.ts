@@ -140,7 +140,10 @@ export const listRoute = new Hono().get(
 
     // 3. PayrollPayments (Paid, netSalary > 0)
     const ppPaidFilters: SQL[] = [
-      eq(payrollPayments.status, 'Paid'),
+      or(
+        eq(payrollPayments.status, 'Paid'),
+        eq(payrollPayments.status, 'PensionPaid')
+      ) as SQL,
       eq(payrollPayments.collaboratorId, collaboratorId),
       eq(payrollPayments.currency, currency),
       isNotNull(payrollPayments.paidAt),
