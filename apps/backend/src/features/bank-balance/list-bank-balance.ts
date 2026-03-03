@@ -106,7 +106,10 @@ export const listRoute = new Hono().get(
 
     // 3. CollaboratorPayments (Paid, netSalary > 0)
     const cpFilters: SQL[] = [
-      eq(collaboratorPayments.status, 'Paid'),
+      or(
+        eq(collaboratorPayments.status, 'Paid'),
+        eq(collaboratorPayments.status, 'Confirmed')
+      ) as SQL,
       eq(collaboratorPayments.currency, currency),
       isNotNull(collaboratorPayments.paidAt),
     ];

@@ -39,6 +39,7 @@ export function CollectionsSkeleton() {
           <TableHead>Total</TableHead>
           <TableHead>Commission</TableHead>
           <TableHead>Taxes</TableHead>
+          <TableHead>Confirmed At</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className="w-[100px]">Actions</TableHead>
         </TableRow>
@@ -46,6 +47,9 @@ export function CollectionsSkeleton() {
       <TableBody>
         {Array.from({ length: 10 }).map((_, index) => (
           <TableRow key={index}>
+            <TableCell>
+              <Skeleton className="h-8 w-[50%]" />
+            </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[50%]" />
             </TableCell>
@@ -93,6 +97,7 @@ export function CollectionTable() {
             <TableHead>Total</TableHead>
             <TableHead>Commission</TableHead>
             <TableHead>Taxes</TableHead>
+            <TableHead>Confirmed At</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="w-[100px]">Actions</TableHead>
           </TableRow>
@@ -107,6 +112,7 @@ export function CollectionTable() {
               <TableCell>{Number(item.total).toFixed(2)}</TableCell>
               <TableCell>{Number(item.commission).toFixed(2)}</TableCell>
               <TableCell>{Number(item.taxes).toFixed(2)}</TableCell>
+              <TableCell>{item.confirmedAt}</TableCell>
               <TableCell>
                 <Badge variant={statusVariant(item.status)}>
                   {item.status}
