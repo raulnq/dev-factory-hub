@@ -25,6 +25,7 @@ export function TimesheetsSkeleton() {
           <TableHead>Role</TableHead>
           <TableHead>Start Date</TableHead>
           <TableHead>End Date</TableHead>
+          <TableHead>Completed At</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className="w-[100px]">Actions</TableHead>
         </TableRow>
@@ -37,6 +38,9 @@ export function TimesheetsSkeleton() {
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[40%]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[80px]" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[80px]" />
@@ -75,6 +79,7 @@ export function TimesheetTable() {
             <TableHead>Role</TableHead>
             <TableHead>Start Date</TableHead>
             <TableHead>End Date</TableHead>
+            <TableHead>Completed At</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="w-[100px]">Actions</TableHead>
           </TableRow>
@@ -88,6 +93,7 @@ export function TimesheetTable() {
               <TableCell>{item.collaboratorRoleName}</TableCell>
               <DateTableCell value={item.startDate} />
               <DateTableCell value={item.endDate} />
+              <DateTableCell value={item.completedAt} />
               <TableCell>
                 <Badge
                   variant={

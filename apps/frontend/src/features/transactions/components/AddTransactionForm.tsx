@@ -20,8 +20,8 @@ import {
   type AddTransaction,
 } from '#/features/transactions/schemas';
 import { FormCardContent } from '@/components/FormCardContent';
+import { CurrencySelect } from '@/components/CurrencySelect';
 
-const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
 const TRANSACTION_TYPES = ['Income', 'Outcome'];
 
 type AddTransactionFormProps = {
@@ -104,22 +104,12 @@ export function AddTransactionForm({
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor="currency">Currency</FieldLabel>
-                <Select
+                <CurrencySelect
                   value={field.value}
                   onValueChange={field.onChange}
+                  id="currency"
                   disabled={isPending}
-                >
-                  <SelectTrigger id="currency">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CURRENCIES.map(c => (
-                      <SelectItem key={c} value={c}>
-                        {c}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}

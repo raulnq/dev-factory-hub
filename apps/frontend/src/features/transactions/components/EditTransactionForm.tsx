@@ -23,8 +23,8 @@ import {
 } from '#/features/transactions/schemas';
 import { FormCardContent } from '@/components/FormCardContent';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
+import { CurrencySelect } from '@/components/CurrencySelect';
 
-const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
 const TRANSACTION_TYPES = ['Income', 'Outcome'];
 
 type EditTransactionFormProps = {
@@ -113,22 +113,12 @@ export function EditTransactionForm({
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor="currency">Currency</FieldLabel>
-                <Select
+                <CurrencySelect
                   value={field.value}
                   onValueChange={field.onChange}
+                  id="currency"
                   disabled={isPending || !isStatusPending}
-                >
-                  <SelectTrigger id="currency">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CURRENCIES.map(c => (
-                      <SelectItem key={c} value={c}>
-                        {c}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}

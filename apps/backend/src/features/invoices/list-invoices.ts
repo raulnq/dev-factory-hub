@@ -41,7 +41,7 @@ export const listRoute = new Hono().get(
       .from(invoices)
       .innerJoin(clients, eq(invoices.clientId, clients.clientId))
       .where(and(...filters))
-      .orderBy(desc(invoices.createdAt))
+      .orderBy(desc(invoices.issuedAt))
       .limit(pageSize)
       .offset(offset);
 

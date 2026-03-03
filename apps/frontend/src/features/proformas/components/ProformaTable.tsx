@@ -28,8 +28,9 @@ export function ProformasSkeleton() {
           <TableHead>Start Date</TableHead>
           <TableHead>End Date</TableHead>
           <TableHead>Currency</TableHead>
-          <TableHead>Status</TableHead>
           <TableHead>Total</TableHead>
+          <TableHead>Completed At</TableHead>
+          <TableHead>Status</TableHead>
           <TableHead className="w-[80px]">Actions</TableHead>
         </TableRow>
       </TableHeader>
@@ -86,8 +87,9 @@ export function ProformaTable() {
             <TableHead>Start Date</TableHead>
             <TableHead>End Date</TableHead>
             <TableHead>Currency</TableHead>
-            <TableHead>Status</TableHead>
             <TableHead>Total</TableHead>
+            <TableHead>Completed At</TableHead>
+            <TableHead>Status</TableHead>
             <TableHead className="w-[80px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -99,12 +101,14 @@ export function ProformaTable() {
               <DateTableCell value={item.startDate} />
               <DateTableCell value={item.endDate} />
               <TableCell>{item.currency}</TableCell>
+              <NumberTableCell value={item.total} />
+              <DateTableCell value={item.issuedAt} />
               <TableCell>
                 <Badge variant={getStatusVariant(item.status)}>
                   {item.status}
                 </Badge>
               </TableCell>
-              <NumberTableCell value={item.total} />
+
               <TableCell>
                 <Button variant="ghost" size="icon" asChild>
                   <Link to={`/proformas/${item.proformaId}/edit`}>

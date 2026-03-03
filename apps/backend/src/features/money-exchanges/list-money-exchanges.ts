@@ -29,7 +29,7 @@ export const listRoute = new Hono().get(
       .select()
       .from(moneyExchanges)
       .where(and(...filters))
-      .orderBy(desc(moneyExchanges.createdAt))
+      .orderBy(desc(moneyExchanges.issuedAt))
       .limit(pageSize)
       .offset(offset);
 

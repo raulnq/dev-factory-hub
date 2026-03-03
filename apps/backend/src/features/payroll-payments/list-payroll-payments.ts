@@ -49,7 +49,7 @@ export const listRoute = new Hono().get(
         eq(payrollPayments.collaboratorId, collaborators.collaboratorId)
       )
       .where(and(...filters))
-      .orderBy(desc(payrollPayments.createdAt))
+      .orderBy(desc(payrollPayments.paidAt))
       .limit(pageSize)
       .offset(offset);
 

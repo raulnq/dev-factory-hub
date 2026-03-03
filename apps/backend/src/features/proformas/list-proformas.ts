@@ -45,7 +45,7 @@ export const listRoute = new Hono().get(
       .from(proformas)
       .innerJoin(projects, eq(proformas.projectId, projects.projectId))
       .where(and(...filters))
-      .orderBy(desc(proformas.startDate))
+      .orderBy(desc(proformas.issuedAt))
       .limit(pageSize)
       .offset(offset);
 

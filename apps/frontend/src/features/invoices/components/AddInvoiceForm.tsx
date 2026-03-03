@@ -2,13 +2,6 @@ import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
   Field,
   FieldError,
   FieldGroup,
@@ -17,8 +10,7 @@ import {
 import { addInvoiceSchema, type AddInvoice } from '#/features/invoices/schemas';
 import { FormCardContent } from '@/components/FormCardContent';
 import { ClientCombobox } from '../../clients/components/ClientCombobox';
-
-const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
+import { CurrencySelect } from '@/components/CurrencySelect';
 
 type AddInvoiceFormProps = {
   isPending: boolean;
@@ -64,22 +56,12 @@ export function AddInvoiceForm({ isPending, onSubmit }: AddInvoiceFormProps) {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="currency">Currency</FieldLabel>
-              <Select
+              <CurrencySelect
                 value={field.value}
                 onValueChange={field.onChange}
+                id="currency"
                 disabled={isPending}
-              >
-                <SelectTrigger id="currency">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {CURRENCIES.map(c => (
-                    <SelectItem key={c} value={c}>
-                      {c}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}

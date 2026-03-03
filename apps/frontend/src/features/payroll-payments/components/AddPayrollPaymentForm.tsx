@@ -7,13 +7,6 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
   Field,
   FieldError,
   FieldGroup,
@@ -25,8 +18,7 @@ import {
 } from '#/features/payroll-payments/schemas';
 import { FormCardContent } from '@/components/FormCardContent';
 import { CollaboratorCombobox } from '../../collaborators/components/CollaboratorCombobox';
-
-const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
+import { CurrencySelect } from '@/components/CurrencySelect';
 
 type AddPayrollPaymentFormProps = {
   isPending: boolean;
@@ -77,22 +69,12 @@ export function AddPayrollPaymentForm({
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor="currency">Currency</FieldLabel>
-                <Select
+                <CurrencySelect
                   value={field.value}
                   onValueChange={field.onChange}
+                  id="currency"
                   disabled={isPending}
-                >
-                  <SelectTrigger id="currency">
-                    <SelectValue placeholder="Select currency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CURRENCIES.map(c => (
-                      <SelectItem key={c} value={c}>
-                        {c}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}

@@ -1,45 +1,24 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { SearchBar } from '@/components/SearchBar';
-
-const CURRENCIES = [
-  'USD',
-  'EUR',
-  'GBP',
-  'PEN',
-  'ARS',
-  'CLP',
-  'COP',
-  'MXN',
-  'JPY',
-  'CAD',
-  'CHF',
-  'CNY',
-];
+import { CurrencySelect } from '@/components/CurrencySelect';
 
 export function MoneyExchangeSearchBar() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialFromCurrency = searchParams.get('fromCurrency') ?? '';
-  const initialToCurrency = searchParams.get('toCurrency') ?? '';
+  const initialFromCurrency = searchParams.get('fromCurrency') ?? 'all';
+  const initialToCurrency = searchParams.get('toCurrency') ?? 'all';
   const [fromCurrency, setFromCurrency] = useState(initialFromCurrency);
   const [toCurrency, setToCurrency] = useState(initialToCurrency);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setSearchParams(prev => {
-      if (fromCurrency) {
+      if (fromCurrency && fromCurrency !== 'all') {
         prev.set('fromCurrency', fromCurrency);
       } else {
         prev.delete('fromCurrency');
       }
-      if (toCurrency) {
+      if (toCurrency && toCurrency !== 'all') {
         prev.set('toCurrency', toCurrency);
       } else {
         prev.delete('toCurrency');
@@ -50,8 +29,8 @@ export function MoneyExchangeSearchBar() {
   };
 
   const handleClear = () => {
-    setFromCurrency('');
-    setToCurrency('');
+    setFromCurrency('all');
+    setToCurrency('all');
     setSearchParams(prev => {
       prev.delete('fromCurrency');
       prev.delete('toCurrency');
@@ -63,36 +42,24 @@ export function MoneyExchangeSearchBar() {
   return (
     <SearchBar
       onSearch={handleSearch}
-      showClearButton={!!(fromCurrency || toCurrency)}
+      showClearButton={!!(fromCurrency !== 'all' || toCurrency !== 'all')}
       onClear={handleClear}
     >
       <div className="w-[160px]">
-        <Select value={fromCurrency} onValueChange={setFromCurrency}>
-          <SelectTrigger>
-            <SelectValue placeholder="From currency" />
-          </SelectTrigger>
-          <SelectContent>
-            {CURRENCIES.map(c => (
-              <SelectItem key={c} value={c}>
-                {c}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <CurrencySelect
+          value={fromCurrency}
+          onValueChange={setFromCurrency}
+          allowEmpty
+          placeholder="From currency"
+        />
       </div>
       <div className="w-[160px]">
-        <Select value={toCurrency} onValueChange={setToCurrency}>
-          <SelectTrigger>
-            <SelectValue placeholder="To currency" />
-          </SelectTrigger>
-          <SelectContent>
-            {CURRENCIES.map(c => (
-              <SelectItem key={c} value={c}>
-                {c}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <CurrencySelect
+          value={toCurrency}
+          onValueChange={setToCurrency}
+          allowEmpty
+          placeholder="To currency"
+        />
       </div>
     </SearchBar>
   );

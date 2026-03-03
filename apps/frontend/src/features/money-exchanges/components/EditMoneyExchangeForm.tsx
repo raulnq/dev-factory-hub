@@ -2,13 +2,6 @@ import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
   Field,
   FieldError,
   FieldGroup,
@@ -22,8 +15,7 @@ import {
 } from '#/features/money-exchanges/schemas';
 import { FormCardContent } from '@/components/FormCardContent';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
-
-const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
+import { CurrencySelect } from '@/components/CurrencySelect';
 
 type EditMoneyExchangeFormProps = {
   isPending: boolean;
@@ -61,22 +53,12 @@ export function EditMoneyExchangeForm({
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor="fromCurrency">From Currency</FieldLabel>
-                <Select
+                <CurrencySelect
                   value={field.value}
                   onValueChange={field.onChange}
+                  id="fromCurrency"
                   disabled={isPending || !isStatusPending}
-                >
-                  <SelectTrigger id="fromCurrency">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CURRENCIES.map(c => (
-                      <SelectItem key={c} value={c}>
-                        {c}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
@@ -89,22 +71,12 @@ export function EditMoneyExchangeForm({
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor="toCurrency">To Currency</FieldLabel>
-                <Select
+                <CurrencySelect
                   value={field.value}
                   onValueChange={field.onChange}
+                  id="toCurrency"
                   disabled={isPending || !isStatusPending}
-                >
-                  <SelectTrigger id="toCurrency">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CURRENCIES.map(c => (
-                      <SelectItem key={c} value={c}>
-                        {c}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}

@@ -4,7 +4,7 @@ import { timesheets } from './timesheet.js';
 import { createPage } from '#/pagination.js';
 import { zValidator } from '#/validator.js';
 import { client } from '#/database/client.js';
-import { eq, count, SQL, and } from 'drizzle-orm';
+import { eq, count, SQL, and, desc } from 'drizzle-orm';
 import { listTimesheetsSchema } from './schemas.js';
 import { collaborators } from '../collaborators/collaborator.js';
 import { collaboratorRoles } from '../collaborator-roles/collaborator-role.js';
@@ -57,6 +57,7 @@ export const listRoute = new Hono().get(
         collaboratorRoles,
         eq(timesheets.collaboratorRoleId, collaboratorRoles.collaboratorRoleId)
       )
+      .orderBy(desc(timesheets.completedAt))
       .where(and(...filters))
       .limit(pageSize)
       .offset(offset);

@@ -28,7 +28,7 @@ export const listRoute = new Hono().get(
       .select()
       .from(transactions)
       .where(and(...filters))
-      .orderBy(desc(transactions.createdAt))
+      .orderBy(desc(transactions.issuedAt))
       .limit(pageSize)
       .offset(offset);
 

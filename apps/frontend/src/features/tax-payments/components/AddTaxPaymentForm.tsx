@@ -19,11 +19,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { CurrencySelect } from '@/components/CurrencySelect';
 
 const currentYear = new Date().getFullYear();
 const YEARS = Array.from({ length: 26 }, (_, i) => currentYear - 20 + i);
 const MONTHS = Array.from({ length: 13 }, (_, i) => i + 1);
-const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
 
 type AddTaxPaymentFormProps = {
   isPending: boolean;
@@ -115,22 +115,11 @@ export function AddTaxPaymentForm({
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>Currency</FieldLabel>
-                <Select
+                <CurrencySelect
                   onValueChange={field.onChange}
                   value={field.value}
                   disabled={isPending}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select currency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CURRENCIES.map(c => (
-                      <SelectItem key={c} value={c}>
-                        {c}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}

@@ -42,7 +42,7 @@ export const listRoute = new Hono().get(
       .from(collections)
       .leftJoin(clients, eq(collections.clientId, clients.clientId))
       .where(and(...filters))
-      .orderBy(desc(collections.createdAt))
+      .orderBy(desc(collections.confirmedAt))
       .limit(pageSize)
       .offset(offset);
 

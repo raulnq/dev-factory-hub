@@ -13,16 +13,8 @@ import {
   FieldGroup,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
-
-const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
+import { CurrencySelect } from '@/components/CurrencySelect';
 
 type EditTaxPaymentFormProps = {
   isPending: boolean;
@@ -66,22 +58,11 @@ export function EditTaxPaymentForm({
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>Currency</FieldLabel>
-                <Select
+                <CurrencySelect
                   onValueChange={field.onChange}
                   value={field.value}
                   disabled={isPending || !isStatusPending}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select currency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CURRENCIES.map(c => (
-                      <SelectItem key={c} value={c}>
-                        {c}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
