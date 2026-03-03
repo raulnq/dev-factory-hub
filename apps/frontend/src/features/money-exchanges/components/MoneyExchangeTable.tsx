@@ -2,8 +2,6 @@ import { Link, useSearchParams } from 'react-router';
 import { Pencil } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import type { BadgeProps } from '@/components/ui/badge';
 import {
   Table,
   TableBody,
@@ -16,7 +14,8 @@ import { useMoneyExchangesSuspense } from '../stores/useMoneyExchanges';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { NumberTableCell } from '@/components/NumberTableCell';
-import { DateTableCell } from '@/components/DateTableCell';
+import { BadgeTableCell } from '@/components/BadgeTableCell';
+import type { BadgeProps } from '@/components/ui/badge';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -111,11 +110,9 @@ export function MoneyExchangeTable() {
               <NumberTableCell value={Number(item.fromTaxes)} />
               <NumberTableCell value={Number(item.toTaxes)} />
               <DateTableCell value={item.issuedAt} />
-              <TableCell>
-                <Badge variant={statusVariant(item.status)}>
-                  {item.status}
-                </Badge>
-              </TableCell>
+              <BadgeTableCell variant={statusVariant(item.status)}>
+                {item.status}
+              </BadgeTableCell>
               <TableCell>
                 <Button variant="ghost" size="icon" asChild>
                   <Link to={`/money-exchanges/${item.moneyExchangeId}/edit`}>

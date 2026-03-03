@@ -2,7 +2,6 @@ import { Link, useSearchParams } from 'react-router';
 import { Pencil } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   Table,
   TableBody,
@@ -17,6 +16,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import type { BadgeProps } from '@/components/ui/badge';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
+import { BadgeTableCell } from '@/components/BadgeTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -120,11 +120,9 @@ export function CollaboratorPaymentTable() {
               <NumberTableCell value={item.withholding} />
               <NumberTableCell value={item.netSalary} />
               <DateTableCell value={item.paidAt} />
-              <TableCell>
-                <Badge variant={statusVariant(item.status)}>
-                  {item.status}
-                </Badge>
-              </TableCell>
+              <BadgeTableCell variant={statusVariant(item.status)}>
+                {item.status}
+              </BadgeTableCell>
               <TableCell>
                 <Button variant="ghost" size="icon" asChild>
                   <Link

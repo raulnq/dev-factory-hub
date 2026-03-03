@@ -6,7 +6,7 @@ type DateTableCellProp = {
 } & ComponentProps<typeof TableCell>;
 
 function formatDate(value: string | Date | null | undefined): string {
-  if (!value) return '-';
+  if (!value) return '--/--/----';
 
   let date: Date;
 

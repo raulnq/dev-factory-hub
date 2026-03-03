@@ -13,8 +13,8 @@ import {
 import { useTimesheetsSuspense } from '../stores/useTimesheets';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
-import { Badge } from '@/components/ui/badge';
 import { DateTableCell } from '@/components/DateTableCell';
+import { BadgeTableCell } from '@/components/BadgeTableCell';
 
 export function TimesheetsSkeleton() {
   return (
@@ -94,15 +94,11 @@ export function TimesheetTable() {
               <DateTableCell value={item.startDate} />
               <DateTableCell value={item.endDate} />
               <DateTableCell value={item.completedAt} />
-              <TableCell>
-                <Badge
-                  variant={
-                    item.status === 'Completed' ? 'default' : 'secondary'
-                  }
-                >
-                  {item.status}
-                </Badge>
-              </TableCell>
+              <BadgeTableCell
+                variant={item.status === 'Completed' ? 'default' : 'secondary'}
+              >
+                {item.status}
+              </BadgeTableCell>
               <TableCell>
                 <Button variant="ghost" size="icon" asChild>
                   <Link to={`/timesheets/${item.timesheetId}/edit`}>

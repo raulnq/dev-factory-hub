@@ -2,7 +2,6 @@ import { Link, useSearchParams } from 'react-router';
 import { Pencil } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   Table,
   TableBody,
@@ -15,6 +14,7 @@ import { useInvoicesSuspense } from '../stores/useInvoices';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { NumberTableCell } from '@/components/NumberTableCell';
+import { BadgeTableCell } from '@/components/BadgeTableCell';
 import type { BadgeProps } from '@/components/ui/badge';
 
 function statusVariant(status: string): BadgeProps['variant'] {
@@ -106,11 +106,9 @@ export function InvoiceTable() {
               <NumberTableCell value={item.subtotal} />
               <NumberTableCell value={item.taxes} />
               <NumberTableCell value={item.total} />
-              <TableCell>
-                <Badge variant={statusVariant(item.status)}>
-                  {item.status}
-                </Badge>
-              </TableCell>
+              <BadgeTableCell variant={statusVariant(item.status)}>
+                {item.status}
+              </BadgeTableCell>
               <TableCell>
                 <Button variant="ghost" size="icon" asChild>
                   <Link to={`/invoices/${item.invoiceId}/edit`}>

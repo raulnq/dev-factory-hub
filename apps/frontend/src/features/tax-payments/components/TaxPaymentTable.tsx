@@ -2,7 +2,6 @@ import { Link, useSearchParams } from 'react-router';
 import { Pencil } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   Table,
   TableBody,
@@ -17,6 +16,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { getStatusVariant } from '../utils/status-variants';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { DateTableCell } from '@/components/DateTableCell';
+import { BadgeTableCell } from '@/components/BadgeTableCell';
 
 const currentYear = new Date().getFullYear();
 
@@ -97,11 +97,9 @@ export function TaxPaymentTable() {
               <TableCell>{item.currency}</TableCell>
               <NumberTableCell value={item.total} />
               <DateTableCell value={item.paidAt} />
-              <TableCell>
-                <Badge variant={getStatusVariant(item.status)}>
-                  {item.status}
-                </Badge>
-              </TableCell>
+              <BadgeTableCell variant={getStatusVariant(item.status)}>
+                {item.status}
+              </BadgeTableCell>
               <TableCell>
                 <Button variant="ghost" size="icon" asChild>
                   <Link to={`/tax-payments/${item.taxPaymentId}/edit`}>

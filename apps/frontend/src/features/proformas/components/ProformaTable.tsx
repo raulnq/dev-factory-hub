@@ -2,7 +2,6 @@ import { Link, useSearchParams } from 'react-router';
 import { Pencil } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   Table,
   TableBody,
@@ -17,6 +16,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { getStatusVariant } from '../utils/status-variants';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
+import { BadgeTableCell } from '@/components/BadgeTableCell';
 
 export function ProformasSkeleton() {
   return (
@@ -106,12 +106,9 @@ export function ProformaTable() {
               <TableCell>{item.currency}</TableCell>
               <NumberTableCell value={item.total} />
               <DateTableCell value={item.issuedAt} />
-              <TableCell>
-                <Badge variant={getStatusVariant(item.status)}>
-                  {item.status}
-                </Badge>
-              </TableCell>
-
+              <BadgeTableCell variant={getStatusVariant(item.status)}>
+                {item.status}
+              </BadgeTableCell>
               <TableCell>
                 <Button variant="ghost" size="icon" asChild>
                   <Link to={`/proformas/${item.proformaId}/edit`}>
