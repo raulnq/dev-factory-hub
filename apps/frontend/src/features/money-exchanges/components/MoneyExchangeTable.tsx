@@ -16,6 +16,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import type { BadgeProps } from '@/components/ui/badge';
+import { DateTableCell } from '@/components/DateTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
