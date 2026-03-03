@@ -59,6 +59,9 @@ export function ProformasSkeleton() {
               <Skeleton className="h-8 w-[60px]" />
             </TableCell>
             <TableCell>
+              <Skeleton className="h-8 w-[60px]" />
+            </TableCell>
+            <TableCell>
               <Skeleton className="h-8" />
             </TableCell>
           </TableRow>

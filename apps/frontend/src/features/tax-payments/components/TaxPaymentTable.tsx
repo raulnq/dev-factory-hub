@@ -16,6 +16,7 @@ import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { getStatusVariant } from '../utils/status-variants';
 import { NumberTableCell } from '@/components/NumberTableCell';
+import { DateTableCell } from '@/components/DateTableCell';
 
 const currentYear = new Date().getFullYear();
 
@@ -28,6 +29,7 @@ export function TaxPaymentsSkeleton() {
           <TableHead>Month</TableHead>
           <TableHead>Currency</TableHead>
           <TableHead>Total</TableHead>
+          <TableHead>Paid At</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className="w-[80px]">Actions</TableHead>
         </TableRow>
@@ -43,6 +45,9 @@ export function TaxPaymentsSkeleton() {
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[50px]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[80px]" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[80px]" />
@@ -78,7 +83,8 @@ export function TaxPaymentTable() {
             <TableHead>Year</TableHead>
             <TableHead>Month</TableHead>
             <TableHead>Currency</TableHead>
-            <TableHead className="text-right">Total</TableHead>
+            <TableHead>Total</TableHead>
+            <TableHead>Paid At</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="w-[80px]">Actions</TableHead>
           </TableRow>
@@ -90,6 +96,7 @@ export function TaxPaymentTable() {
               <TableCell>{item.month}</TableCell>
               <TableCell>{item.currency}</TableCell>
               <NumberTableCell value={item.total} />
+              <DateTableCell value={item.paidAt} />
               <TableCell>
                 <Badge variant={getStatusVariant(item.status)}>
                   {item.status}

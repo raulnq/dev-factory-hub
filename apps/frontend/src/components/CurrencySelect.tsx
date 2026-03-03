@@ -23,7 +23,7 @@ export function CurrencySelect({
   disabled,
   id,
   allowEmpty,
-  placeholder,
+  placeholder = 'Select currency',
 }: CurrencySelectProps) {
   return (
     <Select value={value} onValueChange={onValueChange} disabled={disabled}>
@@ -31,7 +31,7 @@ export function CurrencySelect({
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
-        {allowEmpty && <SelectItem value="all">All</SelectItem>}
+        {allowEmpty && <SelectItem value="">All</SelectItem>}
         {CURRENCIES.map(c => (
           <SelectItem key={c} value={c}>
             {c}

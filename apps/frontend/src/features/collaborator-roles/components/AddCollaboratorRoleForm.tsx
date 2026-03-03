@@ -1,11 +1,4 @@
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -19,6 +12,7 @@ import {
   type AddCollaboratorRole,
 } from '#/features/collaborator-roles/schemas';
 import { FormCardContent } from '@/components/FormCardContent';
+import { CurrencySelect } from '@/components/CurrencySelect';
 
 type AddCollaboratorRoleFormProps = {
   isPending: boolean;
@@ -65,19 +59,12 @@ export function AddCollaboratorRoleForm({
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="currency">Currency</FieldLabel>
-              <Select
+              <CurrencySelect
                 value={field.value}
                 onValueChange={field.onChange}
+                id="currency"
                 disabled={isPending}
-              >
-                <SelectTrigger id="currency">
-                  <SelectValue placeholder="Select currency" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="PEN">PEN</SelectItem>
-                  <SelectItem value="USD">USD</SelectItem>
-                </SelectContent>
-              </Select>
+              />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}

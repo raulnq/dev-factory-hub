@@ -13,6 +13,7 @@ import {
 import { useClientsSuspense } from '../stores/useClients';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
+import { TextTableCell } from '@/components/TextTableCell';
 
 export function ClientsSkeleton() {
   return (
@@ -75,10 +76,10 @@ export function ClientTable() {
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.clientId}>
-              <TableCell className="font-medium">{item.name}</TableCell>
-              <TableCell>{item.documentNumber ?? '—'}</TableCell>
-              <TableCell>{item.phone ?? '—'}</TableCell>
-              <TableCell>{item.email ?? '—'}</TableCell>
+              <TextTableCell className="font-medium" value={item.name} />
+              <TextTableCell value={item.documentNumber} />
+              <TextTableCell value={item.phone} />
+              <TextTableCell value={item.email} />
               <TableCell>
                 <Button variant="ghost" size="icon" asChild>
                   <Link to={`/clients/${item.clientId}/edit`}>

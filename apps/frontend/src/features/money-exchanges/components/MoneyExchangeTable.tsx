@@ -16,6 +16,7 @@ import { useMoneyExchangesSuspense } from '../stores/useMoneyExchanges';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { NumberTableCell } from '@/components/NumberTableCell';
+import { DateTableCell } from '@/components/DateTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -40,6 +41,7 @@ export function MoneyExchangesSkeleton() {
           <TableHead>To Amount</TableHead>
           <TableHead>From Taxes</TableHead>
           <TableHead>To Taxes</TableHead>
+          <TableHead>Issued At</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className="w-[80px]">Actions</TableHead>
         </TableRow>
@@ -47,7 +49,7 @@ export function MoneyExchangesSkeleton() {
       <TableBody>
         {Array.from({ length: 10 }).map((_, index) => (
           <TableRow key={index}>
-            {Array.from({ length: 8 }).map((_, i) => (
+            {Array.from({ length: 9 }).map((_, i) => (
               <TableCell key={i}>
                 <Skeleton className="h-8 w-full" />
               </TableCell>
@@ -89,6 +91,7 @@ export function MoneyExchangeTable() {
             <TableHead>To Amount</TableHead>
             <TableHead>From Taxes</TableHead>
             <TableHead>To Taxes</TableHead>
+            <TableHead>Issued At</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="w-[80px]">Actions</TableHead>
           </TableRow>
@@ -107,6 +110,7 @@ export function MoneyExchangeTable() {
               <NumberTableCell value={Number(item.toAmount)} />
               <NumberTableCell value={Number(item.fromTaxes)} />
               <NumberTableCell value={Number(item.toTaxes)} />
+              <DateTableCell value={item.issuedAt} />
               <TableCell>
                 <Badge variant={statusVariant(item.status)}>
                   {item.status}

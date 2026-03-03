@@ -14,13 +14,7 @@ import {
   FieldSeparator,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { CurrencySelect } from '@/components/CurrencySelect';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 
 type EditCollectionFormProps = {
@@ -61,20 +55,11 @@ export function EditCollectionForm({
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>Currency</FieldLabel>
-                <Select
+                <CurrencySelect
                   onValueChange={field.onChange}
                   value={field.value}
                   disabled={isPending || !isEditable}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select currency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="USD">USD</SelectItem>
-                    <SelectItem value="EUR">EUR</SelectItem>
-                    <SelectItem value="PEN">PEN</SelectItem>
-                  </SelectContent>
-                </Select>
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
