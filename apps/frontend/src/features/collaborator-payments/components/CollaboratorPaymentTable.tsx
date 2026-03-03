@@ -41,6 +41,7 @@ export function CollaboratorPaymentsSkeleton() {
           <TableHead>Gross Salary</TableHead>
           <TableHead>Withholding</TableHead>
           <TableHead>Net Salary</TableHead>
+          <TableHead>Paid At</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className="w-[80px]">Actions</TableHead>
         </TableRow>
@@ -53,6 +54,9 @@ export function CollaboratorPaymentsSkeleton() {
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[40px]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[80px]" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[80px]" />
@@ -98,6 +102,7 @@ export function CollaboratorPaymentTable() {
             <TableHead>Gross Salary</TableHead>
             <TableHead>Withholding</TableHead>
             <TableHead>Net Salary</TableHead>
+            <TableHead>Paid At</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="w-[80px]">Actions</TableHead>
           </TableRow>
@@ -112,6 +117,7 @@ export function CollaboratorPaymentTable() {
               <TableCell>{Number(item.grossSalary).toFixed(2)}</TableCell>
               <TableCell>{Number(item.withholding).toFixed(2)}</TableCell>
               <TableCell>{Number(item.netSalary).toFixed(2)}</TableCell>
+              <TableCell>{item.paidAt}</TableCell>
               <TableCell>
                 <Badge variant={statusVariant(item.status)}>
                   {item.status}
