@@ -41,6 +41,7 @@ export function PayrollPaymentsSkeleton() {
           <TableHead>Net Salary</TableHead>
           <TableHead>Pension</TableHead>
           <TableHead>Gross Salary</TableHead>
+          <TableHead>Paid At</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className="w-[80px]">Actions</TableHead>
         </TableRow>
@@ -53,6 +54,9 @@ export function PayrollPaymentsSkeleton() {
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[40px]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[80px]" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[80px]" />
@@ -95,6 +99,7 @@ export function PayrollPaymentTable() {
             <TableHead>Net Salary</TableHead>
             <TableHead>Pension</TableHead>
             <TableHead>Gross Salary</TableHead>
+            <TableHead>Paid At</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="w-[80px]">Actions</TableHead>
           </TableRow>
@@ -109,6 +114,7 @@ export function PayrollPaymentTable() {
               <TableCell>{Number(item.netSalary).toFixed(2)}</TableCell>
               <TableCell>{Number(item.pensionAmount).toFixed(2)}</TableCell>
               <TableCell>{Number(item.grossSalary).toFixed(2)}</TableCell>
+              <TableCell>{item.paidAt}</TableCell>
               <TableCell>
                 <Badge variant={statusVariant(item.status)}>
                   {item.status}
