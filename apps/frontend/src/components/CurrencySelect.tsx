@@ -31,7 +31,7 @@ export function CurrencySelect({
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
-        {allowEmpty && <SelectItem value="">All</SelectItem>}
+        {allowEmpty && <SelectItem value="all">All</SelectItem>}
         {CURRENCIES.map(c => (
           <SelectItem key={c} value={c}>
             {c}
