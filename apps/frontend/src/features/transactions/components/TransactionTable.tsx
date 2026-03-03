@@ -37,6 +37,7 @@ export function TransactionsSkeleton() {
           <TableHead>Subtotal</TableHead>
           <TableHead>Taxes</TableHead>
           <TableHead>Total</TableHead>
+          <TableHead>Issued At</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className="w-[80px]">Actions</TableHead>
         </TableRow>
@@ -49,6 +50,9 @@ export function TransactionsSkeleton() {
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[60px]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[80px]" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[80px]" />
@@ -92,6 +96,7 @@ export function TransactionTable() {
             <TableHead>Subtotal</TableHead>
             <TableHead>Taxes</TableHead>
             <TableHead>Total</TableHead>
+            <TableHead>Issued At</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="w-[80px]">Actions</TableHead>
           </TableRow>
@@ -104,6 +109,7 @@ export function TransactionTable() {
               <TableCell>{item.subtotal.toFixed(2)}</TableCell>
               <TableCell>{item.taxes.toFixed(2)}</TableCell>
               <TableCell>{item.total.toFixed(2)}</TableCell>
+              <TableCell>{item.issuedAt}</TableCell>
               <TableCell>
                 <Badge variant={statusVariant(item.status)}>
                   {item.status}
