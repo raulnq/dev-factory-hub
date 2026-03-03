@@ -46,7 +46,7 @@ export const listRoute = new Hono().get(
         eq(collaboratorPayments.collaboratorId, collaborators.collaboratorId)
       )
       .where(and(...filters))
-      .orderBy(desc(collaboratorPayments.createdAt))
+      .orderBy(desc(collaboratorPayments.paidAt))
       .limit(pageSize)
       .offset(offset);
 

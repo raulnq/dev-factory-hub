@@ -21,6 +21,7 @@ import {
   type Invoice,
 } from '#/features/invoices/schemas';
 import { FormCardContent } from '@/components/FormCardContent';
+import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 
 const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
 
@@ -156,22 +157,17 @@ export function EditInvoiceForm({
           </Field>
           <Field>
             <FieldLabel>Issued At</FieldLabel>
-            <Input value={invoice.issuedAt ?? '—'} disabled />
+            <DateReadOnlyField value={invoice.issuedAt} />
           </Field>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel>Created At</FieldLabel>
-            <Input value={invoice.createdAt.toLocaleString()} disabled />
+            <DateReadOnlyField value={invoice.createdAt} />
           </Field>
           <Field>
             <FieldLabel>Canceled At</FieldLabel>
-            <Input
-              value={
-                invoice.canceledAt ? invoice.canceledAt.toLocaleString() : '—'
-              }
-              disabled
-            />
+            <DateReadOnlyField value={invoice.canceledAt} />
           </Field>
         </div>
       </FieldGroup>

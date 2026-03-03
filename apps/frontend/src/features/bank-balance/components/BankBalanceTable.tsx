@@ -12,6 +12,8 @@ import {
 } from '@/components/ui/table';
 import { useBankBalanceSuspense } from '../stores/useBankBalance';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
+import { DateTableCell } from '@/components/DateTableCell';
+import { NumberTableCell } from '@/components/NumberTableCell';
 
 export function BankBalanceSkeleton() {
   return (
@@ -79,9 +81,7 @@ export function BankBalanceTable() {
       <TableBody>
         {data.entries.map((entry, index) => (
           <TableRow key={index}>
-            <TableCell className="whitespace-nowrap">
-              {entry.issuedAt}
-            </TableCell>
+            <DateTableCell value={entry.issuedAt} />
             <TableCell>
               <Badge
                 variant={entry.type === 'Income' ? 'default' : 'destructive'}
@@ -90,15 +90,9 @@ export function BankBalanceTable() {
               </Badge>
             </TableCell>
             <TableCell>{entry.description}</TableCell>
-            <TableCell className="text-right font-mono">
-              {entry.total.toFixed(2)}
-            </TableCell>
-            <TableCell className="text-right font-mono">
-              {entry.taxes.toFixed(2)}
-            </TableCell>
-            <TableCell className="text-right font-mono">
-              {entry.balance.toFixed(2)}
-            </TableCell>
+            <NumberTableCell value={entry.total} />
+            <NumberTableCell value={entry.taxes} />
+            <NumberTableCell value={entry.balance} />
           </TableRow>
         ))}
       </TableBody>
@@ -107,9 +101,10 @@ export function BankBalanceTable() {
           <TableCell colSpan={5} className="text-right font-semibold">
             Final Balance ({currency})
           </TableCell>
-          <TableCell className="text-right font-mono font-semibold">
-            {data.finalBalance.toFixed(2)}
-          </TableCell>
+          <NumberTableCell
+            value={data.finalBalance}
+            className="text-right font-mono font-semibold"
+          />
         </TableRow>
       </TableFooter>
     </Table>

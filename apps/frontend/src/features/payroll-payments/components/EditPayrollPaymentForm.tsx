@@ -26,6 +26,7 @@ import {
   type PayrollPayment,
 } from '#/features/payroll-payments/schemas';
 import { FormCardContent } from '@/components/FormCardContent';
+import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 
 const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
 
@@ -202,26 +203,19 @@ export function EditPayrollPaymentForm({
         <div className="grid grid-cols-4 gap-4">
           <Field>
             <FieldLabel>Created At</FieldLabel>
-            <Input value={payrollPayment.createdAt.toLocaleString()} disabled />
+            <DateReadOnlyField value={payrollPayment.createdAt} />
           </Field>
           <Field>
             <FieldLabel>Paid At</FieldLabel>
-            <Input value={payrollPayment.paidAt ?? '—'} disabled />
+            <DateReadOnlyField value={payrollPayment.paidAt} />
           </Field>
           <Field>
             <FieldLabel>Pension Paid At</FieldLabel>
-            <Input value={payrollPayment.pensionPaidAt ?? '—'} disabled />
+            <DateReadOnlyField value={payrollPayment.pensionPaidAt} />
           </Field>
           <Field>
             <FieldLabel>Canceled At</FieldLabel>
-            <Input
-              value={
-                payrollPayment.canceledAt
-                  ? payrollPayment.canceledAt.toLocaleString()
-                  : '—'
-              }
-              disabled
-            />
+            <DateReadOnlyField value={payrollPayment.canceledAt} />
           </Field>
         </div>
       </FieldGroup>

@@ -21,6 +21,7 @@ import {
   type MoneyExchange,
 } from '#/features/money-exchanges/schemas';
 import { FormCardContent } from '@/components/FormCardContent';
+import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 
 const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
 
@@ -232,22 +233,15 @@ export function EditMoneyExchangeForm({
         <div className="grid grid-cols-3 gap-4">
           <Field>
             <FieldLabel>Issued At</FieldLabel>
-            <Input value={moneyExchange.issuedAt ?? '—'} disabled />
+            <DateReadOnlyField value={moneyExchange.issuedAt} />
           </Field>
           <Field>
             <FieldLabel>Created At</FieldLabel>
-            <Input value={moneyExchange.createdAt.toLocaleString()} disabled />
+            <DateReadOnlyField value={moneyExchange.createdAt} />
           </Field>
           <Field>
             <FieldLabel>Canceled At</FieldLabel>
-            <Input
-              value={
-                moneyExchange.canceledAt
-                  ? moneyExchange.canceledAt.toLocaleString()
-                  : '—'
-              }
-              disabled
-            />
+            <DateReadOnlyField value={moneyExchange.canceledAt} />
           </Field>
         </div>
       </FieldGroup>

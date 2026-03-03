@@ -15,6 +15,8 @@ import {
 import { usePayrollPaymentsSuspense } from '../stores/usePayrollPayments';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
+import { DateTableCell } from '@/components/DateTableCell';
+import { NumberTableCell } from '@/components/NumberTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -111,10 +113,10 @@ export function PayrollPaymentTable() {
                 {item.collaboratorName}
               </TableCell>
               <TableCell>{item.currency}</TableCell>
-              <TableCell>{Number(item.netSalary).toFixed(2)}</TableCell>
-              <TableCell>{Number(item.pensionAmount).toFixed(2)}</TableCell>
-              <TableCell>{Number(item.grossSalary).toFixed(2)}</TableCell>
-              <TableCell>{item.paidAt}</TableCell>
+              <NumberTableCell value={Number(item.netSalary)} />
+              <NumberTableCell value={Number(item.pensionAmount)} />
+              <NumberTableCell value={Number(item.grossSalary)} />
+              <DateTableCell value={item.paidAt} />
               <TableCell>
                 <Badge variant={statusVariant(item.status)}>
                   {item.status}

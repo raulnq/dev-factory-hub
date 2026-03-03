@@ -14,6 +14,7 @@ import { useTimesheetsSuspense } from '../stores/useTimesheets';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { Badge } from '@/components/ui/badge';
+import { DateTableCell } from '@/components/DateTableCell';
 
 export function TimesheetsSkeleton() {
   return (
@@ -22,7 +23,8 @@ export function TimesheetsSkeleton() {
         <TableRow>
           <TableHead>Collaborator</TableHead>
           <TableHead>Role</TableHead>
-          <TableHead>Period</TableHead>
+          <TableHead>Start Date</TableHead>
+          <TableHead>End Date</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className="w-[100px]">Actions</TableHead>
         </TableRow>
@@ -37,7 +39,10 @@ export function TimesheetsSkeleton() {
               <Skeleton className="h-8 w-[40%]" />
             </TableCell>
             <TableCell>
-              <Skeleton className="h-8 w-[80%]" />
+              <Skeleton className="h-8 w-[80px]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[80px]" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[40%]" />
@@ -68,7 +73,8 @@ export function TimesheetTable() {
           <TableRow>
             <TableHead>Collaborator</TableHead>
             <TableHead>Role</TableHead>
-            <TableHead>Period</TableHead>
+            <TableHead>Start Date</TableHead>
+            <TableHead>End Date</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="w-[100px]">Actions</TableHead>
           </TableRow>
@@ -80,9 +86,8 @@ export function TimesheetTable() {
                 {item.collaboratorName}
               </TableCell>
               <TableCell>{item.collaboratorRoleName}</TableCell>
-              <TableCell>
-                {item.startDate} to {item.endDate}
-              </TableCell>
+              <DateTableCell value={item.startDate} />
+              <DateTableCell value={item.endDate} />
               <TableCell>
                 <Badge
                   variant={

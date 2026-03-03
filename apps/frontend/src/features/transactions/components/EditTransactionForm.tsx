@@ -22,6 +22,7 @@ import {
   type Transaction,
 } from '#/features/transactions/schemas';
 import { FormCardContent } from '@/components/FormCardContent';
+import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 
 const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
 const TRANSACTION_TYPES = ['Income', 'Outcome'];
@@ -195,23 +196,16 @@ export function EditTransactionForm({
           </Field>
           <Field>
             <FieldLabel>Issued At</FieldLabel>
-            <Input value={transaction.issuedAt ?? '—'} disabled />
+            <DateReadOnlyField value={transaction.issuedAt} />
           </Field>
           <Field>
             <FieldLabel>Created At</FieldLabel>
-            <Input value={transaction.createdAt.toLocaleString()} disabled />
+            <DateReadOnlyField value={transaction.createdAt} />
           </Field>
         </div>
         <Field>
           <FieldLabel>Canceled At</FieldLabel>
-          <Input
-            value={
-              transaction.canceledAt
-                ? transaction.canceledAt.toLocaleString()
-                : '—'
-            }
-            disabled
-          />
+          <DateReadOnlyField value={transaction.canceledAt} />
         </Field>
       </FieldGroup>
     </FormCardContent>

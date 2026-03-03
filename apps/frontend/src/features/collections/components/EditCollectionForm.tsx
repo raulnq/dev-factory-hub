@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 
 type EditCollectionFormProps = {
   isPending: boolean;
@@ -164,24 +165,17 @@ export function EditCollectionForm({
         <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel>Created At</FieldLabel>
-            <Input value={collection.createdAt.toLocaleString()} disabled />
+            <DateReadOnlyField value={collection.createdAt} />
           </Field>
 
           <Field>
             <FieldLabel>Confirmed At</FieldLabel>
-            <Input value={collection.confirmedAt ?? ''} disabled />
+            <DateReadOnlyField value={collection.confirmedAt} />
           </Field>
 
           <Field>
             <FieldLabel>Canceled At</FieldLabel>
-            <Input
-              value={
-                collection.canceledAt
-                  ? collection.canceledAt.toLocaleString()
-                  : ''
-              }
-              disabled
-            />
+            <DateReadOnlyField value={collection.canceledAt} />
           </Field>
         </div>
       </FieldGroup>

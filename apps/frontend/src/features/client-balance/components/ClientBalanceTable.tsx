@@ -12,6 +12,8 @@ import {
 } from '@/components/ui/table';
 import { useClientBalanceSuspense } from '../stores/useClientBalance';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
+import { DateTableCell } from '@/components/DateTableCell';
+import { NumberTableCell } from '@/components/NumberTableCell';
 
 export function ClientBalanceSkeleton() {
   return (
@@ -85,9 +87,7 @@ export function ClientBalanceTable() {
       <TableBody>
         {data.entries.map((entry, index) => (
           <TableRow key={index}>
-            <TableCell className="whitespace-nowrap">
-              {entry.issuedAt}
-            </TableCell>
+            <DateTableCell value={entry.issuedAt} />
             <TableCell>
               <Badge
                 variant={entry.type === 'Income' ? 'default' : 'destructive'}
@@ -97,12 +97,8 @@ export function ClientBalanceTable() {
             </TableCell>
             <TableCell>{entry.name}</TableCell>
             <TableCell>{entry.description}</TableCell>
-            <TableCell className="text-right font-mono">
-              {entry.amount.toFixed(2)}
-            </TableCell>
-            <TableCell className="text-right font-mono">
-              {entry.balance.toFixed(2)}
-            </TableCell>
+            <NumberTableCell value={entry.amount} />
+            <NumberTableCell value={entry.balance} />
           </TableRow>
         ))}
       </TableBody>
@@ -111,9 +107,10 @@ export function ClientBalanceTable() {
           <TableCell colSpan={5} className="text-right font-semibold">
             Final Balance ({currency})
           </TableCell>
-          <TableCell className="text-right font-mono font-semibold">
-            {data.finalBalance.toFixed(2)}
-          </TableCell>
+          <NumberTableCell
+            value={data.finalBalance}
+            className="text-right font-mono font-semibold"
+          />
         </TableRow>
       </TableFooter>
     </Table>

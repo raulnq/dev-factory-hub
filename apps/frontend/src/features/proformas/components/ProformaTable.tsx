@@ -15,6 +15,8 @@ import { useProformasSuspense } from '../stores/useProformas';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { getStatusVariant } from '../utils/status-variants';
+import { DateTableCell } from '@/components/DateTableCell';
+import { NumberTableCell } from '@/components/NumberTableCell';
 
 export function ProformasSkeleton() {
   return (
@@ -25,6 +27,7 @@ export function ProformasSkeleton() {
           <TableHead>Project</TableHead>
           <TableHead>Start Date</TableHead>
           <TableHead>End Date</TableHead>
+          <TableHead>Currency</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Total</TableHead>
           <TableHead className="w-[80px]">Actions</TableHead>
@@ -44,6 +47,9 @@ export function ProformasSkeleton() {
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[80px]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[40px]" />
             </TableCell>
             <TableCell>
               <Skeleton className="h-8 w-[60px]" />
@@ -79,6 +85,7 @@ export function ProformaTable() {
             <TableHead>Project</TableHead>
             <TableHead>Start Date</TableHead>
             <TableHead>End Date</TableHead>
+            <TableHead>Currency</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Total</TableHead>
             <TableHead className="w-[80px]">Actions</TableHead>
@@ -89,16 +96,15 @@ export function ProformaTable() {
             <TableRow key={item.proformaId}>
               <TableCell className="font-medium">{item.number}</TableCell>
               <TableCell>{item.projectName}</TableCell>
-              <TableCell>{item.startDate}</TableCell>
-              <TableCell>{item.endDate}</TableCell>
+              <DateTableCell value={item.startDate} />
+              <DateTableCell value={item.endDate} />
+              <TableCell>{item.currency}</TableCell>
               <TableCell>
                 <Badge variant={getStatusVariant(item.status)}>
                   {item.status}
                 </Badge>
               </TableCell>
-              <TableCell>
-                {item.currency} {item.total}
-              </TableCell>
+              <NumberTableCell value={item.total} />
               <TableCell>
                 <Button variant="ghost" size="icon" asChild>
                   <Link to={`/proformas/${item.proformaId}/edit`}>

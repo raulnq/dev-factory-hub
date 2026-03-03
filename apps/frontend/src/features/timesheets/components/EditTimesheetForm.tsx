@@ -2,6 +2,7 @@ import { Input } from '@/components/ui/input';
 import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { type Timesheet } from '#/features/timesheets/schemas';
 import { CardContent } from '@/components/ui/card';
+import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 
 type EditTimesheetFormProps = {
   timesheet: Timesheet;
@@ -22,22 +23,22 @@ export function EditTimesheetForm({ timesheet }: EditTimesheetFormProps) {
         <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel>Start Date</FieldLabel>
-            <Input value={timesheet.startDate} type="date" disabled />
+            <DateReadOnlyField value={timesheet.startDate} />
           </Field>
           <Field>
             <FieldLabel>End Date</FieldLabel>
-            <Input value={timesheet.endDate} type="date" disabled />
+            <DateReadOnlyField value={timesheet.endDate} />
           </Field>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel>Created At</FieldLabel>
-            <Input value={timesheet.createdAt.toISOString()} disabled />
+            <DateReadOnlyField value={timesheet.createdAt} />
           </Field>
           {timesheet.completedAt && (
             <Field>
               <FieldLabel>Completed At</FieldLabel>
-              <Input value={timesheet.completedAt} disabled />
+              <DateReadOnlyField value={timesheet.completedAt} />
             </Field>
           )}
         </div>

@@ -15,6 +15,8 @@ import { useCollaboratorPaymentsSuspense } from '../stores/useCollaboratorPaymen
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import type { BadgeProps } from '@/components/ui/badge';
+import { DateTableCell } from '@/components/DateTableCell';
+import { NumberTableCell } from '@/components/NumberTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -114,10 +116,10 @@ export function CollaboratorPaymentTable() {
                 {item.collaboratorName}
               </TableCell>
               <TableCell>{item.currency}</TableCell>
-              <TableCell>{Number(item.grossSalary).toFixed(2)}</TableCell>
-              <TableCell>{Number(item.withholding).toFixed(2)}</TableCell>
-              <TableCell>{Number(item.netSalary).toFixed(2)}</TableCell>
-              <TableCell>{item.paidAt}</TableCell>
+              <NumberTableCell value={item.grossSalary} />
+              <NumberTableCell value={item.withholding} />
+              <NumberTableCell value={item.netSalary} />
+              <DateTableCell value={item.paidAt} />
               <TableCell>
                 <Badge variant={statusVariant(item.status)}>
                   {item.status}

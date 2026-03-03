@@ -21,18 +21,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 
 type EditCollaboratorPaymentFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditCollaboratorPayment>;
   collaboratorPayment: CollaboratorPayment;
 };
-
-function formatDate(value: string | Date | null | undefined): string {
-  if (!value) return '';
-  if (value instanceof Date) return value.toLocaleDateString();
-  return value;
-}
 
 export function EditCollaboratorPaymentForm({
   isPending,
@@ -162,23 +157,17 @@ export function EditCollaboratorPaymentForm({
         <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel>Created At</FieldLabel>
-            <Input
-              value={collaboratorPayment.createdAt.toLocaleString()}
-              disabled
-            />
+            <DateReadOnlyField value={collaboratorPayment.createdAt} />
           </Field>
 
           <Field>
             <FieldLabel>Paid At</FieldLabel>
-            <Input value={formatDate(collaboratorPayment.paidAt)} disabled />
+            <DateReadOnlyField value={collaboratorPayment.paidAt} />
           </Field>
 
           <Field>
             <FieldLabel>Confirmed At</FieldLabel>
-            <Input
-              value={formatDate(collaboratorPayment.confirmedAt)}
-              disabled
-            />
+            <DateReadOnlyField value={collaboratorPayment.confirmedAt} />
           </Field>
 
           <Field>
@@ -188,14 +177,7 @@ export function EditCollaboratorPaymentForm({
 
           <Field>
             <FieldLabel>Canceled At</FieldLabel>
-            <Input
-              value={
-                collaboratorPayment.canceledAt
-                  ? collaboratorPayment.canceledAt.toLocaleString()
-                  : ''
-              }
-              disabled
-            />
+            <DateReadOnlyField value={collaboratorPayment.canceledAt} />
           </Field>
         </div>
       </FieldGroup>

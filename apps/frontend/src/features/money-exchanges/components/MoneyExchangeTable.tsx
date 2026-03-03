@@ -15,6 +15,7 @@ import {
 import { useMoneyExchangesSuspense } from '../stores/useMoneyExchanges';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
+import { NumberTableCell } from '@/components/NumberTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -97,11 +98,15 @@ export function MoneyExchangeTable() {
             <TableRow key={item.moneyExchangeId}>
               <TableCell className="font-medium">{item.fromCurrency}</TableCell>
               <TableCell>{item.toCurrency}</TableCell>
-              <TableCell>{Number(item.rate).toFixed(4)}</TableCell>
-              <TableCell>{Number(item.fromAmount).toFixed(2)}</TableCell>
-              <TableCell>{Number(item.toAmount).toFixed(2)}</TableCell>
-              <TableCell>{Number(item.fromTaxes).toFixed(2)}</TableCell>
-              <TableCell>{Number(item.toTaxes).toFixed(2)}</TableCell>
+              <NumberTableCell
+                value={Number(item.rate)}
+                maximumFractionDigits={4}
+                minimumFractionDigits={4}
+              />
+              <NumberTableCell value={Number(item.fromAmount)} />
+              <NumberTableCell value={Number(item.toAmount)} />
+              <NumberTableCell value={Number(item.fromTaxes)} />
+              <NumberTableCell value={Number(item.toTaxes)} />
               <TableCell>
                 <Badge variant={statusVariant(item.status)}>
                   {item.status}

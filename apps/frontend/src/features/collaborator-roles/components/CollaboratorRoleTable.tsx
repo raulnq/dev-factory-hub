@@ -13,6 +13,7 @@ import {
 import { useCollaboratorRolesSuspense } from '../stores/useCollaboratorRoles';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
+import { NumberTableCell } from '@/components/NumberTableCell';
 
 export function CollaboratorRolesSkeleton() {
   return (
@@ -84,8 +85,8 @@ export function CollaboratorRoleTable() {
                 </Link>
               </TableCell>
               <TableCell>{item.currency}</TableCell>
-              <TableCell>{item.feeRate}</TableCell>
-              <TableCell>{item.costRate}</TableCell>
+              <NumberTableCell value={item.feeRate} />
+              <NumberTableCell value={item.costRate} />
               <TableCell>
                 <div className="flex gap-2">
                   <Button variant="ghost" size="icon" asChild>

@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 
 const CURRENCIES = ['USD', 'EUR', 'GBP', 'PEN', 'ARS', 'CLP', 'COP', 'MXN'];
 
@@ -121,21 +122,15 @@ export function EditTaxPaymentForm({
           </Field>
           <Field>
             <FieldLabel>Created At</FieldLabel>
-            <Input value={taxPayment.createdAt.toLocaleDateString()} disabled />
+            <DateReadOnlyField value={taxPayment.createdAt} />
           </Field>
           <Field>
             <FieldLabel>Paid At</FieldLabel>
-            <Input
-              value={taxPayment.paidAt?.toLocaleDateString() ?? ''}
-              disabled
-            />
+            <DateReadOnlyField value={taxPayment.paidAt} />
           </Field>
           <Field>
             <FieldLabel>Cancelled At</FieldLabel>
-            <Input
-              value={taxPayment.cancelledAt?.toLocaleDateString() ?? ''}
-              disabled
-            />
+            <DateReadOnlyField value={taxPayment.cancelledAt} />
           </Field>
         </div>
 

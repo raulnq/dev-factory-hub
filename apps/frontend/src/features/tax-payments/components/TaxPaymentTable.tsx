@@ -15,6 +15,7 @@ import { useTaxPaymentsSuspense } from '../stores/useTaxPayments';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { getStatusVariant } from '../utils/status-variants';
+import { NumberTableCell } from '@/components/NumberTableCell';
 
 const currentYear = new Date().getFullYear();
 
@@ -88,7 +89,7 @@ export function TaxPaymentTable() {
               <TableCell className="font-medium">{item.year}</TableCell>
               <TableCell>{item.month}</TableCell>
               <TableCell>{item.currency}</TableCell>
-              <TableCell className="text-right">{item.total}</TableCell>
+              <NumberTableCell value={item.total} />
               <TableCell>
                 <Badge variant={getStatusVariant(item.status)}>
                   {item.status}

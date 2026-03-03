@@ -11,6 +11,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import type { Proforma, EditProforma } from '#/features/proformas/schemas';
+import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 
 type EditProformaFormrops = {
   isPending: boolean;
@@ -51,11 +52,11 @@ export function EditProformaForm({
           </Field>
           <Field>
             <FieldLabel>Start Date</FieldLabel>
-            <Input value={proforma.startDate} disabled />
+            <DateReadOnlyField value={proforma.startDate} />
           </Field>
           <Field>
             <FieldLabel>End Date</FieldLabel>
-            <Input value={proforma.endDate} disabled />
+            <DateReadOnlyField value={proforma.endDate} />
           </Field>
         </div>
         <Controller

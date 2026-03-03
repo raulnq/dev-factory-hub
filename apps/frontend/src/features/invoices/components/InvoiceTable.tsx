@@ -14,6 +14,7 @@ import {
 import { useInvoicesSuspense } from '../stores/useInvoices';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
+import { NumberTableCell } from '@/components/NumberTableCell';
 import type { BadgeProps } from '@/components/ui/badge';
 
 function statusVariant(status: string): BadgeProps['variant'] {
@@ -102,9 +103,9 @@ export function InvoiceTable() {
                 {item.clientName ?? '—'}
               </TableCell>
               <TableCell>{item.currency}</TableCell>
-              <TableCell>{item.subtotal.toFixed(2)}</TableCell>
-              <TableCell>{item.taxes.toFixed(2)}</TableCell>
-              <TableCell>{item.total.toFixed(2)}</TableCell>
+              <NumberTableCell value={item.subtotal} />
+              <NumberTableCell value={item.taxes} />
+              <NumberTableCell value={item.total} />
               <TableCell>
                 <Badge variant={statusVariant(item.status)}>
                   {item.status}

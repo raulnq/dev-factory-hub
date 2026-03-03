@@ -15,6 +15,8 @@ import {
 import { useTransactionsSuspense } from '../stores/useTransactions';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
+import { DateTableCell } from '@/components/DateTableCell';
+import { NumberTableCell } from '@/components/NumberTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -106,10 +108,10 @@ export function TransactionTable() {
             <TableRow key={item.transactionId}>
               <TableCell>{item.type}</TableCell>
               <TableCell>{item.currency}</TableCell>
-              <TableCell>{item.subtotal.toFixed(2)}</TableCell>
-              <TableCell>{item.taxes.toFixed(2)}</TableCell>
-              <TableCell>{item.total.toFixed(2)}</TableCell>
-              <TableCell>{item.issuedAt}</TableCell>
+              <NumberTableCell value={item.subtotal} />
+              <NumberTableCell value={item.taxes} />
+              <NumberTableCell value={item.total} />
+              <DateTableCell value={item.issuedAt} />
               <TableCell>
                 <Badge variant={statusVariant(item.status)}>
                   {item.status}

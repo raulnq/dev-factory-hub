@@ -15,6 +15,8 @@ import {
 import { useCollectionsSuspense } from '../stores/useCollections';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
+import { DateTableCell } from '@/components/DateTableCell';
+import { NumberTableCell } from '@/components/NumberTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -109,10 +111,10 @@ export function CollectionTable() {
                 {item.clientName ?? ''}
               </TableCell>
               <TableCell>{item.currency}</TableCell>
-              <TableCell>{Number(item.total).toFixed(2)}</TableCell>
-              <TableCell>{Number(item.commission).toFixed(2)}</TableCell>
-              <TableCell>{Number(item.taxes).toFixed(2)}</TableCell>
-              <TableCell>{item.confirmedAt}</TableCell>
+              <NumberTableCell value={Number(item.total)} />
+              <NumberTableCell value={Number(item.commission)} />
+              <NumberTableCell value={Number(item.taxes)} />
+              <DateTableCell value={item.confirmedAt} />
               <TableCell>
                 <Badge variant={statusVariant(item.status)}>
                   {item.status}
