@@ -253,7 +253,7 @@ export const listRoute = new Hono().get(
       const entryDate = entry.issuedAt.substring(0, 10);
       const rate = rateMap.get(entryDate);
       const convertedAmount =
-        rate !== undefined ? Math.round(entry.amount * rate * 100) / 100 : 0;
+        rate !== undefined ? Math.round((entry.amount / rate) * 100) / 100 : 0;
       runningConvertedBalance =
         Math.round((runningConvertedBalance + convertedAmount) * 100) / 100;
       return {
