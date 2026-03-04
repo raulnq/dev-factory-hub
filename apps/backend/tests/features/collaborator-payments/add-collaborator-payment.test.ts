@@ -26,6 +26,7 @@ describe('Add CollaboratorPayment Endpoint', () => {
       .hasGrossSalary(1000)
       .hasWithholding(100)
       .hasNetSalary(900)
+      .hasTaxes(0)
       .hasPaidAt(null)
       .hasConfirmedAt(null)
       .hasCanceledAt(false)

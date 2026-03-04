@@ -1,0 +1,1 @@
+ALTER TABLE "dev-factory-hub"."collaborator_payments" ADD COLUMN "taxes" numeric(10, 2) DEFAULT '0' NOT NULL;

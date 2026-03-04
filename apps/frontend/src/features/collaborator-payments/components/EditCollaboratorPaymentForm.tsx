@@ -36,6 +36,7 @@ export function EditCollaboratorPaymentForm({
       currency: collaboratorPayment.currency,
       grossSalary: Number(collaboratorPayment.grossSalary),
       withholding: Number(collaboratorPayment.withholding),
+      taxes: Number(collaboratorPayment.taxes),
     },
   });
 
@@ -75,7 +76,7 @@ export function EditCollaboratorPaymentForm({
           />
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           <Controller
             name="grossSalary"
             control={form.control}
@@ -110,6 +111,31 @@ export function EditCollaboratorPaymentForm({
                 <Input
                   {...field}
                   id="withholding"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={field.value ?? ''}
+                  onChange={e => field.onChange(Number(e.target.value))}
+                  aria-invalid={fieldState.invalid}
+                  placeholder="0.00"
+                  disabled={isPending || !isEditable}
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="taxes"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="taxes">Taxes</FieldLabel>
+                <Input
+                  {...field}
+                  id="taxes"
                   type="number"
                   step="0.01"
                   min="0"

@@ -41,6 +41,7 @@ export const editPaymentInput = (
   currency: 'EUR',
   grossSalary: 2000,
   withholding: 200,
+  taxes: 0,
   ...overrides,
 });
 
@@ -411,6 +412,14 @@ export const assertCollaboratorPayment = (item: CollaboratorPayment) => ({
       Number(item.netSalary),
       expected,
       `Expected netSalary to be ${expected}, got ${item.netSalary}`
+    );
+    return this;
+  },
+  hasTaxes(expected: number) {
+    assert.strictEqual(
+      Number(item.taxes),
+      expected,
+      `Expected taxes to be ${expected}, got ${item.taxes}`
     );
     return this;
   },

@@ -43,6 +43,7 @@ export function getCollaboratorPaymentWithRelations() {
       grossSalary: collaboratorPayments.grossSalary,
       withholding: collaboratorPayments.withholding,
       netSalary: collaboratorPayments.netSalary,
+      taxes: collaboratorPayments.taxes,
       status: collaboratorPayments.status,
       paidAt: collaboratorPayments.paidAt,
       confirmedAt: collaboratorPayments.confirmedAt,

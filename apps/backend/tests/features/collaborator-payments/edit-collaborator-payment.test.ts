@@ -25,6 +25,7 @@ describe('Edit CollaboratorPayment Endpoint', () => {
       currency: 'EUR',
       grossSalary: 2000,
       withholding: 300,
+      taxes: 50,
     });
     const item = await editCollaboratorPayment(
       created.collaboratorPaymentId,
@@ -35,6 +36,7 @@ describe('Edit CollaboratorPayment Endpoint', () => {
       .hasCurrency('EUR')
       .hasGrossSalary(2000)
       .hasWithholding(300)
+      .hasTaxes(50)
       .hasNetSalary(1700);
   });
 
@@ -66,6 +68,17 @@ describe('Edit CollaboratorPayment Endpoint', () => {
         expectedError: createValidationError([
           {
             path: 'withholding',
+            message: 'Too small: expected number to be >=0',
+            code: 'too_small',
+          },
+        ]),
+      },
+      {
+        name: 'should reject negative taxes',
+        input: editPaymentInput({ taxes: -1 }),
+        expectedError: createValidationError([
+          {
+            path: 'taxes',
             message: 'Too small: expected number to be >=0',
             code: 'too_small',
           },

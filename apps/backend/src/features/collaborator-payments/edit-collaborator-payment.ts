@@ -21,7 +21,7 @@ export const editRoute = new Hono().put(
   zValidator('json', editCollaboratorPaymentSchema),
   async c => {
     const { collaboratorPaymentId } = c.req.valid('param');
-    const { currency, grossSalary, withholding } = c.req.valid('json');
+    const { currency, grossSalary, withholding, taxes } = c.req.valid('json');
 
     const [existing] = await client
       .select()
@@ -42,7 +42,7 @@ export const editRoute = new Hono().put(
 
     await client
       .update(collaboratorPayments)
-      .set({ currency, grossSalary, withholding, netSalary })
+      .set({ currency, grossSalary, withholding, netSalary, taxes })
       .where(
         eq(collaboratorPayments.collaboratorPaymentId, collaboratorPaymentId)
       );

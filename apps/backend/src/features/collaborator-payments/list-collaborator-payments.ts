@@ -39,6 +39,7 @@ export const listRoute = new Hono().get(
         canceledAt: collaboratorPayments.canceledAt,
         createdAt: collaboratorPayments.createdAt,
         number: collaboratorPayments.number,
+        taxes: collaboratorPayments.taxes,
       })
       .from(collaboratorPayments)
       .innerJoin(

@@ -31,6 +31,13 @@ export const collaboratorPayments = dbSchema.table('collaborator_payments', {
     scale: 2,
     mode: 'number',
   }).notNull(),
+  taxes: numeric('taxes', {
+    precision: 10,
+    scale: 2,
+    mode: 'number',
+  })
+    .notNull()
+    .default(0),
   status: varchar('status', { length: 25 }).notNull().default('Pending'),
   paidAt: date('paidAt', { mode: 'string' }),
   confirmedAt: date('confirmedAt', { mode: 'string' }),

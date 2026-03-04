@@ -9,6 +9,7 @@ export const collaboratorPaymentSchema = z.object({
   grossSalary: z.number().min(0),
   withholding: z.number().min(0),
   netSalary: z.number().min(0),
+  taxes: z.number().min(0),
   status: z.string(),
   paidAt: z.iso.date().nullable(),
   confirmedAt: z.iso.date().nullable(),
@@ -27,6 +28,7 @@ export const editCollaboratorPaymentSchema = z.object({
   currency: z.string().length(3),
   grossSalary: z.number().min(0),
   withholding: z.number().min(0),
+  taxes: z.number().min(0),
 });
 
 export const payCollaboratorPaymentSchema = z.object({
