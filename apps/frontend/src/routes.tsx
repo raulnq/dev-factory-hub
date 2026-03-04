@@ -41,6 +41,9 @@ import { EditTaxPaymentPage } from './features/tax-payments/pages/EditTaxPayment
 import { BankBalancePage } from './features/bank-balance/pages/BankBalancePage';
 import { CollaboratorBalancePage } from './features/collaborator-balance/pages/CollaboratorBalancePage';
 import { ClientBalancePage } from './features/client-balance/pages/ClientBalancePage';
+import { ListExchangeRatePage } from './features/exchange-rates/pages/ListExchangeRatePage';
+import { AddExchangeRatePage } from './features/exchange-rates/pages/AddExchangeRatePage';
+import { EditExchangeRatePage } from './features/exchange-rates/pages/EditExchangeRatePage';
 
 export const router = createBrowserRouter([
   {
@@ -172,6 +175,14 @@ export const router = createBrowserRouter([
       {
         path: 'client-balance',
         children: [{ index: true, element: <ClientBalancePage /> }],
+      },
+      {
+        path: 'exchange-rates',
+        children: [
+          { index: true, element: <ListExchangeRatePage /> },
+          { path: 'new', element: <AddExchangeRatePage /> },
+          { path: ':exchangeRateId/edit', element: <EditExchangeRatePage /> },
+        ],
       },
     ],
   },

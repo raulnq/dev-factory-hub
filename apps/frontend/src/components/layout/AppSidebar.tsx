@@ -27,6 +27,7 @@ import {
   PiggyBank,
   Scale,
   BarChart2,
+  TrendingUp,
 } from 'lucide-react';
 import { useLocation } from 'react-router';
 import { UserButton } from '@clerk/clerk-react';
@@ -59,6 +60,7 @@ const NAV_ITEMS: NavItem[] = [
   { title: 'Bank Balance', to: '/bank-balance', icon: PiggyBank },
   { title: 'Collaborator Balance', to: '/collaborator-balance', icon: Scale },
   { title: 'Client Balance', to: '/client-balance', icon: BarChart2 },
+  { title: 'Exchange Rates', to: '/exchange-rates', icon: TrendingUp },
 ];
 
 export function AppSidebar() {

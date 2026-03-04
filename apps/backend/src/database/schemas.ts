@@ -19,3 +19,4 @@ export {
   taxPayments,
   taxPaymentItems,
 } from '#/features/tax-payments/tax-payment.js';
+export { exchangeRates } from '#/features/exchange-rates/exchange-rate.js';
