@@ -121,6 +121,7 @@ export const listRoute = new Hono().get(
         collaboratorName: collaborators.name,
         netSalary: collaboratorPayments.netSalary,
         paidAt: collaboratorPayments.paidAt,
+        taxes: collaboratorPayments.taxes,
       })
       .from(collaboratorPayments)
       .leftJoin(
@@ -136,7 +137,7 @@ export const listRoute = new Hono().get(
         type: 'Outcome',
         description: `Collaborator payment to ${cp.collaboratorName ?? 'Unknown'}`,
         total: -Math.abs(cp.netSalary),
-        taxes: 0,
+        taxes: negAbsOrZero(cp.taxes),
       });
     }
 
