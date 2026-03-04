@@ -45,22 +45,18 @@ export function MoneyExchangeSearchBar() {
       showClearButton={!!(fromCurrency !== 'all' || toCurrency !== 'all')}
       onClear={handleClear}
     >
-      <div className="w-[160px]">
-        <CurrencySelect
-          value={fromCurrency}
-          onValueChange={setFromCurrency}
-          allowEmpty
-          placeholder="From currency"
-        />
-      </div>
-      <div className="w-[160px]">
-        <CurrencySelect
-          value={toCurrency}
-          onValueChange={setToCurrency}
-          allowEmpty
-          placeholder="To currency"
-        />
-      </div>
+      <CurrencySelect
+        value={fromCurrency}
+        onValueChange={setFromCurrency}
+        allowEmpty
+        placeholder="From currency"
+      />
+      <CurrencySelect
+        value={toCurrency}
+        onValueChange={setToCurrency}
+        allowEmpty
+        placeholder="To currency"
+      />
     </SearchBar>
   );
 }

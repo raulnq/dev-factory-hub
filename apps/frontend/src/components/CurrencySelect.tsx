@@ -14,6 +14,7 @@ type CurrencySelectProps = {
   disabled?: boolean;
   id?: string;
   allowEmpty?: boolean;
+  emptyLabel?: string;
   placeholder?: string;
 };
 
@@ -23,7 +24,8 @@ export function CurrencySelect({
   disabled,
   id,
   allowEmpty,
-  placeholder = 'Select currency',
+  emptyLabel = 'All',
+  placeholder = 'Select currency...',
 }: CurrencySelectProps) {
   return (
     <Select value={value} onValueChange={onValueChange} disabled={disabled}>
@@ -31,7 +33,7 @@ export function CurrencySelect({
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
-        {allowEmpty && <SelectItem value="all">All</SelectItem>}
+        {allowEmpty && <SelectItem value="all">{emptyLabel}</SelectItem>}
         {CURRENCIES.map(c => (
           <SelectItem key={c} value={c}>
             {c}

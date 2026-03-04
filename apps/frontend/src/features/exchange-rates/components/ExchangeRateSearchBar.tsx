@@ -36,14 +36,12 @@ export function ExchangeRateSearchBar() {
       showClearButton={fromCurrency !== 'all'}
       onClear={handleClear}
     >
-      <div className="w-[160px]">
-        <CurrencySelect
-          value={fromCurrency}
-          onValueChange={setFromCurrency}
-          allowEmpty
-          placeholder="From currency"
-        />
-      </div>
+      <CurrencySelect
+        value={fromCurrency}
+        onValueChange={setFromCurrency}
+        allowEmpty
+        placeholder="From currency"
+      />
     </SearchBar>
   );
 }

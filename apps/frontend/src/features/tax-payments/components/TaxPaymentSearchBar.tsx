@@ -45,20 +45,18 @@ export function TaxPaymentSearchBar() {
       showClearButton={year !== String(currentYear)}
       onClear={handleClear}
     >
-      <div className="w-[140px]">
-        <Select value={year} onValueChange={setYear}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select year" />
-          </SelectTrigger>
-          <SelectContent>
-            {YEARS.map(y => (
-              <SelectItem key={y} value={String(y)}>
-                {y}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      <Select value={year} onValueChange={setYear}>
+        <SelectTrigger>
+          <SelectValue placeholder="Select year" />
+        </SelectTrigger>
+        <SelectContent>
+          {YEARS.map(y => (
+            <SelectItem key={y} value={String(y)}>
+              {y}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </SearchBar>
   );
 }

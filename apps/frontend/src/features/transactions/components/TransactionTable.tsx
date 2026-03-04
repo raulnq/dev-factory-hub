@@ -51,6 +51,9 @@ export function TransactionsSkeleton() {
               <Skeleton className="h-8 w-[80px]" />
             </TableCell>
             <TableCell>
+              <Skeleton className="h-8 w-[80px]" />
+            </TableCell>
+            <TableCell>
               <Skeleton className="h-8 w-[60px]" />
             </TableCell>
             <TableCell>
@@ -94,6 +97,7 @@ export function TransactionTable() {
         <TableHeader>
           <TableRow>
             <TableHead>Type</TableHead>
+            <TableHead>Description</TableHead>
             <TableHead>Currency</TableHead>
             <TableHead>Subtotal</TableHead>
             <TableHead>Taxes</TableHead>
@@ -107,6 +111,7 @@ export function TransactionTable() {
           {data.items.map(item => (
             <TableRow key={item.transactionId}>
               <TableCell>{item.type}</TableCell>
+              <TableCell>{item.description}</TableCell>
               <TableCell>{item.currency}</TableCell>
               <NumberTableCell value={item.subtotal} />
               <NumberTableCell value={item.taxes} />

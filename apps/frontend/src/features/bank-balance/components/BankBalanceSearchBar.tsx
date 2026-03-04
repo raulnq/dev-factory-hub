@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { Input } from '@/components/ui/input';
 import { SearchBar } from '@/components/SearchBar';
+import { CurrencySelect } from '@/components/CurrencySelect';
 
 export function BankBalanceSearchBar() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -47,14 +48,11 @@ export function BankBalanceSearchBar() {
       showClearButton={hasFilters}
       onClear={handleClear}
     >
-      <Input
-        placeholder="Currency *"
+      <CurrencySelect
         value={currency}
-        onChange={e => setCurrency(e.target.value.toUpperCase())}
-        maxLength={3}
-        className="w-[120px]"
-        required
-        aria-label="Currency (required)"
+        onValueChange={setCurrency}
+        allowEmpty
+        emptyLabel="Select currency..."
       />
       <Input
         ref={startDateRef}

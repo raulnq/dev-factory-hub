@@ -48,24 +48,22 @@ export function TransactionSearchBar() {
       showClearButton={!!(type || description)}
       onClear={handleClear}
     >
-      <div className="w-[160px]">
-        <Select
-          value={type}
-          onValueChange={v => setType(v === '__all__' ? '' : v)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="All types" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="__all__">All types</SelectItem>
-            {TRANSACTION_TYPES.map(t => (
-              <SelectItem key={t} value={t}>
-                {t}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      <Select
+        value={type}
+        onValueChange={v => setType(v === '__all__' ? '' : v)}
+      >
+        <SelectTrigger>
+          <SelectValue placeholder="All types" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="__all__">All types</SelectItem>
+          {TRANSACTION_TYPES.map(t => (
+            <SelectItem key={t} value={t}>
+              {t}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
       <Input
         placeholder="Search by description..."
         value={description}

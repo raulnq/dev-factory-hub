@@ -112,12 +112,18 @@ export function CollaboratorBalanceTable() {
             </TableCell>
             <TableCell>{entry.name}</TableCell>
             <TableCell>{entry.description}</TableCell>
-            <NumberTableCell value={entry.amount} />
-            <NumberTableCell value={entry.balance} />
+            <NumberTableCell className="text-right" value={entry.amount} />
+            <NumberTableCell className="text-right" value={entry.balance} />
             {showConverted && (
               <>
-                <NumberTableCell value={entry.convertedAmount ?? 0} />
-                <NumberTableCell value={entry.convertedBalance ?? 0} />
+                <NumberTableCell
+                  className="text-right"
+                  value={entry.convertedAmount ?? 0}
+                />
+                <NumberTableCell
+                  className="text-right"
+                  value={entry.convertedBalance ?? 0}
+                />
               </>
             )}
           </TableRow>

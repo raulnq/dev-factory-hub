@@ -7,7 +7,9 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 
 export function CollaboratorBalanceSearchBar() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [currency, setCurrency] = useState(searchParams.get('currency') ?? '');
+  const [currency, setCurrency] = useState(
+    searchParams.get('currency') ?? 'all'
+  );
   const [collaboratorId, setCollaboratorId] = useState(
     searchParams.get('collaboratorId') ?? ''
   );
@@ -18,7 +20,7 @@ export function CollaboratorBalanceSearchBar() {
   const endDateRef = useRef<HTMLInputElement>(null);
 
   const hasFilters =
-    !!currency ||
+    currency !== 'all' ||
     !!collaboratorId ||
     !!searchParams.get('startDate') ||
     !!searchParams.get('endDate') ||
@@ -27,7 +29,7 @@ export function CollaboratorBalanceSearchBar() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setSearchParams(prev => {
-      if (currency) prev.set('currency', currency);
+      if (currency !== 'all') prev.set('currency', currency);
       else prev.delete('currency');
       if (collaboratorId) prev.set('collaboratorId', collaboratorId);
       else prev.delete('collaboratorId');
@@ -47,7 +49,7 @@ export function CollaboratorBalanceSearchBar() {
   };
 
   const handleClear = () => {
-    setCurrency('');
+    setCurrency('all');
     setCollaboratorId('');
     setExchangeCurrencyTo('all');
     if (startDateRef.current) startDateRef.current.value = '';
@@ -68,14 +70,11 @@ export function CollaboratorBalanceSearchBar() {
       showClearButton={hasFilters}
       onClear={handleClear}
     >
-      <Input
-        placeholder="Currency *"
+      <CurrencySelect
         value={currency}
-        onChange={e => setCurrency(e.target.value.toUpperCase())}
-        maxLength={3}
-        className="w-[120px]"
-        required
-        aria-label="Currency (required)"
+        onValueChange={setCurrency}
+        allowEmpty
+        emptyLabel="Select currency..."
       />
       <div className="w-[240px]">
         <CollaboratorCombobox
@@ -97,14 +96,13 @@ export function CollaboratorBalanceSearchBar() {
         className="w-[180px]"
         aria-label="End date"
       />
-      <div className="w-[160px]">
-        <CurrencySelect
-          value={exchangeCurrencyTo}
-          onValueChange={setExchangeCurrencyTo}
-          allowEmpty
-          placeholder="Exchange to..."
-        />
-      </div>
+      <CurrencySelect
+        value={exchangeCurrencyTo}
+        onValueChange={setExchangeCurrencyTo}
+        allowEmpty
+        emptyLabel="Exchange to..."
+        placeholder="Exchange to..."
+      />
     </SearchBar>
   );
 }

@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router';
 import { Input } from '@/components/ui/input';
 import { SearchBar } from '@/components/SearchBar';
 import { ClientCombobox } from '@/features/clients/components/ClientCombobox';
+import { CurrencySelect } from '@/components/CurrencySelect';
 
 export function ClientBalanceSearchBar() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -54,14 +55,11 @@ export function ClientBalanceSearchBar() {
       showClearButton={hasFilters}
       onClear={handleClear}
     >
-      <Input
-        placeholder="Currency *"
+      <CurrencySelect
         value={currency}
-        onChange={e => setCurrency(e.target.value.toUpperCase())}
-        maxLength={3}
-        className="w-[120px]"
-        required
-        aria-label="Currency (required)"
+        onValueChange={setCurrency}
+        allowEmpty
+        emptyLabel="Select currency..."
       />
       <div className="w-[240px]">
         <ClientCombobox value={clientId} onChange={id => setClientId(id)} />
