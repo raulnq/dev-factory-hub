@@ -62,15 +62,20 @@ export function CollaboratorBalanceTable() {
   const collaboratorId = searchParams.get('collaboratorId') ?? '';
   const startDate = searchParams.get('startDate') ?? undefined;
   const endDate = searchParams.get('endDate') ?? undefined;
+  const exchangeCurrencyTo =
+    searchParams.get('exchangeCurrencyTo') ?? undefined;
 
   const { data } = useCollaboratorBalanceSuspense({
     currency,
     collaboratorId,
     startDate,
     endDate,
+    exchangeCurrencyTo,
   });
 
   if (data.entries.length === 0) return <NoMatchingItems />;
+
+  const showConverted = !!exchangeCurrencyTo;
 
   return (
     <Table>
@@ -82,6 +87,16 @@ export function CollaboratorBalanceTable() {
           <TableHead>Description</TableHead>
           <TableHead className="text-right">Amount</TableHead>
           <TableHead className="text-right">Balance</TableHead>
+          {showConverted && (
+            <>
+              <TableHead className="text-right">
+                Amount ({exchangeCurrencyTo})
+              </TableHead>
+              <TableHead className="text-right">
+                Balance ({exchangeCurrencyTo})
+              </TableHead>
+            </>
+          )}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -99,6 +114,12 @@ export function CollaboratorBalanceTable() {
             <TableCell>{entry.description}</TableCell>
             <NumberTableCell value={entry.amount} />
             <NumberTableCell value={entry.balance} />
+            {showConverted && (
+              <>
+                <NumberTableCell value={entry.convertedAmount ?? 0} />
+                <NumberTableCell value={entry.convertedBalance ?? 0} />
+              </>
+            )}
           </TableRow>
         ))}
       </TableBody>
@@ -111,6 +132,17 @@ export function CollaboratorBalanceTable() {
             value={data.finalBalance}
             className="text-right font-mono font-semibold"
           />
+          {showConverted && (
+            <>
+              <TableCell className="text-right font-semibold">
+                Final Balance ({exchangeCurrencyTo})
+              </TableCell>
+              <NumberTableCell
+                value={data.finalConvertedBalance ?? 0}
+                className="text-right font-mono font-semibold"
+              />
+            </>
+          )}
         </TableRow>
       </TableFooter>
     </Table>

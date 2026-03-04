@@ -15,6 +15,7 @@ export async function getCollaboratorBalance(
         collaboratorId: params.collaboratorId,
         startDate: params.startDate,
         endDate: params.endDate,
+        exchangeCurrencyTo: params.exchangeCurrencyTo,
       },
     },
     { headers: token ? { Authorization: `Bearer ${token}` } : {} }

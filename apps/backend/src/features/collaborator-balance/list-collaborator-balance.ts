@@ -6,6 +6,7 @@ import {
   and,
   eq,
   gte,
+  inArray,
   isNotNull,
   isNull,
   lte,
@@ -19,6 +20,7 @@ import { collaborators } from '#/features/collaborators/collaborator.js';
 import { collaboratorRoles } from '#/features/collaborator-roles/collaborator-role.js';
 import { collaboratorPayments } from '#/features/collaborator-payments/collaborator-payment.js';
 import { payrollPayments } from '#/features/payroll-payments/payroll-payment.js';
+import { exchangeRates } from '#/features/exchange-rates/exchange-rate.js';
 
 type RawEntry = {
   issuedAt: string;
@@ -32,7 +34,7 @@ export const listRoute = new Hono().get(
   '/',
   zValidator('query', listCollaboratorBalanceSchema),
   async c => {
-    const { currency, collaboratorId, startDate, endDate } =
+    const { currency, collaboratorId, startDate, endDate, exchangeCurrencyTo } =
       c.req.valid('query');
 
     const entries: RawEntry[] = [];
@@ -222,8 +224,51 @@ export const listRoute = new Hono().get(
       return { ...entry, balance: runningBalance };
     });
 
+    if (!exchangeCurrencyTo) {
+      return c.json(
+        { entries: result, finalBalance: runningBalance },
+        StatusCodes.OK
+      );
+    }
+
+    // Exchange rate conversion
+    const dates = [...new Set(result.map(e => e.issuedAt.substring(0, 10)))];
+    const rateRows =
+      dates.length > 0
+        ? await client
+            .select({ date: exchangeRates.date, rate: exchangeRates.rate })
+            .from(exchangeRates)
+            .where(
+              and(
+                eq(exchangeRates.fromCurrency, currency),
+                eq(exchangeRates.toCurrency, exchangeCurrencyTo),
+                inArray(exchangeRates.date, dates)
+              )
+            )
+        : [];
+    const rateMap = new Map(rateRows.map(r => [r.date, r.rate]));
+
+    let runningConvertedBalance = 0;
+    const convertedResult = result.map(entry => {
+      const entryDate = entry.issuedAt.substring(0, 10);
+      const rate = rateMap.get(entryDate);
+      const convertedAmount =
+        rate !== undefined ? Math.round(entry.amount * rate * 100) / 100 : 0;
+      runningConvertedBalance =
+        Math.round((runningConvertedBalance + convertedAmount) * 100) / 100;
+      return {
+        ...entry,
+        convertedAmount,
+        convertedBalance: runningConvertedBalance,
+      };
+    });
+
     return c.json(
-      { entries: result, finalBalance: runningBalance },
+      {
+        entries: convertedResult,
+        finalBalance: runningBalance,
+        finalConvertedBalance: runningConvertedBalance,
+      },
       StatusCodes.OK
     );
   }

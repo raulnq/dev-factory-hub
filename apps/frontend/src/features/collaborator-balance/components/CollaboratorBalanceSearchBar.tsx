@@ -3,12 +3,16 @@ import { useSearchParams } from 'react-router';
 import { Input } from '@/components/ui/input';
 import { SearchBar } from '@/components/SearchBar';
 import { CollaboratorCombobox } from '@/features/collaborators/components/CollaboratorCombobox';
+import { CurrencySelect } from '@/components/CurrencySelect';
 
 export function CollaboratorBalanceSearchBar() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currency, setCurrency] = useState(searchParams.get('currency') ?? '');
   const [collaboratorId, setCollaboratorId] = useState(
     searchParams.get('collaboratorId') ?? ''
+  );
+  const [exchangeCurrencyTo, setExchangeCurrencyTo] = useState(
+    searchParams.get('exchangeCurrencyTo') ?? 'all'
   );
   const startDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
@@ -17,7 +21,8 @@ export function CollaboratorBalanceSearchBar() {
     !!currency ||
     !!collaboratorId ||
     !!searchParams.get('startDate') ||
-    !!searchParams.get('endDate');
+    !!searchParams.get('endDate') ||
+    !!searchParams.get('exchangeCurrencyTo');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +37,11 @@ export function CollaboratorBalanceSearchBar() {
       const endDate = endDateRef.current?.value ?? '';
       if (endDate) prev.set('endDate', endDate);
       else prev.delete('endDate');
+      if (exchangeCurrencyTo !== 'all' && exchangeCurrencyTo !== currency) {
+        prev.set('exchangeCurrencyTo', exchangeCurrencyTo);
+      } else {
+        prev.delete('exchangeCurrencyTo');
+      }
       return prev;
     });
   };
@@ -39,6 +49,7 @@ export function CollaboratorBalanceSearchBar() {
   const handleClear = () => {
     setCurrency('');
     setCollaboratorId('');
+    setExchangeCurrencyTo('all');
     if (startDateRef.current) startDateRef.current.value = '';
     if (endDateRef.current) endDateRef.current.value = '';
     setSearchParams(prev => {
@@ -46,6 +57,7 @@ export function CollaboratorBalanceSearchBar() {
       prev.delete('collaboratorId');
       prev.delete('startDate');
       prev.delete('endDate');
+      prev.delete('exchangeCurrencyTo');
       return prev;
     });
   };
@@ -85,6 +97,14 @@ export function CollaboratorBalanceSearchBar() {
         className="w-[180px]"
         aria-label="End date"
       />
+      <div className="w-[160px]">
+        <CurrencySelect
+          value={exchangeCurrencyTo}
+          onValueChange={setExchangeCurrencyTo}
+          allowEmpty
+          placeholder="Exchange to..."
+        />
+      </div>
     </SearchBar>
   );
 }
