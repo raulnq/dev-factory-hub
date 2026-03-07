@@ -1,7 +1,5 @@
-import { Link, useSearchParams } from 'react-router';
-import { Pencil } from 'lucide-react';
+import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import type { BadgeProps } from '@/components/ui/badge';
 import {
   Table,
@@ -17,6 +15,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
+import { EditButton } from '@/components/EditButton';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -120,11 +119,7 @@ export function CollectionTable() {
               </BadgeTableCell>
               <TableCell>
                 <div className="flex gap-2">
-                  <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/collections/${item.collectionId}/edit`}>
-                      <Pencil className="h-4 w-4" />
-                    </Link>
-                  </Button>
+                  <EditButton link={`/collections/${item.collectionId}/edit`} />
                 </div>
               </TableCell>
             </TableRow>

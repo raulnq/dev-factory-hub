@@ -122,7 +122,7 @@ Exports two things: `<Entity>Table` and `<Entities>Skeleton`. Table reads search
 
 ```tsx
 import { Link, useSearchParams } from 'react-router';
-import { Search, Pencil } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import {
@@ -136,6 +136,8 @@ import {
 import { use<Entities>Suspense } from '../stores/use<Entities>';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
+import { EditButton } from '@/components/EditButton';
+
 
 export function <Entities>Skeleton() {
   return (
@@ -199,13 +201,10 @@ export function <Entity>Table() {
                       <Search className="h-4 w-4" />
                     </Link>
                   </Button>
-                  <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/<entities>/${item.<entityId>}/edit`}>
-                      <Pencil className="h-4 w-4" />
-                    </Link>
-                  </Button>
+                  <EditButton link={`/<entities>/${item.<entityId>}/edit`} />
                 </div>
               </TableCell>
+
             </TableRow>
           ))}
         </TableBody>

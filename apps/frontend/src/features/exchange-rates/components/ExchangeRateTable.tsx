@@ -1,7 +1,5 @@
-import { Link, useSearchParams } from 'react-router';
-import { Pencil } from 'lucide-react';
+import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -13,6 +11,7 @@ import {
 import { useExchangeRatesSuspense } from '../stores/useExchangeRates';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
+import { EditButton } from '@/components/EditButton';
 
 export function ExchangeRatesSkeleton() {
   return (
@@ -81,11 +80,9 @@ export function ExchangeRateTable() {
               <TableCell>{item.rate.toFixed(4)}</TableCell>
               <TableCell>
                 <div className="flex gap-2">
-                  <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/exchange-rates/${item.exchangeRateId}/edit`}>
-                      <Pencil className="h-4 w-4" />
-                    </Link>
-                  </Button>
+                  <EditButton
+                    link={`/exchange-rates/${item.exchangeRateId}/edit`}
+                  />
                 </div>
               </TableCell>
             </TableRow>

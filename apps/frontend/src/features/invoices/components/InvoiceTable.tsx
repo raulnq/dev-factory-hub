@@ -1,7 +1,5 @@
-import { Link, useSearchParams } from 'react-router';
-import { Pencil } from 'lucide-react';
+import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -16,6 +14,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import type { BadgeProps } from '@/components/ui/badge';
+import { EditButton } from '@/components/EditButton';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -110,11 +109,7 @@ export function InvoiceTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <Button variant="ghost" size="icon" asChild>
-                  <Link to={`/invoices/${item.invoiceId}/edit`}>
-                    <Pencil className="h-4 w-4" />
-                  </Link>
-                </Button>
+                <EditButton link={`/invoices/${item.invoiceId}/edit`} />
               </TableCell>
             </TableRow>
           ))}

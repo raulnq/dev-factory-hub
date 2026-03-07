@@ -1,7 +1,5 @@
-import { Link, useSearchParams } from 'react-router';
-import { Pencil } from 'lucide-react';
+import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -17,6 +15,7 @@ import type { BadgeProps } from '@/components/ui/badge';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
+import { EditButton } from '@/components/EditButton';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -130,13 +129,9 @@ export function CollaboratorPaymentTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <Button variant="ghost" size="icon" asChild>
-                  <Link
-                    to={`/collaborator-payments/${item.collaboratorPaymentId}/edit`}
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Link>
-                </Button>
+                <EditButton
+                  link={`/collaborator-payments/${item.collaboratorPaymentId}/edit`}
+                />
               </TableCell>
             </TableRow>
           ))}

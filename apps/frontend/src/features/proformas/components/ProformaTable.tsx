@@ -1,7 +1,5 @@
-import { Link, useSearchParams } from 'react-router';
-import { Pencil } from 'lucide-react';
+import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -17,6 +15,7 @@ import { getStatusVariant } from '../utils/status-variants';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
+import { EditButton } from '@/components/EditButton';
 
 export function ProformasSkeleton() {
   return (
@@ -110,11 +109,7 @@ export function ProformaTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <Button variant="ghost" size="icon" asChild>
-                  <Link to={`/proformas/${item.proformaId}/edit`}>
-                    <Pencil className="h-4 w-4" />
-                  </Link>
-                </Button>
+                <EditButton link={`/proformas/${item.proformaId}/edit`} />
               </TableCell>
             </TableRow>
           ))}

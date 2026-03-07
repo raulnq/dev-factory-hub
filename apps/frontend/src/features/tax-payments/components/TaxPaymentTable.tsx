@@ -1,7 +1,5 @@
-import { Link, useSearchParams } from 'react-router';
-import { Pencil } from 'lucide-react';
+import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -17,6 +15,7 @@ import { getStatusVariant } from '../utils/status-variants';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { DateTableCell } from '@/components/DateTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
+import { EditButton } from '@/components/EditButton';
 
 const currentYear = new Date().getFullYear();
 
@@ -101,11 +100,7 @@ export function TaxPaymentTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <Button variant="ghost" size="icon" asChild>
-                  <Link to={`/tax-payments/${item.taxPaymentId}/edit`}>
-                    <Pencil className="h-4 w-4" />
-                  </Link>
-                </Button>
+                <EditButton link={`/tax-payments/${item.taxPaymentId}/edit`} />
               </TableCell>
             </TableRow>
           ))}

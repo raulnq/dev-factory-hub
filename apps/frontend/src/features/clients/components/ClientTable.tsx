@@ -1,7 +1,5 @@
-import { Link, useSearchParams } from 'react-router';
-import { Pencil } from 'lucide-react';
+import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -14,6 +12,7 @@ import { useClientsSuspense } from '../stores/useClients';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { TextTableCell } from '@/components/TextTableCell';
+import { EditButton } from '@/components/EditButton';
 
 export function ClientsSkeleton() {
   return (
@@ -81,11 +80,7 @@ export function ClientTable() {
               <TextTableCell value={item.phone} />
               <TextTableCell value={item.email} />
               <TableCell>
-                <Button variant="ghost" size="icon" asChild>
-                  <Link to={`/clients/${item.clientId}/edit`}>
-                    <Pencil className="h-4 w-4" />
-                  </Link>
-                </Button>
+                <EditButton link={`/clients/${item.clientId}/edit`} />
               </TableCell>
             </TableRow>
           ))}

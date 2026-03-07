@@ -1,7 +1,5 @@
-import { Link, useSearchParams } from 'react-router';
-import { Pencil } from 'lucide-react';
+import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -15,6 +13,7 @@ import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { DateTableCell } from '@/components/DateTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
+import { EditButton } from '@/components/EditButton';
 
 export function TimesheetsSkeleton() {
   return (
@@ -100,11 +99,7 @@ export function TimesheetTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <Button variant="ghost" size="icon" asChild>
-                  <Link to={`/timesheets/${item.timesheetId}/edit`}>
-                    <Pencil className="h-4 w-4" />
-                  </Link>
-                </Button>
+                <EditButton link={`/timesheets/${item.timesheetId}/edit`} />
               </TableCell>
             </TableRow>
           ))}

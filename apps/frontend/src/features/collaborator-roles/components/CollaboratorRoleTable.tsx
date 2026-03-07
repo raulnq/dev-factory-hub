@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from 'react-router';
-import { Search, Pencil } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,6 +14,7 @@ import { useCollaboratorRolesSuspense } from '../stores/useCollaboratorRoles';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { NumberTableCell } from '@/components/NumberTableCell';
+import { EditButton } from '@/components/EditButton';
 
 export function CollaboratorRolesSkeleton() {
   return (
@@ -94,13 +95,9 @@ export function CollaboratorRoleTable() {
                       <Search className="h-4 w-4" />
                     </Link>
                   </Button>
-                  <Button variant="ghost" size="icon" asChild>
-                    <Link
-                      to={`/collaborator-roles/${item.collaboratorRoleId}/edit`}
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Link>
-                  </Button>
+                  <EditButton
+                    link={`/collaborator-roles/${item.collaboratorRoleId}/edit`}
+                  />
                 </div>
               </TableCell>
             </TableRow>

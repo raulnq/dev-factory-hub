@@ -214,9 +214,8 @@ import { <Entity>Skeleton } from '../components/<Entity>Skeleton';
 import { Card } from '@/components/ui/card';
 import { ViewCardHeader } from '@/components/ViewCardHeader';
 import { ViewCardFooter } from '@/components/ViewCardFooter';
-import { Button } from '@/components/ui/button';
-import { Pencil } from 'lucide-react';
 import { ErrorFallback } from '@/components/ErrorFallback';
+import { EditButton } from '@/components/EditButton';
 
 export function View<Entity>Page() {
   const { <entityId> } = useParams<{ <entityId>: string }>();
@@ -229,13 +228,14 @@ export function View<Entity>Page() {
           title="View <Entity>"
           description="View an existing <entity>."
         >
-          <Button className="sm:self-start" asChild>
-            <Link to={`/<entities>/${<entityId>!}/edit`}>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit
-            </Link>
-          </Button>
+          <EditButton
+            className="sm:self-start"
+            link={`/<entities>/${<entityId>!}/edit`}
+          >
+            Edit
+          </EditButton>
         </ViewCardHeader>
+
         <QueryErrorResetBoundary>
           {({ reset }) => (
             <ErrorBoundary
