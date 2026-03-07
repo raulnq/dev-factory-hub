@@ -9,6 +9,7 @@ import {
 import { CollaboratorSearchBar } from '../components/CollaboratorSearchBar';
 import { ListCardHeader } from '@/components/ListCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
+import { AddButton } from '@/components/AddButton';
 
 export function ListCollaboratorPage() {
   return (
@@ -17,8 +18,9 @@ export function ListCollaboratorPage() {
         <ListCardHeader
           title="Collaborators"
           description="Search and manage your collaborators."
-          addLink="/collaborators/new"
-          addText="Add Collaborator"
+          renderAction={
+            <AddButton link="/collaborators/new" text="Add Collaborator" />
+          }
         >
           <CollaboratorSearchBar />
         </ListCardHeader>

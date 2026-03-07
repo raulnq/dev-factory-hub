@@ -6,6 +6,7 @@ import { ListCardHeader } from '@/components/ListCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { InvoiceTable, InvoicesSkeleton } from '../components/InvoiceTable';
 import { InvoiceSearchBar } from '../components/InvoiceSearchBar';
+import { AddButton } from '@/components/AddButton';
 
 export function ListInvoicePage() {
   return (
@@ -14,8 +15,7 @@ export function ListInvoicePage() {
         <ListCardHeader
           title="Invoices"
           description="Manage your invoices."
-          addLink="/invoices/new"
-          addText="Add Invoice"
+          renderAction={<AddButton link="/invoices/new" text="Add Invoice" />}
         >
           <InvoiceSearchBar />
         </ListCardHeader>

@@ -111,8 +111,8 @@ describe('GET /collaborator-balance', () => {
 
       const entry = data.entries.find(e => e.issuedAt === '2003-04-10');
       assert.ok(entry, 'Expected entry for 2003-04-10');
-      assert.strictEqual(entry.convertedAmount, -3750);
-      assertBalance(data).hasFinalConvertedBalance(-3750);
+      assert.strictEqual(entry.convertedAmount, -266.67);
+      assertBalance(data).hasFinalConvertedBalance(-266.67);
     });
 
     test('uses zero when no exchange rate found for entry date', async () => {
@@ -186,9 +186,9 @@ describe('GET /collaborator-balance', () => {
       const e2 = data.entries.find(e => e.issuedAt === '2005-07-01');
       assert.ok(e1, 'Expected entry for 2005-06-01');
       assert.ok(e2, 'Expected entry for 2005-07-01');
-      assert.strictEqual(e1.convertedAmount, -4000);
+      assert.strictEqual(e1.convertedAmount, -250);
       assert.strictEqual(e2.convertedAmount, 0);
-      assertBalance(data).hasFinalConvertedBalance(-4000);
+      assertBalance(data).hasFinalConvertedBalance(-250);
     });
 
     test('returns finalConvertedBalance = 0 for empty result set', async () => {

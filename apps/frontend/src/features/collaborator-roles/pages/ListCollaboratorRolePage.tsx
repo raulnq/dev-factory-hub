@@ -9,6 +9,7 @@ import {
 import { CollaboratorRoleSearchBar } from '../components/CollaboratorRoleSearchBar';
 import { ListCardHeader } from '@/components/ListCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
+import { AddButton } from '@/components/AddButton';
 
 export function ListCollaboratorRolePage() {
   return (
@@ -17,8 +18,9 @@ export function ListCollaboratorRolePage() {
         <ListCardHeader
           title="Collaborator Roles"
           description="Search and manage collaborator roles."
-          addLink="/collaborator-roles/new"
-          addText="Add Role"
+          renderAction={
+            <AddButton link="/collaborator-roles/new" text="Add Role" />
+          }
         >
           <CollaboratorRoleSearchBar />
         </ListCardHeader>

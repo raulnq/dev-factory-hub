@@ -9,6 +9,7 @@ import {
   TaxPaymentsSkeleton,
 } from '../components/TaxPaymentTable';
 import { TaxPaymentSearchBar } from '../components/TaxPaymentSearchBar';
+import { AddButton } from '@/components/AddButton';
 
 export function ListTaxPaymentPage() {
   return (
@@ -17,8 +18,9 @@ export function ListTaxPaymentPage() {
         <ListCardHeader
           title="Tax Payments"
           description="Manage your tax payments."
-          addLink="/tax-payments/new"
-          addText="Add Tax Payment"
+          renderAction={
+            <AddButton link="/tax-payments/new" text="Add Tax Payment" />
+          }
         >
           <TaxPaymentSearchBar />
         </ListCardHeader>

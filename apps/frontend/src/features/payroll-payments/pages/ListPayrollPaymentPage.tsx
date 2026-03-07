@@ -9,6 +9,7 @@ import {
 import { PayrollPaymentSearchBar } from '../components/PayrollPaymentSearchBar';
 import { ListCardHeader } from '@/components/ListCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
+import { AddButton } from '@/components/AddButton';
 
 export function ListPayrollPaymentPage() {
   return (
@@ -17,8 +18,12 @@ export function ListPayrollPaymentPage() {
         <ListCardHeader
           title="Payroll Payments"
           description="Manage your payroll payments."
-          addLink="/payroll-payments/new"
-          addText="Add Payroll Payment"
+          renderAction={
+            <AddButton
+              link="/payroll-payments/new"
+              text="Add Payroll Payment"
+            />
+          }
         >
           <PayrollPaymentSearchBar />
         </ListCardHeader>

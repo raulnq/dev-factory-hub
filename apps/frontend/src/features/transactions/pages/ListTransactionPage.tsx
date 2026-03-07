@@ -9,6 +9,7 @@ import {
 import { TransactionSearchBar } from '../components/TransactionSearchBar';
 import { ListCardHeader } from '@/components/ListCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
+import { AddButton } from '@/components/AddButton';
 
 export function ListTransactionPage() {
   return (
@@ -17,8 +18,9 @@ export function ListTransactionPage() {
         <ListCardHeader
           title="Transactions"
           description="Manage your transactions."
-          addLink="/transactions/new"
-          addText="Add Transaction"
+          renderAction={
+            <AddButton link="/transactions/new" text="Add Transaction" />
+          }
         >
           <TransactionSearchBar />
         </ListCardHeader>

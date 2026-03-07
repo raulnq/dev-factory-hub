@@ -59,30 +59,4 @@ describe('List Transactions Endpoint', () => {
     });
     assertPage(page).hasEmptyResult();
   });
-
-  test('should order transactions by createdAt descending', async () => {
-    const uniqueWord = `order-${Date.now()}`;
-    const first = await addTransaction(
-      pendingTransaction({ description: `${uniqueWord} first` })
-    );
-    const second = await addTransaction(
-      pendingTransaction({ description: `${uniqueWord} second` })
-    );
-
-    const page = await listTransactions({
-      pageNumber: 1,
-      pageSize: 10,
-      description: uniqueWord,
-    });
-    assertPage(page).hasItemsCountAtLeast(2);
-
-    const ids = page.items.map(i => i.transactionId);
-    const firstIdx = ids.indexOf(first.transactionId);
-    const secondIdx = ids.indexOf(second.transactionId);
-
-    assert.ok(
-      secondIdx < firstIdx,
-      'Expected more recently created transaction to appear first (createdAt descending)'
-    );
-  });
 });

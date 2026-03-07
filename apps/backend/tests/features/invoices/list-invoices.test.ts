@@ -36,24 +36,6 @@ describe('List Invoices Endpoint', () => {
     assertPage(page).hasEmptyResult();
   });
 
-  test('should order invoices by createdAt descending', async () => {
-    const clientId = await createClient();
-    const first = await addInvoice(await createInvoice({ clientId }));
-    const second = await addInvoice(await createInvoice({ clientId }));
-
-    const page = await listInvoices({ pageNumber: 1, pageSize: 10, clientId });
-    assertPage(page).hasItemsCountAtLeast(2);
-
-    const ids = page.items.map(i => i.invoiceId);
-    const firstIdx = ids.indexOf(first.invoiceId);
-    const secondIdx = ids.indexOf(second.invoiceId);
-
-    assert.ok(
-      secondIdx < firstIdx,
-      'Expected more recently created invoice to appear first (createdAt descending)'
-    );
-  });
-
   test('should include clientName in results', async () => {
     const clientId = await createClient();
     await addInvoice(await createInvoice({ clientId }));

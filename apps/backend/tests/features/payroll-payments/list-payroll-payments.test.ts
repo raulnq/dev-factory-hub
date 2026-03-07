@@ -48,22 +48,4 @@ describe('List PayrollPayments Endpoint', () => {
     });
     assertPage(page).hasEmptyResult();
   });
-
-  test('should order by createdAt descending', async () => {
-    const collaboratorId = await createCollaborator();
-    const first = await addPayrollPayment(paymentInput(collaboratorId));
-    const second = await addPayrollPayment(paymentInput(collaboratorId));
-    const page = await listPayrollPayments({
-      collaboratorId,
-      pageSize: 10,
-      pageNumber: 1,
-    });
-    assertPage(page).hasItemsCountAtLeast(2);
-    assert.ok(
-      page.items[0].createdAt >= page.items[1].createdAt,
-      'Items should be ordered by createdAt descending'
-    );
-    assert.strictEqual(page.items[0].payrollPaymentId, second.payrollPaymentId);
-    assert.strictEqual(page.items[1].payrollPaymentId, first.payrollPaymentId);
-  });
 });

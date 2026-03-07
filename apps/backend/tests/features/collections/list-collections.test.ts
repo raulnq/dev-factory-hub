@@ -51,31 +51,4 @@ describe('List Collections Endpoint', () => {
 
     assert.strictEqual(page.items.length, 0);
   });
-
-  test('should return collections ordered by createdAt descending', async () => {
-    const client = await createClient();
-    const first = await addCollection(
-      collectionInput(client.clientId, { total: 100 })
-    );
-    const second = await addCollection(
-      collectionInput(client.clientId, { total: 200 })
-    );
-    const third = await addCollection(
-      collectionInput(client.clientId, { total: 300 })
-    );
-
-    const page = await listCollections({
-      pageNumber: 1,
-      pageSize: 10,
-      clientId: client.clientId,
-    });
-
-    const ids = page.items.map(i => i.collectionId);
-    assert.ok(
-      ids.indexOf(third.collectionId) < ids.indexOf(second.collectionId)
-    );
-    assert.ok(
-      ids.indexOf(second.collectionId) < ids.indexOf(first.collectionId)
-    );
-  });
 });

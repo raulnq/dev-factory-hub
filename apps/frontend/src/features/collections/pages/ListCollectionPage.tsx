@@ -9,6 +9,7 @@ import {
 import { CollectionSearchBar } from '../components/CollectionSearchBar';
 import { ListCardHeader } from '@/components/ListCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
+import { AddButton } from '@/components/AddButton';
 
 export function ListCollectionPage() {
   return (
@@ -17,8 +18,9 @@ export function ListCollectionPage() {
         <ListCardHeader
           title="Collections"
           description="Manage client collections."
-          addLink="/collections/new"
-          addText="Add Collection"
+          renderAction={
+            <AddButton link="/collections/new" text="Add Collection" />
+          }
         >
           <CollectionSearchBar />
         </ListCardHeader>

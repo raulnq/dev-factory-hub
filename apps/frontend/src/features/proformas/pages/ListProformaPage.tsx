@@ -6,6 +6,7 @@ import { ListCardHeader } from '@/components/ListCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { ProformaTable, ProformasSkeleton } from '../components/ProformaTable';
 import { ProformaSearchBar } from '../components/ProformaSearchBar';
+import { AddButton } from '@/components/AddButton';
 
 export function ListProformaPage() {
   return (
@@ -14,8 +15,7 @@ export function ListProformaPage() {
         <ListCardHeader
           title="Proformas"
           description="Manage your proformas."
-          addLink="/proformas/new"
-          addText="Add Proforma"
+          renderAction={<AddButton link="/proformas/new" text="Add Proforma" />}
         >
           <ProformaSearchBar />
         </ListCardHeader>

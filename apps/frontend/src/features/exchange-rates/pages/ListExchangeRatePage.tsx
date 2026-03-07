@@ -9,6 +9,7 @@ import {
 import { ExchangeRateSearchBar } from '../components/ExchangeRateSearchBar';
 import { ListCardHeader } from '@/components/ListCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
+import { AddButton } from '@/components/AddButton';
 
 export function ListExchangeRatePage() {
   return (
@@ -17,8 +18,9 @@ export function ListExchangeRatePage() {
         <ListCardHeader
           title="Exchange Rates"
           description="Manage your exchange rates."
-          addLink="/exchange-rates/new"
-          addText="Add Exchange Rate"
+          renderAction={
+            <AddButton link="/exchange-rates/new" text="Add Exchange Rate" />
+          }
         >
           <ExchangeRateSearchBar />
         </ListCardHeader>

@@ -9,6 +9,7 @@ import {
 import { MoneyExchangeSearchBar } from '../components/MoneyExchangeSearchBar';
 import { ListCardHeader } from '@/components/ListCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
+import { AddButton } from '@/components/AddButton';
 
 export function ListMoneyExchangePage() {
   return (
@@ -17,8 +18,9 @@ export function ListMoneyExchangePage() {
         <ListCardHeader
           title="Money Exchanges"
           description="Manage your money exchanges."
-          addLink="/money-exchanges/new"
-          addText="Add Money Exchange"
+          renderAction={
+            <AddButton link="/money-exchanges/new" text="Add Money Exchange" />
+          }
         >
           <MoneyExchangeSearchBar />
         </ListCardHeader>

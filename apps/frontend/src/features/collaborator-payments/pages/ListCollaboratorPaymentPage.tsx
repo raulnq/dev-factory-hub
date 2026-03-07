@@ -9,6 +9,7 @@ import {
 import { CollaboratorPaymentSearchBar } from '../components/CollaboratorPaymentSearchBar';
 import { ListCardHeader } from '@/components/ListCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
+import { AddButton } from '@/components/AddButton';
 
 export function ListCollaboratorPaymentPage() {
   return (
@@ -17,8 +18,9 @@ export function ListCollaboratorPaymentPage() {
         <ListCardHeader
           title="Collaborator Payments"
           description="Manage collaborator salary payments."
-          addLink="/collaborator-payments/new"
-          addText="Add Payment"
+          renderAction={
+            <AddButton link="/collaborator-payments/new" text="Add Payment" />
+          }
         >
           <CollaboratorPaymentSearchBar />
         </ListCardHeader>

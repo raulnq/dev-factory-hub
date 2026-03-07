@@ -9,6 +9,7 @@ import {
 import { TimesheetSearchBar } from '../components/TimesheetSearchBar';
 import { ListCardHeader } from '@/components/ListCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
+import { AddButton } from '@/components/AddButton';
 
 export function ListTimesheetPage() {
   return (
@@ -17,8 +18,9 @@ export function ListTimesheetPage() {
         <ListCardHeader
           title="Timesheets"
           description="Manage and track collaborator hours."
-          addLink="/timesheets/new"
-          addText="Add Timesheet"
+          renderAction={
+            <AddButton link="/timesheets/new" text="Add Timesheet" />
+          }
         >
           <TimesheetSearchBar />
         </ListCardHeader>
