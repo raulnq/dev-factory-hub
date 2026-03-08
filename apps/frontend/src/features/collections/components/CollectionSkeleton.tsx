@@ -1,11 +1,11 @@
-import { Field, FieldLabel } from '@/components/ui/field';
-import { CardContent } from '@/components/ui/card';
+import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { Skeleton } from '@/components/ui/skeleton';
+import { FormCardSkeleton } from '@/components/FormCardSkeleton';
 
 export function CollectionSkeleton() {
   return (
-    <CardContent>
-      <div className="space-y-4">
+    <FormCardSkeleton>
+      <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel>Client</FieldLabel>
@@ -44,7 +44,7 @@ export function CollectionSkeleton() {
             <Skeleton className="h-9 w-full" />
           </Field>
         </div>
-      </div>
-    </CardContent>
+      </FieldGroup>
+    </FormCardSkeleton>
   );
 }

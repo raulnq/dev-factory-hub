@@ -2,7 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
+import { FormCardSkeleton } from '@/components/FormCardSkeleton';
 
 export function TimesheetSkeleton() {
   return (
@@ -12,7 +12,7 @@ export function TimesheetSkeleton() {
           title="Edit Timesheet"
           description="Edit timesheet details."
         />
-        <CardContent className="space-y-6">
+        <FormCardSkeleton>
           <FieldGroup>
             <Field>
               <FieldLabel>Collaborator</FieldLabel>
@@ -43,8 +43,7 @@ export function TimesheetSkeleton() {
               </Field>
             </div>
           </FieldGroup>
-        </CardContent>
-        <FormCardFooter cancelText="Back to List" />
+        </FormCardSkeleton>
       </Card>
       <Card>
         <CardContent className="p-6 space-y-4">

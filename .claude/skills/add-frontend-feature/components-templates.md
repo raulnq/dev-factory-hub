@@ -217,17 +217,17 @@ export function <Entity>Table() {
 
 ## Skeleton (`components/<Entity>Skeleton.tsx`)
 
-Shared by both Edit and View pages. Renders inside `CardContent` with `Field`/`FieldLabel`/`Skeleton` matching the form layout.
+Shared by both Edit and View pages. Renders inside `FormCardSkeleton` with `Field`/`FieldLabel`/`Skeleton` matching the form layout.
 
 ```tsx
-import { Field, FieldLabel } from '@/components/ui/field';
-import { CardContent } from '@/components/ui/card';
+import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { Skeleton } from '@/components/ui/skeleton';
+import { FormCardSkeleton } from '@/components/FormCardSkeleton';
 
 export function <Entity>Skeleton() {
   return (
-    <CardContent>
-      <div className="space-y-4">
+    <FormCardSkeleton>
+      <FieldGroup>
         <Field>
           <FieldLabel>Name</FieldLabel>
           <Skeleton className="h-9 w-full" />
@@ -242,8 +242,8 @@ export function <Entity>Skeleton() {
           <FieldLabel>Address</FieldLabel>
           <Skeleton className="h-16 w-full" />
         </Field>
-      </div>
-    </CardContent>
+      </FieldGroup>
+    </FormCardSkeleton>
   );
 }
 ```

@@ -1,11 +1,11 @@
-import { Field, FieldLabel } from '@/components/ui/field';
-import { CardContent } from '@/components/ui/card';
+import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { Skeleton } from '@/components/ui/skeleton';
+import { FormCardSkeleton } from '@/components/FormCardSkeleton';
 
 export function CollaboratorRoleSkeleton() {
   return (
-    <CardContent>
-      <div className="space-y-4">
+    <FormCardSkeleton>
+      <FieldGroup>
         <Field>
           <FieldLabel>Name</FieldLabel>
           <Skeleton className="h-9 w-full" />
@@ -24,7 +24,7 @@ export function CollaboratorRoleSkeleton() {
             <Skeleton className="h-9 w-full" />
           </Field>
         </div>
-      </div>
-    </CardContent>
+      </FieldGroup>
+    </FormCardSkeleton>
   );
 }
