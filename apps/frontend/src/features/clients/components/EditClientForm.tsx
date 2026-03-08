@@ -13,7 +13,7 @@ import {
   type EditClient,
   type Client,
 } from '#/features/clients/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 
 type EditClientFormProps = {
   isPending: boolean;
@@ -34,11 +34,13 @@ export function EditClientForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Client"
       isPending={isPending}
+      title="Edit Client"
+      description="Edit an existing client."
     >
       <FieldGroup>
         <Controller
@@ -136,6 +138,6 @@ export function EditClientForm({
           )}
         />
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

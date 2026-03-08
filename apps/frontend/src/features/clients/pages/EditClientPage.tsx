@@ -4,8 +4,6 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import type { EditClient } from '#/features/clients/schemas';
 import { useEditClient, useClientSuspense } from '../stores/useClients';
@@ -32,34 +30,28 @@ export function EditClientPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Edit Client"
-          description="Edit an existing client."
-        />
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={({ resetErrorBoundary }) => (
-                <ErrorFallback
-                  resetErrorBoundary={resetErrorBoundary}
-                  message="Failed to load client"
-                />
-              )}
-            >
-              <Suspense fallback={<ClientSkeleton />}>
-                <InnerClient
-                  isPending={edit.isPending}
-                  onSubmit={onSubmit}
-                  clientId={clientId!}
-                  onCancel={() => navigate('/clients')}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Card>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={({ resetErrorBoundary }) => (
+              <ErrorFallback
+                resetErrorBoundary={resetErrorBoundary}
+                message="Failed to load client"
+              />
+            )}
+          >
+            <Suspense fallback={<ClientSkeleton />}>
+              <InnerClient
+                isPending={edit.isPending}
+                onSubmit={onSubmit}
+                clientId={clientId!}
+                onCancel={() => navigate('/clients')}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <ProjectsSection clientId={clientId!} />
         <ContactsSection clientId={clientId!} />

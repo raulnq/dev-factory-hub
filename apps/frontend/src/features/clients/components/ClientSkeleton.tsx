@@ -1,10 +1,10 @@
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Skeleton } from '@/components/ui/skeleton';
-import { FormCardSkeleton } from '@/components/FormCardSkeleton';
+import { FormSkeleton } from '@/components/FormCard';
 
 export function ClientSkeleton() {
   return (
-    <FormCardSkeleton>
+    <FormSkeleton>
       <FieldGroup>
         <Field>
           <FieldLabel>Name</FieldLabel>
@@ -27,6 +27,6 @@ export function ClientSkeleton() {
           <Skeleton className="h-9 w-full" />
         </Field>
       </FieldGroup>
-    </FormCardSkeleton>
+    </FormSkeleton>
   );
 }

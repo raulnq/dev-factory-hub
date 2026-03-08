@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router';
 import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import type { AddClient } from '#/features/clients/schemas';
 import { useAddClient } from '../stores/useClients';
 import { AddClientForm } from '../components/AddClientForm';
@@ -25,14 +23,11 @@ export function AddClientPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader title="Add Client" description="Create a new client." />
-        <AddClientForm
-          isPending={add.isPending}
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/clients')}
-        />
-      </Card>
+      <AddClientForm
+        isPending={add.isPending}
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/clients')}
+      />
     </div>
   );
 }

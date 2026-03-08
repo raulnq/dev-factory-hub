@@ -9,7 +9,7 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { addClientSchema, type AddClient } from '#/features/clients/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 
 type AddClientFormProps = {
   isPending: boolean;
@@ -34,11 +34,13 @@ export function AddClientForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Client"
       isPending={isPending}
+      title="Add Client"
+      description="Create a new client."
     >
       <FieldGroup>
         <Controller
@@ -136,6 +138,6 @@ export function AddClientForm({
           )}
         />
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }
