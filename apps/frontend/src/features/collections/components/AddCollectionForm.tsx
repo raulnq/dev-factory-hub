@@ -18,11 +18,13 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type AddCollectionFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddCollection>;
+  onCancel: () => void;
 };
 
 export function AddCollectionForm({
   isPending,
   onSubmit,
+  onCancel,
 }: AddCollectionFormProps) {
   const form = useForm<AddCollection>({
     resolver: zodResolver(addCollectionSchema),
@@ -36,7 +38,13 @@ export function AddCollectionForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Collection"
+      isPending={isPending}
+    >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Controller

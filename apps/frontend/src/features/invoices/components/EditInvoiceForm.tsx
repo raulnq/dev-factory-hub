@@ -20,12 +20,14 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type EditInvoiceFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditInvoice>;
+  onCancel: () => void;
   invoice: Invoice;
 };
 
 export function EditInvoiceForm({
   isPending,
   onSubmit,
+  onCancel,
   invoice,
 }: EditInvoiceFormProps) {
   const isStatusPending = invoice.status === 'Pending';
@@ -46,7 +48,14 @@ export function EditInvoiceForm({
     : invoice.total.toFixed(2);
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId={isStatusPending ? 'form' : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Invoice"
+      cancelText={isStatusPending ? 'Cancel' : 'Back'}
+      isPending={isPending}
+    >
       <FieldGroup>
         <Field>
           <FieldLabel>Client</FieldLabel>

@@ -5,7 +5,6 @@ import type { AddPayrollPayment } from '#/features/payroll-payments/schemas';
 import { useAddPayrollPayment } from '../stores/usePayrollPayments';
 import { AddPayrollPaymentForm } from '../components/AddPayrollPaymentForm';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { Card } from '@/components/ui/card';
 
 export function AddPayrollPaymentPage() {
@@ -33,13 +32,10 @@ export function AddPayrollPaymentPage() {
           title="Add Payroll Payment"
           description="Create a new payroll payment."
         />
-        <AddPayrollPaymentForm isPending={add.isPending} onSubmit={onSubmit} />
-        <FormCardFooter
-          formId="form"
-          saveText="Save Payroll Payment"
-          cancelText="Cancel"
-          onCancel={() => navigate('/payroll-payments')}
+        <AddPayrollPaymentForm
           isPending={add.isPending}
+          onSubmit={onSubmit}
+          onCancel={() => navigate('/payroll-payments')}
         />
       </Card>
     </div>

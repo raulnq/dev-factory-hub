@@ -5,7 +5,6 @@ import type { AddExchangeRate } from '#/features/exchange-rates/schemas';
 import { useAddExchangeRate } from '../stores/useExchangeRates';
 import { AddExchangeRateForm } from '../components/AddExchangeRateForm';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { Card } from '@/components/ui/card';
 
 export function AddExchangeRatePage() {
@@ -31,13 +30,10 @@ export function AddExchangeRatePage() {
           title="Add Exchange Rate"
           description="Create a new exchange rate."
         />
-        <AddExchangeRateForm isPending={add.isPending} onSubmit={onSubmit} />
-        <FormCardFooter
-          formId="form"
-          saveText="Save Exchange Rate"
-          cancelText="Cancel"
-          onCancel={() => navigate('/exchange-rates')}
+        <AddExchangeRateForm
           isPending={add.isPending}
+          onSubmit={onSubmit}
+          onCancel={() => navigate('/exchange-rates')}
         />
       </Card>
     </div>

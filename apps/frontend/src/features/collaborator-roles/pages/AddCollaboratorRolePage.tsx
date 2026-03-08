@@ -5,7 +5,6 @@ import type { AddCollaboratorRole } from '#/features/collaborator-roles/schemas'
 import { useAddCollaboratorRole } from '../stores/useCollaboratorRoles';
 import { AddCollaboratorRoleForm } from '../components/AddCollaboratorRoleForm';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { Card } from '@/components/ui/card';
 
 export function AddCollaboratorRolePage() {
@@ -36,13 +35,7 @@ export function AddCollaboratorRolePage() {
         <AddCollaboratorRoleForm
           isPending={add.isPending}
           onSubmit={onSubmit}
-        />
-        <FormCardFooter
-          formId="form"
-          saveText="Save Role"
-          cancelText="Cancel"
           onCancel={() => navigate('/collaborator-roles')}
-          isPending={add.isPending}
         />
       </Card>
     </div>

@@ -18,12 +18,14 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type EditCollaboratorRoleFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditCollaboratorRole>;
+  onCancel: () => void;
   collaboratorRole: CollaboratorRole;
 };
 
 export function EditCollaboratorRoleForm({
   isPending,
   onSubmit,
+  onCancel,
   collaboratorRole,
 }: EditCollaboratorRoleFormProps) {
   const form = useForm<EditCollaboratorRole>({
@@ -32,7 +34,13 @@ export function EditCollaboratorRoleForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Role"
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="name"

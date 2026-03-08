@@ -27,11 +27,13 @@ const TRANSACTION_TYPES = ['Income', 'Outcome'];
 type AddTransactionFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddTransaction>;
+  onCancel: () => void;
 };
 
 export function AddTransactionForm({
   isPending,
   onSubmit,
+  onCancel,
 }: AddTransactionFormProps) {
   const form = useForm<AddTransaction>({
     resolver: zodResolver(addTransactionSchema),
@@ -49,7 +51,13 @@ export function AddTransactionForm({
   const total = (Number(subtotal) + Number(taxes)).toFixed(2);
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Transaction"
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="description"

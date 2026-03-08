@@ -5,7 +5,6 @@ import type { AddCollaboratorPayment } from '#/features/collaborator-payments/sc
 import { useAddCollaboratorPayment } from '../stores/useCollaboratorPayments';
 import { AddCollaboratorPaymentForm } from '../components/AddCollaboratorPaymentForm';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { Card } from '@/components/ui/card';
 
 export function AddCollaboratorPaymentPage() {
@@ -34,13 +33,7 @@ export function AddCollaboratorPaymentPage() {
         <AddCollaboratorPaymentForm
           isPending={add.isPending}
           onSubmit={onSubmit}
-        />
-        <FormCardFooter
-          formId="form"
-          saveText="Save Payment"
-          cancelText="Cancel"
           onCancel={() => navigate('/collaborator-payments')}
-          isPending={add.isPending}
         />
       </Card>
     </div>

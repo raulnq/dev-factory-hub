@@ -14,6 +14,7 @@ import { useCollaboratorsSuspense } from '../stores/useCollaborators';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { EditButton } from '@/components/EditButton';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function InnerTableHeader() {
   return (
@@ -71,7 +72,7 @@ export function CollaboratorTable() {
                   {item.name}
                 </Link>
               </TableCell>
-              <TableCell>{item.email}</TableCell>
+              <TextTableCell value={item.email} />
               <TableCell>{item.withholdingPercentage}%</TableCell>
               <TableCell>
                 <div className="flex gap-2">

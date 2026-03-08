@@ -16,6 +16,7 @@ import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditButton } from '@/components/EditButton';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -84,10 +85,11 @@ export function PayrollPaymentTable() {
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.payrollPaymentId}>
-              <TableCell className="font-medium">
-                {item.collaboratorName}
-              </TableCell>
-              <TableCell>{item.currency}</TableCell>
+              <TextTableCell
+                className="font-medium"
+                value={item.collaboratorName}
+              />
+              <TextTableCell value={item.currency} />
               <NumberTableCell value={Number(item.netSalary)} />
               <NumberTableCell value={Number(item.pensionAmount)} />
               <NumberTableCell value={Number(item.grossSalary)} />

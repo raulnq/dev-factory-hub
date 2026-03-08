@@ -21,9 +21,9 @@ import { CollectionSkeleton } from '../components/CollectionSkeleton';
 import { CollectionToolbar } from '../components/CollectionToolbar';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { Badge } from '@/components/ui/badge';
+
 import type { BadgeProps } from '@/components/ui/badge';
 
 function statusVariant(status: string): BadgeProps['variant'] {
@@ -149,8 +149,6 @@ function EditCollectionInner({
     upload.isPending ||
     downloadUrl.isPending;
 
-  const isEditable = collection.status === 'Pending';
-
   return (
     <>
       <FormCardHeader
@@ -176,13 +174,7 @@ function EditCollectionInner({
         collection={collection}
         isPending={edit.isPending}
         onSubmit={handleSubmit}
-      />
-      <FormCardFooter
-        formId={isEditable ? 'form' : undefined}
-        saveText="Save Collection"
-        cancelText="Back"
         onCancel={onCancel}
-        isPending={isPending}
       />
     </>
   );

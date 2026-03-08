@@ -16,6 +16,7 @@ import { BadgeTableCell } from '@/components/BadgeTableCell';
 import type { BadgeProps } from '@/components/ui/badge';
 import { DateTableCell } from '@/components/DateTableCell';
 import { EditButton } from '@/components/EditButton';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -88,8 +89,11 @@ export function MoneyExchangeTable() {
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.moneyExchangeId}>
-              <TableCell className="font-medium">{item.fromCurrency}</TableCell>
-              <TableCell>{item.toCurrency}</TableCell>
+              <TextTableCell
+                className="font-medium"
+                value={item.fromCurrency}
+              />
+              <TextTableCell value={item.toCurrency} />
               <NumberTableCell
                 value={Number(item.rate)}
                 maximumFractionDigits={4}

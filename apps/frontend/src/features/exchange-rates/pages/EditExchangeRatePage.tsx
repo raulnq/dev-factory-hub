@@ -13,7 +13,6 @@ import { EditExchangeRateForm } from '../components/EditExchangeRateForm';
 import { ExchangeRateSkeleton } from '../components/ExchangeRateSkeleton';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
 export function EditExchangeRatePage() {
@@ -56,18 +55,12 @@ export function EditExchangeRatePage() {
                   isPending={edit.isPending}
                   onSubmit={onSubmit}
                   exchangeRateId={exchangeRateId!}
+                  onCancel={() => navigate('/exchange-rates')}
                 />
               </Suspense>
             </ErrorBoundary>
           )}
         </QueryErrorResetBoundary>
-        <FormCardFooter
-          formId="form"
-          saveText="Save Exchange Rate"
-          cancelText="Cancel"
-          onCancel={() => navigate('/exchange-rates')}
-          isPending={edit.isPending}
-        />
       </Card>
     </div>
   );
@@ -77,12 +70,14 @@ type InnerExchangeRateProps = {
   exchangeRateId: string;
   isPending: boolean;
   onSubmit: SubmitHandler<EditExchangeRate>;
+  onCancel: () => void;
 };
 
 function InnerExchangeRate({
   isPending,
   onSubmit,
   exchangeRateId,
+  onCancel,
 }: InnerExchangeRateProps) {
   const { data } = useExchangeRateSuspense(exchangeRateId);
   return (
@@ -90,6 +85,7 @@ function InnerExchangeRate({
       isPending={isPending}
       onSubmit={onSubmit}
       exchangeRate={data}
+      onCancel={onCancel}
     />
   );
 }

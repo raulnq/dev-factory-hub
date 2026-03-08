@@ -14,9 +14,14 @@ import { FormCardContent } from '@/components/FormCardContent';
 type AddClientFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddClient>;
+  onCancel: () => void;
 };
 
-export function AddClientForm({ isPending, onSubmit }: AddClientFormProps) {
+export function AddClientForm({
+  isPending,
+  onSubmit,
+  onCancel,
+}: AddClientFormProps) {
   const form = useForm<AddClient>({
     resolver: zodResolver(addClientSchema),
     defaultValues: {
@@ -29,7 +34,12 @@ export function AddClientForm({ isPending, onSubmit }: AddClientFormProps) {
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Client"
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="name"

@@ -18,6 +18,7 @@ import { FormCardContent } from '@/components/FormCardContent';
 type EditClientFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditClient>;
+  onCancel: () => void;
   client: Client;
 };
 
@@ -25,6 +26,7 @@ export function EditClientForm({
   isPending,
   onSubmit,
   client,
+  onCancel,
 }: EditClientFormProps) {
   const form = useForm<EditClient>({
     resolver: zodResolver(editClientSchema),
@@ -32,7 +34,12 @@ export function EditClientForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Client"
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="name"

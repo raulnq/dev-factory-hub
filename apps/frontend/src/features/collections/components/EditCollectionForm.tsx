@@ -20,12 +20,14 @@ import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 type EditCollectionFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditCollection>;
+  onCancel: () => void;
   collection: Collection;
 };
 
 export function EditCollectionForm({
   isPending,
   onSubmit,
+  onCancel,
   collection,
 }: EditCollectionFormProps) {
   const isEditable = collection.status === 'Pending';
@@ -41,7 +43,14 @@ export function EditCollectionForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId={isEditable ? 'form' : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Collection"
+      cancelText={isEditable ? 'Cancel' : 'Back'}
+      isPending={isPending}
+    >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Field>

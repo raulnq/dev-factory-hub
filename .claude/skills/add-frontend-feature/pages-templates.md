@@ -94,18 +94,16 @@ export function Add<Entity>Page() {
           title="Add <Entity>"
           description="Create a new <entity>."
         />
-        <Add<Entity>Form isPending={add.isPending} onSubmit={onSubmit} />
-        <FormCardFooter
-          formId="form"
-          saveText="Save <Entity>"
-          cancelText="Cancel"
-          onCancel={() => navigate('/<entities>')}
+        <Add<Entity>Form
           isPending={add.isPending}
+          onSubmit={onSubmit}
+          onCancel={() => navigate('/<entities>')}
         />
       </Card>
     </div>
   );
 }
+
 ```
 
 ## Edit Page (`pages/Edit<Entity>Page.tsx`)
@@ -167,19 +165,13 @@ export function Edit<Entity>Page() {
                 <Inner<Entity>
                   isPending={edit.isPending}
                   onSubmit={onSubmit}
+                  onCancel={() => navigate('/<entities>')}
                   <entityId>={<entityId>!}
                 />
               </Suspense>
             </ErrorBoundary>
           )}
         </QueryErrorResetBoundary>
-        <FormCardFooter
-          formId="form"
-          saveText="Save <Entity>"
-          cancelText="Cancel"
-          onCancel={() => navigate('/<entities>')}
-          isPending={edit.isPending}
-        />
       </Card>
     </div>
   );
@@ -189,14 +181,26 @@ type Inner<Entity>Props = {
   <entityId>: string;
   isPending: boolean;
   onSubmit: SubmitHandler<Edit<Entity>>;
+  onCancel: () => void;
 };
 
-function Inner<Entity>({ isPending, onSubmit, <entityId> }: Inner<Entity>Props) {
+function Inner<Entity>({
+  isPending,
+  onSubmit,
+  onCancel,
+  <entityId>,
+}: Inner<Entity>Props) {
   const { data } = use<Entity>Suspense(<entityId>);
   return (
-    <Edit<Entity>Form isPending={isPending} onSubmit={onSubmit} <entity>={data} />
+    <Edit<Entity>Form
+      isPending={isPending}
+      onSubmit={onSubmit}
+      onCancel={onCancel}
+      <entity>={data}
+    />
   );
 }
+
 ```
 
 ## View Page (`pages/View<Entity>Page.tsx`)

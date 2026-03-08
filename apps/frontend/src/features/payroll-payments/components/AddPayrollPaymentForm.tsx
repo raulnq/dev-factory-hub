@@ -23,11 +23,13 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type AddPayrollPaymentFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddPayrollPayment>;
+  onCancel: () => void;
 };
 
 export function AddPayrollPaymentForm({
   isPending,
   onSubmit,
+  onCancel,
 }: AddPayrollPaymentFormProps) {
   const form = useForm<AddPayrollPayment>({
     resolver: zodResolver(addPayrollPaymentSchema),
@@ -43,7 +45,13 @@ export function AddPayrollPaymentForm({
   const grossSalary = Number(netSalary);
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Payroll Payment"
+      isPending={isPending}
+    >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Controller

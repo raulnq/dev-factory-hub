@@ -17,11 +17,13 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type AddCollaboratorRoleFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddCollaboratorRole>;
+  onCancel: () => void;
 };
 
 export function AddCollaboratorRoleForm({
   isPending,
   onSubmit,
+  onCancel,
 }: AddCollaboratorRoleFormProps) {
   const form = useForm<AddCollaboratorRole>({
     resolver: zodResolver(addCollaboratorRoleSchema),
@@ -34,7 +36,13 @@ export function AddCollaboratorRoleForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Role"
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="name"

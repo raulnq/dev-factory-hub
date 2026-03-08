@@ -18,11 +18,13 @@ import { CollaboratorCombobox } from '../../collaborators/components/Collaborato
 type AddCollaboratorPaymentFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddCollaboratorPayment>;
+  onCancel: () => void;
 };
 
 export function AddCollaboratorPaymentForm({
   isPending,
   onSubmit,
+  onCancel,
 }: AddCollaboratorPaymentFormProps) {
   const form = useForm<AddCollaboratorPayment>({
     resolver: zodResolver(addCollaboratorPaymentSchema),
@@ -33,7 +35,13 @@ export function AddCollaboratorPaymentForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Payment"
+      isPending={isPending}
+    >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Controller

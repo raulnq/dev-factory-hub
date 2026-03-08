@@ -5,7 +5,6 @@ import type { AddTransaction } from '#/features/transactions/schemas';
 import { useAddTransaction } from '../stores/useTransactions';
 import { AddTransactionForm } from '../components/AddTransactionForm';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { Card } from '@/components/ui/card';
 
 export function AddTransactionPage() {
@@ -31,13 +30,10 @@ export function AddTransactionPage() {
           title="Add Transaction"
           description="Create a new transaction."
         />
-        <AddTransactionForm isPending={add.isPending} onSubmit={onSubmit} />
-        <FormCardFooter
-          formId="form"
-          saveText="Save Transaction"
-          cancelText="Cancel"
-          onCancel={() => navigate('/transactions')}
+        <AddTransactionForm
           isPending={add.isPending}
+          onSubmit={onSubmit}
+          onCancel={() => navigate('/transactions')}
         />
       </Card>
     </div>

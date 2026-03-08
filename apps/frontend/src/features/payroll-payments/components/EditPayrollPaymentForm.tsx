@@ -25,12 +25,14 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type EditPayrollPaymentFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditPayrollPayment>;
+  onCancel: () => void;
   payrollPayment: PayrollPayment;
 };
 
 export function EditPayrollPaymentForm({
   isPending,
   onSubmit,
+  onCancel,
   payrollPayment,
 }: EditPayrollPaymentFormProps) {
   const isStatusPending = payrollPayment.status === 'Pending';
@@ -51,7 +53,14 @@ export function EditPayrollPaymentForm({
   const grossSalary = Number(netSalary) + Number(payrollPayment.pensionAmount);
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId={isStatusPending ? 'form' : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Payroll Payment"
+      cancelText={isStatusPending ? 'Cancel' : 'Back'}
+      isPending={isPending}
+    >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Field>

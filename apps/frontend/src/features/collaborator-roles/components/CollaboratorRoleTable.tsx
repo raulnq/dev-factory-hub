@@ -15,6 +15,7 @@ import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { EditButton } from '@/components/EditButton';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function InnerTableHeader() {
   return (
@@ -73,7 +74,7 @@ export function CollaboratorRoleTable() {
                   {item.name}
                 </Link>
               </TableCell>
-              <TableCell>{item.currency}</TableCell>
+              <TextTableCell value={item.currency} />
               <NumberTableCell value={item.feeRate} />
               <NumberTableCell value={item.costRate} />
               <TableCell>

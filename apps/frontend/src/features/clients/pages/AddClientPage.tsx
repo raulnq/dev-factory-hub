@@ -3,7 +3,6 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import type { AddClient } from '#/features/clients/schemas';
 import { useAddClient } from '../stores/useClients';
 import { AddClientForm } from '../components/AddClientForm';
@@ -28,13 +27,10 @@ export function AddClientPage() {
     <div className="space-y-4">
       <Card>
         <FormCardHeader title="Add Client" description="Create a new client." />
-        <AddClientForm isPending={add.isPending} onSubmit={onSubmit} />
-        <FormCardFooter
-          formId="form"
-          saveText="Save Client"
-          cancelText="Cancel"
-          onCancel={() => navigate('/clients')}
+        <AddClientForm
           isPending={add.isPending}
+          onSubmit={onSubmit}
+          onCancel={() => navigate('/clients')}
         />
       </Card>
     </div>

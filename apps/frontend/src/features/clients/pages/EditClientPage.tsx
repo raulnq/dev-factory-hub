@@ -6,7 +6,6 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import type { EditClient } from '#/features/clients/schemas';
 import { useEditClient, useClientSuspense } from '../stores/useClients';
@@ -54,18 +53,12 @@ export function EditClientPage() {
                   isPending={edit.isPending}
                   onSubmit={onSubmit}
                   clientId={clientId!}
+                  onCancel={() => navigate('/clients')}
                 />
               </Suspense>
             </ErrorBoundary>
           )}
         </QueryErrorResetBoundary>
-        <FormCardFooter
-          formId="form"
-          saveText="Save Client"
-          cancelText="Cancel"
-          onCancel={() => navigate('/clients')}
-          isPending={edit.isPending}
-        />
       </Card>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <ProjectsSection clientId={clientId!} />
@@ -79,11 +72,22 @@ type InnerClientProps = {
   clientId: string;
   isPending: boolean;
   onSubmit: SubmitHandler<EditClient>;
+  onCancel: () => void;
 };
 
-function InnerClient({ isPending, onSubmit, clientId }: InnerClientProps) {
+function InnerClient({
+  isPending,
+  onSubmit,
+  clientId,
+  onCancel,
+}: InnerClientProps) {
   const { data } = useClientSuspense(clientId);
   return (
-    <EditClientForm isPending={isPending} onSubmit={onSubmit} client={data} />
+    <EditClientForm
+      isPending={isPending}
+      onSubmit={onSubmit}
+      client={data}
+      onCancel={onCancel}
+    />
   );
 }

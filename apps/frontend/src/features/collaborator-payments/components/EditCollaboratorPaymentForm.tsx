@@ -20,12 +20,14 @@ import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 type EditCollaboratorPaymentFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditCollaboratorPayment>;
+  onCancel: () => void;
   collaboratorPayment: CollaboratorPayment;
 };
 
 export function EditCollaboratorPaymentForm({
   isPending,
   onSubmit,
+  onCancel,
   collaboratorPayment,
 }: EditCollaboratorPaymentFormProps) {
   const isEditable = collaboratorPayment.status === 'Pending';
@@ -46,7 +48,14 @@ export function EditCollaboratorPaymentForm({
     Math.round((Number(grossSalary) - Number(withholding)) * 100) / 100;
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId={isEditable ? 'form' : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Payment"
+      cancelText={isEditable ? 'Cancel' : 'Back'}
+      isPending={isPending}
+    >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Field>

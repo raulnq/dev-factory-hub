@@ -18,12 +18,14 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type EditExchangeRateFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditExchangeRate>;
+  onCancel: () => void;
   exchangeRate: ExchangeRate;
 };
 
 export function EditExchangeRateForm({
   isPending,
   onSubmit,
+  onCancel,
   exchangeRate,
 }: EditExchangeRateFormProps) {
   const form = useForm<EditExchangeRate>({
@@ -32,7 +34,13 @@ export function EditExchangeRateForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Exchange Rate"
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="date"

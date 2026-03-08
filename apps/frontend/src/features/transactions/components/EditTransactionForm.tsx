@@ -30,12 +30,14 @@ const TRANSACTION_TYPES = ['Income', 'Outcome'];
 type EditTransactionFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditTransaction>;
+  onCancel: () => void;
   transaction: Transaction;
 };
 
 export function EditTransactionForm({
   isPending,
   onSubmit,
+  onCancel,
   transaction,
 }: EditTransactionFormProps) {
   const isStatusPending = transaction.status === 'Pending';
@@ -58,7 +60,14 @@ export function EditTransactionForm({
     : transaction.total.toFixed(2);
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId={isStatusPending ? 'form' : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Transaction"
+      cancelText={isStatusPending ? 'Cancel' : 'Back'}
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="description"

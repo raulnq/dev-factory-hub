@@ -14,6 +14,7 @@ import { useClientBalanceSuspense } from '../stores/useClientBalance';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function InnerTableHeader() {
   return (
@@ -80,13 +81,14 @@ export function ClientBalanceTable() {
                   {entry.type}
                 </Badge>
               </TableCell>
-              <TableCell>{entry.name}</TableCell>
-              <TableCell>{entry.description}</TableCell>
-              <NumberTableCell className="text-right" value={entry.amount} />
-              <NumberTableCell className="text-right" value={entry.balance} />
+              <TextTableCell value={entry.name} />
+              <TextTableCell value={entry.description} />
+              <NumberTableCell value={entry.amount} />
+              <NumberTableCell value={entry.balance} />
             </TableRow>
           ))}
         </TableBody>
+
         <TableFooter>
           <TableRow>
             <TableCell colSpan={5} className="text-right font-semibold">

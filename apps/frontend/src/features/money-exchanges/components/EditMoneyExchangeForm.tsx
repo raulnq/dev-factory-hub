@@ -20,12 +20,14 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type EditMoneyExchangeFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditMoneyExchange>;
+  onCancel: () => void;
   moneyExchange: MoneyExchange;
 };
 
 export function EditMoneyExchangeForm({
   isPending,
   onSubmit,
+  onCancel,
   moneyExchange,
 }: EditMoneyExchangeFormProps) {
   const isStatusPending = moneyExchange.status === 'Pending';
@@ -44,7 +46,14 @@ export function EditMoneyExchangeForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId={isStatusPending ? 'form' : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Money Exchange"
+      cancelText={isStatusPending ? 'Cancel' : 'Back'}
+      isPending={isPending}
+    >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Controller

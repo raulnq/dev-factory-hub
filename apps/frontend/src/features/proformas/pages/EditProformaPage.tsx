@@ -4,8 +4,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
+
 import { EditProformaForm } from '../components/EditProformaForm';
 import { ProformaItemsSection } from '../components/ProformaItemsSection';
 import { ProformaSkeleton } from '../components/ProformaSkeleton';
@@ -117,12 +117,8 @@ function EditProformaInner({
         <EditProformaForm
           proforma={proforma}
           onSubmit={handleSubmit}
-          isPending={edit.isPending}
-        />
-        <FormCardFooter
-          formId={'proforma-form'}
-          isPending={isPending}
           onCancel={onCancel}
+          isPending={edit.isPending}
         />
       </Card>
 

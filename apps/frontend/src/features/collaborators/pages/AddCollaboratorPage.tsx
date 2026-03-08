@@ -5,7 +5,6 @@ import type { AddCollaborator } from '#/features/collaborators/schemas';
 import { useAddCollaborator } from '../stores/useCollaborators';
 import { AddCollaboratorForm } from '../components/AddCollaboratorForm';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { Card } from '@/components/ui/card';
 
 export function AddCollaboratorPage() {
@@ -31,13 +30,10 @@ export function AddCollaboratorPage() {
           title="Add Collaborator"
           description="Create a new collaborator record."
         />
-        <AddCollaboratorForm isPending={add.isPending} onSubmit={onSubmit} />
-        <FormCardFooter
-          formId="form"
-          saveText="Save Collaborator"
-          cancelText="Cancel"
-          onCancel={() => navigate('/collaborators')}
+        <AddCollaboratorForm
           isPending={add.isPending}
+          onSubmit={onSubmit}
+          onCancel={() => navigate('/collaborators')}
         />
       </Card>
     </div>

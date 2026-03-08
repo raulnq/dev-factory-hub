@@ -13,7 +13,6 @@ import { EditCollaboratorRoleForm } from '../components/EditCollaboratorRoleForm
 import { CollaboratorRoleSkeleton } from '../components/CollaboratorRoleSkeleton';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
 export function EditCollaboratorRolePage() {
@@ -58,18 +57,12 @@ export function EditCollaboratorRolePage() {
                   isPending={edit.isPending}
                   onSubmit={onSubmit}
                   collaboratorRoleId={collaboratorRoleId!}
+                  onCancel={() => navigate('/collaborator-roles')}
                 />
               </Suspense>
             </ErrorBoundary>
           )}
         </QueryErrorResetBoundary>
-        <FormCardFooter
-          formId="form"
-          saveText="Save Role"
-          cancelText="Cancel"
-          onCancel={() => navigate('/collaborator-roles')}
-          isPending={edit.isPending}
-        />
       </Card>
     </div>
   );
@@ -79,12 +72,14 @@ type InnerCollaboratorRoleProps = {
   collaboratorRoleId: string;
   isPending: boolean;
   onSubmit: SubmitHandler<EditCollaboratorRole>;
+  onCancel: () => void;
 };
 
 function InnerCollaboratorRole({
   isPending,
   onSubmit,
   collaboratorRoleId,
+  onCancel,
 }: InnerCollaboratorRoleProps) {
   const { data } = useCollaboratorRoleSuspense(collaboratorRoleId);
   return (
@@ -92,6 +87,7 @@ function InnerCollaboratorRole({
       isPending={isPending}
       onSubmit={onSubmit}
       collaboratorRole={data}
+      onCancel={onCancel}
     />
   );
 }

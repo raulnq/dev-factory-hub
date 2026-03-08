@@ -13,17 +13,19 @@ import { Textarea } from '@/components/ui/textarea';
 import type { Proforma, EditProforma } from '#/features/proformas/schemas';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 
-type EditProformaFormrops = {
+type EditProformaFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditProforma>;
+  onCancel: () => void;
   proforma: Proforma;
 };
 
 export function EditProformaForm({
   proforma,
   onSubmit,
+  onCancel,
   isPending,
-}: EditProformaFormrops) {
+}: EditProformaFormProps) {
   const isStatusPending = proforma.status === 'Pending';
   const form = useForm<EditProforma>({
     resolver: zodResolver(editProformaSchema),
@@ -39,6 +41,10 @@ export function EditProformaForm({
     <FormCardContent
       formId="proforma-form"
       onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      isPending={isPending}
+      saveText="Save Proforma"
+      cancelText={isStatusPending ? 'Cancel' : 'Back'}
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">

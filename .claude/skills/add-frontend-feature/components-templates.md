@@ -445,9 +445,14 @@ import { FormCardContent } from '@/components/FormCardContent';
 type Add<Entity>FormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<Add<Entity>>;
+  onCancel: () => void;
 };
 
-export function Add<Entity>Form({ isPending, onSubmit }: Add<Entity>FormProps) {
+export function Add<Entity>Form({
+  isPending,
+  onSubmit,
+  onCancel,
+}: Add<Entity>FormProps) {
   const form = useForm<Add<Entity>>({
     resolver: zodResolver(add<Entity>Schema),
     defaultValues: {
@@ -456,8 +461,15 @@ export function Add<Entity>Form({ isPending, onSubmit }: Add<Entity>FormProps) {
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      isPending={isPending}
+      saveText="Save <Entity>"
+    >
       <FieldGroup>
+
         <Controller
           name="name"
           control={form.control}
@@ -504,12 +516,14 @@ import { FormCardContent } from '@/components/FormCardContent';
 type Edit<Entity>FormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<Edit<Entity>>;
+  onCancel: () => void;
   <entity>: <Entity>;
 };
 
 export function Edit<Entity>Form({
   isPending,
   onSubmit,
+  onCancel,
   <entity>,
 }: Edit<Entity>FormProps) {
   const form = useForm<Edit<Entity>>({
@@ -518,8 +532,15 @@ export function Edit<Entity>Form({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      isPending={isPending}
+      saveText="Save <Entity>"
+    >
       <FieldGroup>
+
         <Controller
           name="name"
           control={form.control}

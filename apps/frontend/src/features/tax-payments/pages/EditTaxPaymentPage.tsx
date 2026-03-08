@@ -4,8 +4,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
+
 import { EditTaxPaymentForm } from '../components/EditTaxPaymentForm';
 import { TaxPaymentItemsSection } from '../components/TaxPaymentItemsSection';
 import { TaxPaymentSkeleton } from '../components/TaxPaymentSkeleton';
@@ -94,7 +94,6 @@ function EditTaxPaymentInner({
   };
 
   const isMutating = edit.isPending || pay.isPending || cancel.isPending;
-  const isStatusPending = taxPayment.status === 'Pending';
 
   return (
     <div className="space-y-6">
@@ -120,12 +119,8 @@ function EditTaxPaymentInner({
         <EditTaxPaymentForm
           taxPayment={taxPayment}
           onSubmit={handleSubmit}
-          isPending={edit.isPending}
-        />
-        <FormCardFooter
-          formId={isStatusPending ? 'tax-payment-form' : undefined}
-          isPending={isMutating}
           onCancel={onCancel}
+          isPending={edit.isPending}
         />
       </Card>
 

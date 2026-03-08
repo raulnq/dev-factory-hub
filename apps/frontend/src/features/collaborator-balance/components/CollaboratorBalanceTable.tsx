@@ -14,6 +14,7 @@ import { useCollaboratorBalanceSuspense } from '../stores/useCollaboratorBalance
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function InnerTableHeader({
   exchangeCurrencyTo,
@@ -105,10 +106,11 @@ export function CollaboratorBalanceTable() {
                   {entry.type}
                 </Badge>
               </TableCell>
-              <TableCell>{entry.name}</TableCell>
-              <TableCell>{entry.description}</TableCell>
+              <TextTableCell value={entry.name} />
+              <TextTableCell value={entry.description} />
               <NumberTableCell className="text-right" value={entry.amount} />
               <NumberTableCell className="text-right" value={entry.balance} />
+
               {showConverted && (
                 <>
                   <NumberTableCell

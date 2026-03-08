@@ -15,6 +15,7 @@ import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import type { BadgeProps } from '@/components/ui/badge';
 import { EditButton } from '@/components/EditButton';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -78,10 +79,8 @@ export function InvoiceTable() {
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.invoiceId}>
-              <TableCell className="font-medium">
-                {item.clientName ?? '—'}
-              </TableCell>
-              <TableCell>{item.currency}</TableCell>
+              <TextTableCell className="font-medium" value={item.clientName} />
+              <TextTableCell value={item.currency} />
               <NumberTableCell value={item.subtotal} />
               <NumberTableCell value={item.taxes} />
               <NumberTableCell value={item.total} />

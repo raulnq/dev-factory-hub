@@ -21,9 +21,9 @@ import { CollaboratorPaymentSkeleton } from '../components/CollaboratorPaymentSk
 import { CollaboratorPaymentToolbar } from '../components/CollaboratorPaymentToolbar';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { Badge } from '@/components/ui/badge';
+
 import type { BadgeProps } from '@/components/ui/badge';
 
 function statusVariant(status: string): BadgeProps['variant'] {
@@ -138,7 +138,6 @@ function EditCollaboratorPaymentInner({
 
   const isPending =
     edit.isPending || pay.isPending || confirm.isPending || cancel.isPending;
-  const isEditable = payment.status === 'Pending';
 
   return (
     <>
@@ -163,13 +162,7 @@ function EditCollaboratorPaymentInner({
         collaboratorPayment={payment}
         isPending={edit.isPending}
         onSubmit={handleSubmit}
-      />
-      <FormCardFooter
-        formId={isEditable ? 'form' : undefined}
-        saveText="Save Payment"
-        cancelText="Back"
         onCancel={onCancel}
-        isPending={isPending}
       />
     </>
   );

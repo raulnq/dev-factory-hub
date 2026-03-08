@@ -21,9 +21,9 @@ import { TransactionSkeleton } from '../components/TransactionSkeleton';
 import { TransactionToolbar } from '../components/TransactionToolbar';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { Badge } from '@/components/ui/badge';
+
 import type { BadgeProps } from '@/components/ui/badge';
 import type { Transaction } from '#/features/transactions/schemas';
 
@@ -148,8 +148,6 @@ function EditTransactionInner({
     upload.isPending ||
     downloadUrl.isPending;
 
-  const isStatusPending = transaction.status === 'Pending';
-
   return (
     <>
       <FormCardHeader
@@ -175,13 +173,7 @@ function EditTransactionInner({
         transaction={transaction as Transaction}
         isPending={edit.isPending}
         onSubmit={handleSubmit}
-      />
-      <FormCardFooter
-        formId={isStatusPending ? 'form' : undefined}
-        saveText="Save Transaction"
-        cancelText="Back"
         onCancel={onCancel}
-        isPending={isPending}
       />
     </>
   );

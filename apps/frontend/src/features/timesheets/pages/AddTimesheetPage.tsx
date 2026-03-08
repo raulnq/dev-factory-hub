@@ -5,7 +5,6 @@ import type { AddTimesheet } from '#/features/timesheets/schemas';
 import { useAddTimesheet } from '../stores/useTimesheets';
 import { AddTimesheetForm } from '../components/AddTimesheetForm';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { Card } from '@/components/ui/card';
 
 export function AddTimesheetPage() {
@@ -31,13 +30,10 @@ export function AddTimesheetPage() {
           title="Add Timesheet"
           description="Initialize a new timesheet period."
         />
-        <AddTimesheetForm isPending={add.isPending} onSubmit={onSubmit} />
-        <FormCardFooter
-          formId="form"
-          saveText="Create Timesheet"
-          cancelText="Cancel"
-          onCancel={() => navigate('/timesheets')}
+        <AddTimesheetForm
           isPending={add.isPending}
+          onSubmit={onSubmit}
+          onCancel={() => navigate('/timesheets')}
         />
       </Card>
     </div>

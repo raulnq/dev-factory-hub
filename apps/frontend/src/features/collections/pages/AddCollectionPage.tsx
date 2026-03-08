@@ -5,7 +5,6 @@ import type { AddCollection } from '#/features/collections/schemas';
 import { useAddCollection } from '../stores/useCollections';
 import { AddCollectionForm } from '../components/AddCollectionForm';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { Card } from '@/components/ui/card';
 
 export function AddCollectionPage() {
@@ -31,13 +30,10 @@ export function AddCollectionPage() {
           title="Add Collection"
           description="Create a new collection."
         />
-        <AddCollectionForm isPending={add.isPending} onSubmit={onSubmit} />
-        <FormCardFooter
-          formId="form"
-          saveText="Save Collection"
-          cancelText="Cancel"
-          onCancel={() => navigate('/collections')}
+        <AddCollectionForm
           isPending={add.isPending}
+          onSubmit={onSubmit}
+          onCancel={() => navigate('/collections')}
         />
       </Card>
     </div>

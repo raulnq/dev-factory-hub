@@ -5,7 +5,6 @@ import type { AddMoneyExchange } from '#/features/money-exchanges/schemas';
 import { useAddMoneyExchange } from '../stores/useMoneyExchanges';
 import { AddMoneyExchangeForm } from '../components/AddMoneyExchangeForm';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { Card } from '@/components/ui/card';
 
 export function AddMoneyExchangePage() {
@@ -31,13 +30,10 @@ export function AddMoneyExchangePage() {
           title="Add Money Exchange"
           description="Create a new money exchange."
         />
-        <AddMoneyExchangeForm isPending={add.isPending} onSubmit={onSubmit} />
-        <FormCardFooter
-          formId="form"
-          saveText="Save Money Exchange"
-          cancelText="Cancel"
-          onCancel={() => navigate('/money-exchanges')}
+        <AddMoneyExchangeForm
           isPending={add.isPending}
+          onSubmit={onSubmit}
+          onCancel={() => navigate('/money-exchanges')}
         />
       </Card>
     </div>

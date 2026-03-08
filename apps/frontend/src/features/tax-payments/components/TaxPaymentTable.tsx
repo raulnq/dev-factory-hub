@@ -16,6 +16,7 @@ import { NumberTableCell } from '@/components/NumberTableCell';
 import { DateTableCell } from '@/components/DateTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditButton } from '@/components/EditButton';
+import { TextTableCell } from '@/components/TextTableCell';
 
 const currentYear = new Date().getFullYear();
 
@@ -71,9 +72,12 @@ export function TaxPaymentTable() {
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.taxPaymentId}>
-              <TableCell className="font-medium">{item.year}</TableCell>
-              <TableCell>{item.month}</TableCell>
-              <TableCell>{item.currency}</TableCell>
+              <TextTableCell
+                className="font-medium"
+                value={item.year.toString()}
+              />
+              <TextTableCell value={item.month.toString()} />
+              <TextTableCell value={item.currency} />
               <NumberTableCell value={item.total} />
               <DateTableCell value={item.paidAt} />
               <BadgeTableCell variant={getStatusVariant(item.status)}>

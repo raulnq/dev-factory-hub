@@ -13,7 +13,6 @@ import { EditCollaboratorForm } from '../components/EditCollaboratorForm';
 import { CollaboratorSkeleton } from '../components/CollaboratorSkeleton';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
 export function EditCollaboratorPage() {
@@ -56,18 +55,12 @@ export function EditCollaboratorPage() {
                   isPending={edit.isPending}
                   onSubmit={onSubmit}
                   collaboratorId={collaboratorId!}
+                  onCancel={() => navigate('/collaborators')}
                 />
               </Suspense>
             </ErrorBoundary>
           )}
         </QueryErrorResetBoundary>
-        <FormCardFooter
-          formId="form"
-          saveText="Save Collaborator"
-          cancelText="Cancel"
-          onCancel={() => navigate('/collaborators')}
-          isPending={edit.isPending}
-        />
       </Card>
     </div>
   );
@@ -77,12 +70,14 @@ type InnerCollaboratorProps = {
   collaboratorId: string;
   isPending: boolean;
   onSubmit: SubmitHandler<EditCollaborator>;
+  onCancel: () => void;
 };
 
 function InnerCollaborator({
   isPending,
   onSubmit,
   collaboratorId,
+  onCancel,
 }: InnerCollaboratorProps) {
   const { data } = useCollaboratorSuspense(collaboratorId);
   return (
@@ -90,6 +85,7 @@ function InnerCollaborator({
       isPending={isPending}
       onSubmit={onSubmit}
       collaborator={data}
+      onCancel={onCancel}
     />
   );
 }

@@ -16,9 +16,9 @@ import { IssueInvoiceButton } from '../components/IssueInvoiceButton';
 import { CancelInvoiceButton } from '../components/CancelInvoiceButton';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { Badge } from '@/components/ui/badge';
+
 import type { BadgeProps } from '@/components/ui/badge';
 import type { Invoice } from '#/features/invoices/schemas';
 import type { SubmitHandler } from 'react-hook-form';
@@ -136,11 +136,6 @@ function EditInvoiceInner({
         invoice={invoice as Invoice}
         isPending={edit.isPending}
         onSubmit={handleSubmit}
-      />
-      <FormCardFooter
-        formId={isStatusPending ? 'form' : undefined}
-        saveText="Save Invoice"
-        isPending={isPending}
         onCancel={onCancel}
       />
     </Card>

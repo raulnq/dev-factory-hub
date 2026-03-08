@@ -12,6 +12,7 @@ import { useExchangeRatesSuspense } from '../stores/useExchangeRates';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { EditButton } from '@/components/EditButton';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function InnerTableHeader() {
   return (
@@ -62,9 +63,9 @@ export function ExchangeRateTable() {
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.exchangeRateId}>
-              <TableCell className="font-medium">{item.date}</TableCell>
-              <TableCell>{item.fromCurrency}</TableCell>
-              <TableCell>{item.toCurrency}</TableCell>
+              <TextTableCell className="font-medium" value={item.date} />
+              <TextTableCell value={item.fromCurrency} />
+              <TextTableCell value={item.toCurrency} />
               <TableCell>{item.rate.toFixed(4)}</TableCell>
               <TableCell>
                 <div className="flex gap-2">

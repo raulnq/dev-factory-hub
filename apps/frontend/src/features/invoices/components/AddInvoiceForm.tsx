@@ -15,9 +15,14 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type AddInvoiceFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddInvoice>;
+  onCancel: () => void;
 };
 
-export function AddInvoiceForm({ isPending, onSubmit }: AddInvoiceFormProps) {
+export function AddInvoiceForm({
+  isPending,
+  onSubmit,
+  onCancel,
+}: AddInvoiceFormProps) {
   const form = useForm<AddInvoice>({
     resolver: zodResolver(addInvoiceSchema),
     defaultValues: {
@@ -33,7 +38,13 @@ export function AddInvoiceForm({ isPending, onSubmit }: AddInvoiceFormProps) {
   const total = (Number(subtotal) + Number(taxes)).toFixed(2);
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Invoice"
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="clientId"

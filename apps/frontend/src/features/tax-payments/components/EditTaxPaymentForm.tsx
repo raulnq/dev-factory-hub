@@ -19,12 +19,14 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type EditTaxPaymentFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditTaxPayment>;
+  onCancel: () => void;
   taxPayment: TaxPayment;
 };
 
 export function EditTaxPaymentForm({
   taxPayment,
   onSubmit,
+  onCancel,
   isPending,
 }: EditTaxPaymentFormProps) {
   const isStatusPending = taxPayment.status === 'Pending';
@@ -38,8 +40,12 @@ export function EditTaxPaymentForm({
 
   return (
     <FormCardContent
-      formId="tax-payment-form"
+      formId={isStatusPending ? 'tax-payment-form' : undefined}
       onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      isPending={isPending}
+      saveText="Save Tax Payment"
+      cancelText={isStatusPending ? 'Cancel' : 'Back'}
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">

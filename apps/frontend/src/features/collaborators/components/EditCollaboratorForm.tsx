@@ -17,12 +17,14 @@ import { FormCardContent } from '@/components/FormCardContent';
 type EditCollaboratorFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditCollaborator>;
+  onCancel: () => void;
   collaborator: Collaborator;
 };
 
 export function EditCollaboratorForm({
   isPending,
   onSubmit,
+  onCancel,
   collaborator,
 }: EditCollaboratorFormProps) {
   const form = useForm<EditCollaborator>({
@@ -31,7 +33,13 @@ export function EditCollaboratorForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Collaborator"
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="name"

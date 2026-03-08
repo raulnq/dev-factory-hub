@@ -17,11 +17,13 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type AddExchangeRateFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddExchangeRate>;
+  onCancel: () => void;
 };
 
 export function AddExchangeRateForm({
   isPending,
   onSubmit,
+  onCancel,
 }: AddExchangeRateFormProps) {
   const form = useForm<AddExchangeRate>({
     resolver: zodResolver(addExchangeRateSchema),
@@ -34,7 +36,13 @@ export function AddExchangeRateForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Exchange Rate"
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="date"

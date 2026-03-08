@@ -17,9 +17,14 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 type AddProformaFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddProforma>;
+  onCancel: () => void;
 };
 
-export function AddProformaForm({ onSubmit, isPending }: AddProformaFormProps) {
+export function AddProformaForm({
+  onSubmit,
+  onCancel,
+  isPending,
+}: AddProformaFormProps) {
   const form = useForm<AddProforma>({
     resolver: zodResolver(addProformaSchema),
     defaultValues: {
@@ -34,6 +39,9 @@ export function AddProformaForm({ onSubmit, isPending }: AddProformaFormProps) {
     <FormCardContent
       formId="proforma-form"
       onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      isPending={isPending}
+      saveText="Save Proforma"
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">

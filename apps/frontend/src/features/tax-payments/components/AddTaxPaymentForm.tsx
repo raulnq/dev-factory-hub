@@ -28,10 +28,12 @@ const MONTHS = Array.from({ length: 13 }, (_, i) => i + 1);
 type AddTaxPaymentFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddTaxPayment>;
+  onCancel: () => void;
 };
 
 export function AddTaxPaymentForm({
   onSubmit,
+  onCancel,
   isPending,
 }: AddTaxPaymentFormProps) {
   const form = useForm<AddTaxPayment>({
@@ -48,6 +50,9 @@ export function AddTaxPaymentForm({
     <FormCardContent
       formId="tax-payment-form"
       onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      isPending={isPending}
+      saveText="Save Tax Payment"
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">

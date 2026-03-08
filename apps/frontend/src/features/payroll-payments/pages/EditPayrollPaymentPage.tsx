@@ -24,9 +24,9 @@ import { PayrollPaymentSkeleton } from '../components/PayrollPaymentSkeleton';
 import { PayrollPaymentToolbar } from '../components/PayrollPaymentToolbar';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { Badge } from '@/components/ui/badge';
+
 import type { BadgeProps } from '@/components/ui/badge';
 
 function statusVariant(status: string): BadgeProps['variant'] {
@@ -171,8 +171,6 @@ function EditPayrollPaymentInner({
     upload.isPending ||
     downloadUrl.isPending;
 
-  const isStatusPending = payrollPayment.status === 'Pending';
-
   return (
     <>
       <FormCardHeader
@@ -199,13 +197,7 @@ function EditPayrollPaymentInner({
         payrollPayment={payrollPayment as PayrollPayment}
         isPending={edit.isPending}
         onSubmit={handleSubmit}
-      />
-      <FormCardFooter
-        formId={isStatusPending ? 'form' : undefined}
-        saveText="Save Payroll Payment"
-        cancelText="Back"
         onCancel={onCancel}
-        isPending={isPending}
       />
     </>
   );

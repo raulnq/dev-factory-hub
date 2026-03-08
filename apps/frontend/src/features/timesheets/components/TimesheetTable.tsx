@@ -14,6 +14,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { DateTableCell } from '@/components/DateTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditButton } from '@/components/EditButton';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function InnerTableHeader() {
   return (
@@ -66,10 +67,11 @@ export function TimesheetTable() {
         <TableBody>
           {data?.items.map(item => (
             <TableRow key={item.timesheetId}>
-              <TableCell className="font-medium">
-                {item.collaboratorName}
-              </TableCell>
-              <TableCell>{item.collaboratorRoleName}</TableCell>
+              <TextTableCell
+                className="font-medium"
+                value={item.collaboratorName}
+              />
+              <TextTableCell value={item.collaboratorRoleName} />
               <DateTableCell value={item.startDate} />
               <DateTableCell value={item.endDate} />
               <DateTableCell value={item.completedAt} />

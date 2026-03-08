@@ -17,6 +17,7 @@ import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditButton } from '@/components/EditButton';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -83,9 +84,9 @@ export function TransactionTable() {
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.transactionId}>
-              <TableCell>{item.type}</TableCell>
-              <TableCell>{item.description}</TableCell>
-              <TableCell>{item.currency}</TableCell>
+              <TextTableCell value={item.type} />
+              <TextTableCell value={item.description} />
+              <TextTableCell value={item.currency} />
               <NumberTableCell value={item.subtotal} />
               <NumberTableCell value={item.taxes} />
               <NumberTableCell value={item.total} />

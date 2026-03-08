@@ -16,6 +16,7 @@ import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditButton } from '@/components/EditButton';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
   switch (status) {
@@ -82,10 +83,8 @@ export function CollectionTable() {
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.collectionId}>
-              <TableCell className="font-medium">
-                {item.clientName ?? ''}
-              </TableCell>
-              <TableCell>{item.currency}</TableCell>
+              <TextTableCell className="font-medium" value={item.clientName} />
+              <TextTableCell value={item.currency} />
               <NumberTableCell value={Number(item.total)} />
               <NumberTableCell value={Number(item.commission)} />
               <NumberTableCell value={Number(item.taxes)} />

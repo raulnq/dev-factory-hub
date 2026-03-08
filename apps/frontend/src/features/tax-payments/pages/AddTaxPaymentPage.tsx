@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { AddTaxPaymentForm } from '../components/AddTaxPaymentForm';
 import { useAddTaxPayment } from '../stores/useTaxPayments';
+
 import { toast } from 'sonner';
 import type { AddTaxPayment } from '#/features/tax-payments/schemas';
 import type { SubmitHandler } from 'react-hook-form';
@@ -31,11 +31,10 @@ export function AddTaxPaymentPage() {
           title="Add Tax Payment"
           description="Create a new tax payment."
         />
-        <AddTaxPaymentForm onSubmit={onSubmit} isPending={add.isPending} />
-        <FormCardFooter
-          formId="tax-payment-form"
-          isPending={add.isPending}
+        <AddTaxPaymentForm
+          onSubmit={onSubmit}
           onCancel={() => navigate('/tax-payments')}
+          isPending={add.isPending}
         />
       </Card>
     </div>

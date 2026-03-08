@@ -18,11 +18,13 @@ import { CollaboratorRoleCombobox } from '@/features/collaborator-roles/componen
 type AddTimesheetFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddTimesheet>;
+  onCancel: () => void;
 };
 
 export function AddTimesheetForm({
   isPending,
   onSubmit,
+  onCancel,
 }: AddTimesheetFormProps) {
   const form = useForm<AddTimesheet>({
     resolver: zodResolver(addTimesheetSchema),
@@ -35,7 +37,13 @@ export function AddTimesheetForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Create Timesheet"
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="collaboratorId"

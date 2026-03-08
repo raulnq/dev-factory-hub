@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router';
 import { Card } from '@/components/ui/card';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { AddProformaForm } from '../components/AddProformaForm';
 import { useAddProforma } from '../stores/useProformas';
+
 import { toast } from 'sonner';
 import type { AddProforma } from '#/features/proformas/schemas';
 import type { SubmitHandler } from 'react-hook-form';
@@ -31,11 +31,10 @@ export function AddProformaPage() {
           title="Add Proforma"
           description="Create a new proforma."
         />
-        <AddProformaForm onSubmit={onSubmit} isPending={add.isPending} />
-        <FormCardFooter
-          formId="proforma-form"
-          isPending={add.isPending}
+        <AddProformaForm
+          onSubmit={onSubmit}
           onCancel={() => navigate('/proformas')}
+          isPending={add.isPending}
         />
       </Card>
     </div>

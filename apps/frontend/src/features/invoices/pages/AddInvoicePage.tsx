@@ -5,7 +5,6 @@ import type { AddInvoice } from '#/features/invoices/schemas';
 import { useAddInvoice } from '../stores/useInvoices';
 import { AddInvoiceForm } from '../components/AddInvoiceForm';
 import { FormCardHeader } from '@/components/FormCardHeader';
-import { FormCardFooter } from '@/components/FormCardFooter';
 import { Card } from '@/components/ui/card';
 
 export function AddInvoicePage() {
@@ -31,11 +30,9 @@ export function AddInvoicePage() {
           title="Add Invoice"
           description="Create a new invoice."
         />
-        <AddInvoiceForm isPending={add.isPending} onSubmit={onSubmit} />
-        <FormCardFooter
-          formId="form"
-          saveText="Save Invoice"
+        <AddInvoiceForm
           isPending={add.isPending}
+          onSubmit={onSubmit}
           onCancel={() => navigate('/invoices')}
         />
       </Card>

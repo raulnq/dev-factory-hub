@@ -14,6 +14,7 @@ import { useBankBalanceSuspense } from '../stores/useBankBalance';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function InnerTableHeader() {
   return (
@@ -74,13 +75,14 @@ export function BankBalanceTable() {
                   {entry.type}
                 </Badge>
               </TableCell>
-              <TableCell>{entry.description}</TableCell>
-              <NumberTableCell className="text-right" value={entry.total} />
-              <NumberTableCell className="text-right" value={entry.taxes} />
-              <NumberTableCell className="text-right" value={entry.balance} />
+              <TextTableCell value={entry.description} />
+              <NumberTableCell value={entry.total} />
+              <NumberTableCell value={entry.taxes} />
+              <NumberTableCell value={entry.balance} />
             </TableRow>
           ))}
         </TableBody>
+
         <TableFooter>
           <TableRow>
             <TableCell colSpan={5} className="text-right font-semibold">

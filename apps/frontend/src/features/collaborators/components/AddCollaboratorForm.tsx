@@ -16,11 +16,13 @@ import { FormCardContent } from '@/components/FormCardContent';
 type AddCollaboratorFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddCollaborator>;
+  onCancel: () => void;
 };
 
 export function AddCollaboratorForm({
   isPending,
   onSubmit,
+  onCancel,
 }: AddCollaboratorFormProps) {
   const form = useForm<AddCollaborator>({
     resolver: zodResolver(addCollaboratorSchema),
@@ -32,7 +34,13 @@ export function AddCollaboratorForm({
   });
 
   return (
-    <FormCardContent formId="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <FormCardContent
+      formId="form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      onCancel={onCancel}
+      saveText="Save Collaborator"
+      isPending={isPending}
+    >
       <FieldGroup>
         <Controller
           name="name"
