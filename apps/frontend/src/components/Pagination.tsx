@@ -42,42 +42,44 @@ export function Pagination({ totalPages, pageParamName }: PaginationProps) {
   }
 
   return (
-    <PaginationRoot>
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious
-            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-            className={
-              currentPage === 1
-                ? 'pointer-events-none opacity-50'
-                : 'cursor-pointer'
-            }
-          />
-        </PaginationItem>
-        {pages.map(page => (
-          <PaginationItem key={page}>
-            <PaginationLink
-              onClick={() => handlePageChange(page)}
-              isActive={page === currentPage}
-              className="cursor-pointer"
-            >
-              {page}
-            </PaginationLink>
+    <div className="mt-4">
+      <PaginationRoot>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+              className={
+                currentPage === 1
+                  ? 'pointer-events-none opacity-50'
+                  : 'cursor-pointer'
+              }
+            />
           </PaginationItem>
-        ))}
-        <PaginationItem>
-          <PaginationNext
-            onClick={() =>
-              handlePageChange(Math.min(totalPages, currentPage + 1))
-            }
-            className={
-              currentPage === totalPages
-                ? 'pointer-events-none opacity-50'
-                : 'cursor-pointer'
-            }
-          />
-        </PaginationItem>
-      </PaginationContent>
-    </PaginationRoot>
+          {pages.map(page => (
+            <PaginationItem key={page}>
+              <PaginationLink
+                onClick={() => handlePageChange(page)}
+                isActive={page === currentPage}
+                className="cursor-pointer"
+              >
+                {page}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+          <PaginationItem>
+            <PaginationNext
+              onClick={() =>
+                handlePageChange(Math.min(totalPages, currentPage + 1))
+              }
+              className={
+                currentPage === totalPages
+                  ? 'pointer-events-none opacity-50'
+                  : 'cursor-pointer'
+              }
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </PaginationRoot>
+    </div>
   );
 }

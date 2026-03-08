@@ -245,9 +245,7 @@ function ProjectsTable({ clientId, onEdit, onDelete }: ProjectsTableProps) {
           ))}
         </TableBody>
       </Table>
-      <div className="mt-4">
-        <Pagination totalPages={data.totalPages} pageParamName="projectsPage" />
-      </div>
+      <Pagination totalPages={data.totalPages} pageParamName="projectsPage" />
     </div>
   );
 }

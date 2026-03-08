@@ -89,9 +89,7 @@ export function CollaboratorTable() {
           ))}
         </TableBody>
       </Table>
-      <div className="mt-4">
-        <Pagination totalPages={data.totalPages} />
-      </div>
+      <Pagination totalPages={data.totalPages} />
     </div>
   );
 }

@@ -248,9 +248,7 @@ function ContactsTable({ clientId, onEdit, onDelete }: ContactsTableProps) {
           ))}
         </TableBody>
       </Table>
-      <div className="mt-4">
-        <Pagination totalPages={data.totalPages} pageParamName="contactsPage" />
-      </div>
+      <Pagination totalPages={data.totalPages} pageParamName="contactsPage" />
     </div>
   );
 }
