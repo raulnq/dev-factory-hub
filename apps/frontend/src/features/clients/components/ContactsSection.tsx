@@ -170,28 +170,30 @@ export function ContactsSection({ clientId }: ContactsSectionProps) {
   );
 }
 
+function InnerTableHeader() {
+  return (
+    <TableHeader>
+      <TableRow>
+        <TableHead className="min-w-60">Name</TableHead>
+        <TableHead className="min-w-60">Email</TableHead>
+        <TableHead className="w-20">Actions</TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
 function ContactsSkeleton() {
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Email</TableHead>
-          <TableHead className="w-[100px]">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
+      <InnerTableHeader />
       <TableBody>
         {Array.from({ length: 5 }).map((_, index) => (
           <TableRow key={index}>
-            <TableCell>
-              <Skeleton className="h-8 w-[50%]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[70%]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8" />
-            </TableCell>
+            {Array.from({ length: 3 }).map((_, i) => (
+              <TableCell key={i}>
+                <Skeleton className="h-8" />
+              </TableCell>
+            ))}
           </TableRow>
         ))}
       </TableBody>
@@ -214,15 +216,9 @@ function ContactsTable({ clientId, onEdit, onDelete }: ContactsTableProps) {
   if (data.items.length === 0) return <NoMatchingItems />;
 
   return (
-    <>
+    <div className="overflow-x-auto">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead className="w-[100px]">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
+        <InnerTableHeader />
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.contactId}>
@@ -255,6 +251,6 @@ function ContactsTable({ clientId, onEdit, onDelete }: ContactsTableProps) {
       <div className="mt-4">
         <Pagination totalPages={data.totalPages} pageParamName="contactsPage" />
       </div>
-    </>
+    </div>
   );
 }

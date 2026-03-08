@@ -15,40 +15,33 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 
+function InnerTableHeader() {
+  return (
+    <TableHeader>
+      <TableRow>
+        <TableHead className="min-w-30">Issued At</TableHead>
+        <TableHead className="min-w-20">Type</TableHead>
+        <TableHead className="min-w-60">Description</TableHead>
+        <TableHead className="text-right min-w-30">Total</TableHead>
+        <TableHead className="text-right min-w-30">Taxes</TableHead>
+        <TableHead className="text-right min-w-30">Balance</TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
 export function BankBalanceSkeleton() {
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Issued At</TableHead>
-          <TableHead>Type</TableHead>
-          <TableHead>Description</TableHead>
-          <TableHead className="text-right">Total</TableHead>
-          <TableHead className="text-right">Taxes</TableHead>
-          <TableHead className="text-right">Balance</TableHead>
-        </TableRow>
-      </TableHeader>
+      <InnerTableHeader />
       <TableBody>
         {Array.from({ length: 8 }).map((_, index) => (
           <TableRow key={index}>
-            <TableCell>
-              <Skeleton className="h-5 w-[100px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-5 w-[70px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-5 w-[200px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-5 w-[80px] ml-auto" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-5 w-[60px] ml-auto" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-5 w-[80px] ml-auto" />
-            </TableCell>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <TableCell key={i}>
+                <Skeleton className="h-5" />
+              </TableCell>
+            ))}
           </TableRow>
         ))}
       </TableBody>
@@ -67,46 +60,39 @@ export function BankBalanceTable() {
   if (data.entries.length === 0) return <NoMatchingItems />;
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Issued At</TableHead>
-          <TableHead>Type</TableHead>
-          <TableHead>Description</TableHead>
-          <TableHead className="text-right">Total</TableHead>
-          <TableHead className="text-right">Taxes</TableHead>
-          <TableHead className="text-right">Balance</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {data.entries.map((entry, index) => (
-          <TableRow key={index}>
-            <DateTableCell value={entry.issuedAt} />
-            <TableCell>
-              <Badge
-                variant={entry.type === 'Income' ? 'default' : 'destructive'}
-              >
-                {entry.type}
-              </Badge>
+    <div className="overflow-x-auto">
+      <Table>
+        <InnerTableHeader />
+        <TableBody>
+          {data.entries.map((entry, index) => (
+            <TableRow key={index}>
+              <DateTableCell value={entry.issuedAt} />
+              <TableCell>
+                <Badge
+                  variant={entry.type === 'Income' ? 'default' : 'destructive'}
+                >
+                  {entry.type}
+                </Badge>
+              </TableCell>
+              <TableCell>{entry.description}</TableCell>
+              <NumberTableCell className="text-right" value={entry.total} />
+              <NumberTableCell className="text-right" value={entry.taxes} />
+              <NumberTableCell className="text-right" value={entry.balance} />
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={5} className="text-right font-semibold">
+              Final Balance ({currency})
             </TableCell>
-            <TableCell>{entry.description}</TableCell>
-            <NumberTableCell value={entry.total} />
-            <NumberTableCell value={entry.taxes} />
-            <NumberTableCell value={entry.balance} />
+            <NumberTableCell
+              value={data.finalBalance}
+              className="text-right font-mono font-semibold"
+            />
           </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={5} className="text-right font-semibold">
-            Final Balance ({currency})
-          </TableCell>
-          <NumberTableCell
-            value={data.finalBalance}
-            className="text-right font-mono font-semibold"
-          />
-        </TableRow>
-      </TableFooter>
-    </Table>
+        </TableFooter>
+      </Table>
+    </div>
   );
 }

@@ -28,34 +28,37 @@ function statusVariant(status: string): BadgeProps['variant'] {
   }
 }
 
+function InnerTableHeader() {
+  return (
+    <TableHeader>
+      <TableRow>
+        <TableHead className="min-w-20">From</TableHead>
+        <TableHead className="min-w-20">To</TableHead>
+        <TableHead className="min-w-30">Rate</TableHead>
+        <TableHead className="min-w-30">From Amount</TableHead>
+        <TableHead className="min-w-30">To Amount</TableHead>
+        <TableHead className="min-w-30">From Taxes</TableHead>
+        <TableHead className="min-w-30">To Taxes</TableHead>
+        <TableHead className="min-w-30">Issued At</TableHead>
+        <TableHead className="min-w-30">Status</TableHead>
+        <TableHead className="w-20">Actions</TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
 export function MoneyExchangesSkeleton() {
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>From</TableHead>
-          <TableHead>To</TableHead>
-          <TableHead>Rate</TableHead>
-          <TableHead>From Amount</TableHead>
-          <TableHead>To Amount</TableHead>
-          <TableHead>From Taxes</TableHead>
-          <TableHead>To Taxes</TableHead>
-          <TableHead>Issued At</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="w-[80px]">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
+      <InnerTableHeader />
       <TableBody>
         {Array.from({ length: 10 }).map((_, index) => (
           <TableRow key={index}>
-            {Array.from({ length: 9 }).map((_, i) => (
+            {Array.from({ length: 10 }).map((_, i) => (
               <TableCell key={i}>
-                <Skeleton className="h-8 w-full" />
+                <Skeleton className="h-8" />
               </TableCell>
             ))}
-            <TableCell>
-              <Skeleton className="h-8 w-8" />
-            </TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -79,22 +82,9 @@ export function MoneyExchangeTable() {
   if (data.items.length === 0) return <NoMatchingItems />;
 
   return (
-    <>
+    <div className="overflow-x-auto">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>From</TableHead>
-            <TableHead>To</TableHead>
-            <TableHead>Rate</TableHead>
-            <TableHead>From Amount</TableHead>
-            <TableHead>To Amount</TableHead>
-            <TableHead>From Taxes</TableHead>
-            <TableHead>To Taxes</TableHead>
-            <TableHead>Issued At</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="w-[80px]">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
+        <InnerTableHeader />
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.moneyExchangeId}>
@@ -125,6 +115,6 @@ export function MoneyExchangeTable() {
       <div className="mt-4">
         <Pagination totalPages={data.totalPages} />
       </div>
-    </>
+    </div>
   );
 }

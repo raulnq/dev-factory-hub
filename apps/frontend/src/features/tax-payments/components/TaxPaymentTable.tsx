@@ -19,44 +19,34 @@ import { EditButton } from '@/components/EditButton';
 
 const currentYear = new Date().getFullYear();
 
+function InnerTableHeader() {
+  return (
+    <TableHeader>
+      <TableRow>
+        <TableHead className="min-w-20">Year</TableHead>
+        <TableHead className="min-w-20">Month</TableHead>
+        <TableHead className="min-w-20">Currency</TableHead>
+        <TableHead className="min-w-30">Total</TableHead>
+        <TableHead className="min-w-30">Paid At</TableHead>
+        <TableHead className="min-w-30">Status</TableHead>
+        <TableHead className="w-20">Actions</TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
 export function TaxPaymentsSkeleton() {
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Year</TableHead>
-          <TableHead>Month</TableHead>
-          <TableHead>Currency</TableHead>
-          <TableHead>Total</TableHead>
-          <TableHead>Paid At</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="w-[80px]">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
+      <InnerTableHeader />
       <TableBody>
         {Array.from({ length: 10 }).map((_, index) => (
           <TableRow key={index}>
-            <TableCell>
-              <Skeleton className="h-8 w-[60px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[40px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[50px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[80px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[80px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[60px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8" />
-            </TableCell>
+            {Array.from({ length: 7 }).map((_, i) => (
+              <TableCell key={i}>
+                <Skeleton className="h-8" />
+              </TableCell>
+            ))}
           </TableRow>
         ))}
       </TableBody>
@@ -75,19 +65,9 @@ export function TaxPaymentTable() {
   if (data.items.length === 0) return <NoMatchingItems />;
 
   return (
-    <>
+    <div className="overflow-x-auto">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Year</TableHead>
-            <TableHead>Month</TableHead>
-            <TableHead>Currency</TableHead>
-            <TableHead>Total</TableHead>
-            <TableHead>Paid At</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="w-[80px]">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
+        <InnerTableHeader />
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.taxPaymentId}>
@@ -109,6 +89,6 @@ export function TaxPaymentTable() {
       <div className="mt-4">
         <Pagination totalPages={data.totalPages} />
       </div>
-    </>
+    </div>
   );
 }

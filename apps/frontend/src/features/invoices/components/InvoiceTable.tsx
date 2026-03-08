@@ -27,44 +27,34 @@ function statusVariant(status: string): BadgeProps['variant'] {
   }
 }
 
+function InnerTableHeader() {
+  return (
+    <TableHeader>
+      <TableRow>
+        <TableHead className="min-w-60">Client</TableHead>
+        <TableHead className="min-w-20">Currency</TableHead>
+        <TableHead className="min-w-30">Subtotal</TableHead>
+        <TableHead className="min-w-30">Taxes</TableHead>
+        <TableHead className="min-w-30">Total</TableHead>
+        <TableHead className="min-w-30">Status</TableHead>
+        <TableHead className="w-20">Actions</TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
 export function InvoicesSkeleton() {
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Client</TableHead>
-          <TableHead>Currency</TableHead>
-          <TableHead>Subtotal</TableHead>
-          <TableHead>Taxes</TableHead>
-          <TableHead>Total</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="w-[80px]">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
+      <InnerTableHeader />
       <TableBody>
         {Array.from({ length: 10 }).map((_, index) => (
           <TableRow key={index}>
-            <TableCell>
-              <Skeleton className="h-8 w-[50%]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[40px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[60px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[60px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[60px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[80px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8" />
-            </TableCell>
+            {Array.from({ length: 7 }).map((_, i) => (
+              <TableCell key={i}>
+                <Skeleton className="h-8" />
+              </TableCell>
+            ))}
           </TableRow>
         ))}
       </TableBody>
@@ -82,19 +72,9 @@ export function InvoiceTable() {
   if (data.items.length === 0) return <NoMatchingItems />;
 
   return (
-    <>
+    <div className="overflow-x-auto">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Client</TableHead>
-            <TableHead>Currency</TableHead>
-            <TableHead>Subtotal</TableHead>
-            <TableHead>Taxes</TableHead>
-            <TableHead>Total</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="w-[80px]">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
+        <InnerTableHeader />
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.invoiceId}>
@@ -118,6 +98,6 @@ export function InvoiceTable() {
       <div className="mt-4">
         <Pagination totalPages={data.totalPages} />
       </div>
-    </>
+    </div>
   );
 }

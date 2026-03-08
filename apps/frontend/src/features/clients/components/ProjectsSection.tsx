@@ -169,24 +169,29 @@ export function ProjectsSection({ clientId }: ProjectsSectionProps) {
   );
 }
 
+function InnerTableHeader() {
+  return (
+    <TableHeader>
+      <TableRow>
+        <TableHead className="min-w-60">Name</TableHead>
+        <TableHead className="w-20">Actions</TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
 function ProjectsSkeleton() {
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead className="w-[100px]">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
+      <InnerTableHeader />
       <TableBody>
         {Array.from({ length: 5 }).map((_, index) => (
           <TableRow key={index}>
-            <TableCell>
-              <Skeleton className="h-8 w-[50%]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8" />
-            </TableCell>
+            {Array.from({ length: 2 }).map((_, i) => (
+              <TableCell key={i}>
+                <Skeleton className="h-8" />
+              </TableCell>
+            ))}
           </TableRow>
         ))}
       </TableBody>
@@ -209,14 +214,9 @@ function ProjectsTable({ clientId, onEdit, onDelete }: ProjectsTableProps) {
   if (data.items.length === 0) return <NoMatchingItems />;
 
   return (
-    <>
+    <div className="overflow-x-auto">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead className="w-[100px]">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
+        <InnerTableHeader />
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.projectId}>
@@ -248,6 +248,6 @@ function ProjectsTable({ clientId, onEdit, onDelete }: ProjectsTableProps) {
       <div className="mt-4">
         <Pagination totalPages={data.totalPages} pageParamName="projectsPage" />
       </div>
-    </>
+    </div>
   );
 }

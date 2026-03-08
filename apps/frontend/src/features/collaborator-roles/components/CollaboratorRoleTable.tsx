@@ -16,36 +16,32 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { EditButton } from '@/components/EditButton';
 
+function InnerTableHeader() {
+  return (
+    <TableHeader>
+      <TableRow>
+        <TableHead className="min-w-60">Name</TableHead>
+        <TableHead className="min-w-20">Currency</TableHead>
+        <TableHead className="min-w-30">Fee Rate</TableHead>
+        <TableHead className="min-w-30">Cost Rate</TableHead>
+        <TableHead className="w-20">Actions</TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
 export function CollaboratorRolesSkeleton() {
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Currency</TableHead>
-          <TableHead>Fee Rate</TableHead>
-          <TableHead>Cost Rate</TableHead>
-          <TableHead className="w-[100px]">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
+      <InnerTableHeader />
       <TableBody>
         {Array.from({ length: 10 }).map((_, index) => (
           <TableRow key={index}>
-            <TableCell>
-              <Skeleton className="h-8 w-[50%]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[30%]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[40%]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[40%]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8" />
-            </TableCell>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <TableCell key={i}>
+                <Skeleton className="h-8" />
+              </TableCell>
+            ))}
           </TableRow>
         ))}
       </TableBody>
@@ -63,17 +59,9 @@ export function CollaboratorRoleTable() {
   if (data.items.length === 0) return <NoMatchingItems />;
 
   return (
-    <>
+    <div className="overflow-x-auto">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Currency</TableHead>
-            <TableHead>Fee Rate</TableHead>
-            <TableHead>Cost Rate</TableHead>
-            <TableHead className="w-[100px]">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
+        <InnerTableHeader />
         <TableBody>
           {data?.items.map(item => (
             <TableRow key={item.collaboratorRoleId}>
@@ -107,6 +95,6 @@ export function CollaboratorRoleTable() {
       <div className="mt-4">
         <Pagination totalPages={data.totalPages} />
       </div>
-    </>
+    </div>
   );
 }

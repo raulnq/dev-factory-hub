@@ -15,40 +15,53 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 
+function InnerTableHeader({
+  exchangeCurrencyTo,
+}: {
+  exchangeCurrencyTo?: string;
+}) {
+  const showConverted = !!exchangeCurrencyTo;
+  return (
+    <TableHeader>
+      <TableRow>
+        <TableHead className="min-w-30">Issued At</TableHead>
+        <TableHead className="min-w-20">Type</TableHead>
+        <TableHead className="min-w-40">Name</TableHead>
+        <TableHead className="min-w-60">Description</TableHead>
+        <TableHead className="text-right min-w-30">Amount</TableHead>
+        <TableHead className="text-right min-w-30">Balance</TableHead>
+        {showConverted && (
+          <>
+            <TableHead className="text-right min-w-30">
+              Amount ({exchangeCurrencyTo})
+            </TableHead>
+            <TableHead className="text-right min-w-30">
+              Balance ({exchangeCurrencyTo})
+            </TableHead>
+          </>
+        )}
+      </TableRow>
+    </TableHeader>
+  );
+}
+
 export function CollaboratorBalanceSkeleton() {
+  const [searchParams] = useSearchParams();
+  const exchangeCurrencyTo =
+    searchParams.get('exchangeCurrencyTo') ?? undefined;
+  const colCount = exchangeCurrencyTo ? 8 : 6;
+
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Issued At</TableHead>
-          <TableHead>Type</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Description</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
-          <TableHead className="text-right">Balance</TableHead>
-        </TableRow>
-      </TableHeader>
+      <InnerTableHeader exchangeCurrencyTo={exchangeCurrencyTo} />
       <TableBody>
         {Array.from({ length: 8 }).map((_, index) => (
           <TableRow key={index}>
-            <TableCell>
-              <Skeleton className="h-5 w-[100px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-5 w-[70px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-5 w-[120px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-5 w-[200px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-5 w-[80px] ml-auto" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-5 w-[80px] ml-auto" />
-            </TableCell>
+            {Array.from({ length: colCount }).map((_, i) => (
+              <TableCell key={i}>
+                <Skeleton className="h-5" />
+              </TableCell>
+            ))}
           </TableRow>
         ))}
       </TableBody>
@@ -78,79 +91,62 @@ export function CollaboratorBalanceTable() {
   const showConverted = !!exchangeCurrencyTo;
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Issued At</TableHead>
-          <TableHead>Type</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Description</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
-          <TableHead className="text-right">Balance</TableHead>
-          {showConverted && (
-            <>
-              <TableHead className="text-right">
-                Amount ({exchangeCurrencyTo})
-              </TableHead>
-              <TableHead className="text-right">
-                Balance ({exchangeCurrencyTo})
-              </TableHead>
-            </>
-          )}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {data.entries.map((entry, index) => (
-          <TableRow key={index}>
-            <DateTableCell value={entry.issuedAt} />
-            <TableCell>
-              <Badge
-                variant={entry.type === 'Income' ? 'default' : 'destructive'}
-              >
-                {entry.type}
-              </Badge>
+    <div className="overflow-x-auto">
+      <Table>
+        <InnerTableHeader exchangeCurrencyTo={exchangeCurrencyTo} />
+        <TableBody>
+          {data.entries.map((entry, index) => (
+            <TableRow key={index}>
+              <DateTableCell value={entry.issuedAt} />
+              <TableCell>
+                <Badge
+                  variant={entry.type === 'Income' ? 'default' : 'destructive'}
+                >
+                  {entry.type}
+                </Badge>
+              </TableCell>
+              <TableCell>{entry.name}</TableCell>
+              <TableCell>{entry.description}</TableCell>
+              <NumberTableCell className="text-right" value={entry.amount} />
+              <NumberTableCell className="text-right" value={entry.balance} />
+              {showConverted && (
+                <>
+                  <NumberTableCell
+                    className="text-right"
+                    value={entry.convertedAmount ?? 0}
+                  />
+                  <NumberTableCell
+                    className="text-right"
+                    value={entry.convertedBalance ?? 0}
+                  />
+                </>
+              )}
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={5} className="text-right font-semibold">
+              Final Balance ({currency})
             </TableCell>
-            <TableCell>{entry.name}</TableCell>
-            <TableCell>{entry.description}</TableCell>
-            <NumberTableCell className="text-right" value={entry.amount} />
-            <NumberTableCell className="text-right" value={entry.balance} />
+            <NumberTableCell
+              value={data.finalBalance}
+              className="text-right font-mono font-semibold"
+            />
             {showConverted && (
               <>
+                <TableCell className="text-right font-semibold">
+                  Final Balance ({exchangeCurrencyTo})
+                </TableCell>
                 <NumberTableCell
-                  className="text-right"
-                  value={entry.convertedAmount ?? 0}
-                />
-                <NumberTableCell
-                  className="text-right"
-                  value={entry.convertedBalance ?? 0}
+                  value={data.finalConvertedBalance ?? 0}
+                  className="text-right font-mono font-semibold"
                 />
               </>
             )}
           </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={5} className="text-right font-semibold">
-            Final Balance ({currency})
-          </TableCell>
-          <NumberTableCell
-            value={data.finalBalance}
-            className="text-right font-mono font-semibold"
-          />
-          {showConverted && (
-            <>
-              <TableCell className="text-right font-semibold">
-                Final Balance ({exchangeCurrencyTo})
-              </TableCell>
-              <NumberTableCell
-                value={data.finalConvertedBalance ?? 0}
-                className="text-right font-mono font-semibold"
-              />
-            </>
-          )}
-        </TableRow>
-      </TableFooter>
-    </Table>
+        </TableFooter>
+      </Table>
+    </div>
   );
 }

@@ -32,48 +32,35 @@ function statusVariant(status: string): BadgeProps['variant'] {
   }
 }
 
+function InnerTableHeader() {
+  return (
+    <TableHeader>
+      <TableRow>
+        <TableHead className="min-w-60">Collaborator</TableHead>
+        <TableHead className="min-w-20">Currency</TableHead>
+        <TableHead className="min-w-30">Net Salary</TableHead>
+        <TableHead className="min-w-30">Pension</TableHead>
+        <TableHead className="min-w-30">Gross Salary</TableHead>
+        <TableHead className="min-w-30">Paid At</TableHead>
+        <TableHead className="min-w-30">Status</TableHead>
+        <TableHead className="w-20">Actions</TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
 export function PayrollPaymentsSkeleton() {
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Collaborator</TableHead>
-          <TableHead>Currency</TableHead>
-          <TableHead>Net Salary</TableHead>
-          <TableHead>Pension</TableHead>
-          <TableHead>Gross Salary</TableHead>
-          <TableHead>Paid At</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="w-[80px]">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
+      <InnerTableHeader />
       <TableBody>
         {Array.from({ length: 10 }).map((_, index) => (
           <TableRow key={index}>
-            <TableCell>
-              <Skeleton className="h-8 w-[50%]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[40px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[80px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[80px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[80px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[80px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[80px]" />
-            </TableCell>
-            <TableCell>
-              <Skeleton className="h-8 w-[40px]" />
-            </TableCell>
+            {Array.from({ length: 8 }).map((_, i) => (
+              <TableCell key={i}>
+                <Skeleton className="h-8" />
+              </TableCell>
+            ))}
           </TableRow>
         ))}
       </TableBody>
@@ -91,20 +78,9 @@ export function PayrollPaymentTable() {
   if (data.items.length === 0) return <NoMatchingItems />;
 
   return (
-    <>
+    <div className="overflow-x-auto">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Collaborator</TableHead>
-            <TableHead>Currency</TableHead>
-            <TableHead>Net Salary</TableHead>
-            <TableHead>Pension</TableHead>
-            <TableHead>Gross Salary</TableHead>
-            <TableHead>Paid At</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="w-[80px]">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
+        <InnerTableHeader />
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.payrollPaymentId}>
@@ -131,6 +107,6 @@ export function PayrollPaymentTable() {
       <div className="mt-4">
         <Pagination totalPages={data.totalPages} />
       </div>
-    </>
+    </div>
   );
 }

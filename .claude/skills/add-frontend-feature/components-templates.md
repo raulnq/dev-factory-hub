@@ -138,22 +138,27 @@ import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { EditButton } from '@/components/EditButton';
 
+function InnerTableHeader() {
+  return (
+    <TableHeader>
+      <TableRow>
+        <TableHead className="min-w-60">Name</TableHead>
+        {/* Add column headers */}
+        <TableHead className="w-20">Actions</TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
 
 export function <Entities>Skeleton() {
   return (
     <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Name</TableHead>
-          {/* Add column headers */}
-          <TableHead className="w-[100px]">Actions</TableHead>
-        </TableRow>
-      </TableHeader>
+      <InnerTableHeader />
       <TableBody>
         {Array.from({ length: 10 }).map((_, index) => (
           <TableRow key={index}>
             <TableCell>
-              <Skeleton className="h-8 w-[50%]" />
+              <Skeleton className="h-8" />
             </TableCell>
             {/* Match column count */}
             <TableCell>
@@ -176,15 +181,9 @@ export function <Entity>Table() {
   if (data.items.length === 0) return <NoMatchingItems />;
 
   return (
-    <>
+    <div className="overflow-x-auto">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            {/* Add column headers */}
-            <TableHead className="w-[100px]">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
+        <InnerTableHeader />
         <TableBody>
           {data?.items.map(item => (
             <TableRow key={item.<entityId>}>
@@ -204,7 +203,6 @@ export function <Entity>Table() {
                   <EditButton link={`/<entities>/${item.<entityId>}/edit`} />
                 </div>
               </TableCell>
-
             </TableRow>
           ))}
         </TableBody>
@@ -212,9 +210,10 @@ export function <Entity>Table() {
       <div className="mt-4">
         <Pagination totalPages={data.totalPages} />
       </div>
-    </>
+    </div>
   );
 }
+
 ```
 
 ## Skeleton (`components/<Entity>Skeleton.tsx`)
