@@ -12,7 +12,7 @@ import { useClientsSuspense } from '../stores/useClients';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { TextTableCell } from '@/components/TextTableCell';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
 
 function InnerTableHeader() {
   return (
@@ -68,7 +68,7 @@ export function ClientTable() {
               <TextTableCell value={item.phone} />
               <TextTableCell value={item.email} />
               <TableCell>
-                <EditButton link={`/clients/${item.clientId}/edit`} />
+                <EditCellButton link={`/clients/${item.clientId}/edit`} />
               </TableCell>
             </TableRow>
           ))}

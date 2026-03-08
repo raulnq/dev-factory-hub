@@ -1,7 +1,5 @@
 import { Link, useSearchParams } from 'react-router';
-import { Search } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -14,8 +12,9 @@ import { useCollaboratorRolesSuspense } from '../stores/useCollaboratorRoles';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { NumberTableCell } from '@/components/NumberTableCell';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
+import { ViewCellButton } from '@/components/ViewCellButton';
 
 function InnerTableHeader() {
   return (
@@ -79,12 +78,10 @@ export function CollaboratorRoleTable() {
               <NumberTableCell value={item.costRate} />
               <TableCell>
                 <div className="flex gap-2">
-                  <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/collaborator-roles/${item.collaboratorRoleId}`}>
-                      <Search className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <EditButton
+                  <ViewCellButton
+                    link={`/collaborator-roles/${item.collaboratorRoleId}`}
+                  />
+                  <EditCellButton
                     link={`/collaborator-roles/${item.collaboratorRoleId}/edit`}
                   />
                 </div>

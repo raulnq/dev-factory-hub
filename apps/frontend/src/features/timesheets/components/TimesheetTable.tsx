@@ -13,7 +13,7 @@ import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { DateTableCell } from '@/components/DateTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 
 function InnerTableHeader() {
@@ -81,7 +81,7 @@ export function TimesheetTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <EditButton link={`/timesheets/${item.timesheetId}/edit`} />
+                <EditCellButton link={`/timesheets/${item.timesheetId}/edit`} />
               </TableCell>
             </TableRow>
           ))}

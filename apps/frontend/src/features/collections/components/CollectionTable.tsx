@@ -15,7 +15,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
@@ -93,9 +93,9 @@ export function CollectionTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <div className="flex gap-2">
-                  <EditButton link={`/collections/${item.collectionId}/edit`} />
-                </div>
+                <EditCellButton
+                  link={`/collections/${item.collectionId}/edit`}
+                />
               </TableCell>
             </TableRow>
           ))}

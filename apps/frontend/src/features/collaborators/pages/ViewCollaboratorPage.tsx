@@ -7,7 +7,6 @@ import { ViewCollaboratorCard } from '../components/ViewCollaboratorCard';
 import { CollaboratorSkeleton } from '../components/CollaboratorSkeleton';
 import { Card } from '@/components/ui/card';
 import { ViewCardHeader } from '@/components/ViewCardHeader';
-import { ViewCardFooter } from '@/components/ViewCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { EditButton } from '@/components/EditButton';
 
@@ -23,11 +22,9 @@ export function ViewCollaboratorPage() {
           description="View collaborator record details."
         >
           <EditButton
-            className="sm:self-start"
+            text="Edit"
             link={`/collaborators/${collaboratorId!}/edit`}
-          >
-            Edit
-          </EditButton>
+          />
         </ViewCardHeader>
 
         <QueryErrorResetBoundary>
@@ -42,12 +39,14 @@ export function ViewCollaboratorPage() {
               )}
             >
               <Suspense fallback={<CollaboratorSkeleton />}>
-                <InnerCollaborator collaboratorId={collaboratorId!} />
+                <InnerCollaborator
+                  collaboratorId={collaboratorId!}
+                  onCancel={() => navigate('/collaborators')}
+                />
               </Suspense>
             </ErrorBoundary>
           )}
         </QueryErrorResetBoundary>
-        <ViewCardFooter onCancel={() => navigate('/collaborators')} />
       </Card>
     </div>
   );
@@ -55,9 +54,13 @@ export function ViewCollaboratorPage() {
 
 type InnerCollaboratorProps = {
   collaboratorId: string;
+  onCancel: () => void;
 };
 
-function InnerCollaborator({ collaboratorId }: InnerCollaboratorProps) {
+function InnerCollaborator({
+  collaboratorId,
+  onCancel,
+}: InnerCollaboratorProps) {
   const { data } = useCollaboratorSuspense(collaboratorId);
-  return <ViewCollaboratorCard collaborator={data} />;
+  return <ViewCollaboratorCard collaborator={data} onCancel={onCancel} />;
 }

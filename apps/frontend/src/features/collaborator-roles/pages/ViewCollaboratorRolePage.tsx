@@ -7,7 +7,6 @@ import { ViewCollaboratorRoleCard } from '../components/ViewCollaboratorRoleCard
 import { CollaboratorRoleSkeleton } from '../components/CollaboratorRoleSkeleton';
 import { Card } from '@/components/ui/card';
 import { ViewCardHeader } from '@/components/ViewCardHeader';
-import { ViewCardFooter } from '@/components/ViewCardFooter';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { EditButton } from '@/components/EditButton';
 
@@ -23,11 +22,9 @@ export function ViewCollaboratorRolePage() {
           description="View collaborator role record details."
         >
           <EditButton
-            className="sm:self-start"
+            text="Edit"
             link={`/collaborator-roles/${collaboratorRoleId!}/edit`}
-          >
-            Edit
-          </EditButton>
+          />
         </ViewCardHeader>
 
         <QueryErrorResetBoundary>
@@ -44,12 +41,12 @@ export function ViewCollaboratorRolePage() {
               <Suspense fallback={<CollaboratorRoleSkeleton />}>
                 <InnerCollaboratorRole
                   collaboratorRoleId={collaboratorRoleId!}
+                  onCancel={() => navigate('/collaborator-roles')}
                 />
               </Suspense>
             </ErrorBoundary>
           )}
         </QueryErrorResetBoundary>
-        <ViewCardFooter onCancel={() => navigate('/collaborator-roles')} />
       </Card>
     </div>
   );
@@ -57,11 +54,15 @@ export function ViewCollaboratorRolePage() {
 
 type InnerCollaboratorRoleProps = {
   collaboratorRoleId: string;
+  onCancel: () => void;
 };
 
 function InnerCollaboratorRole({
   collaboratorRoleId,
+  onCancel,
 }: InnerCollaboratorRoleProps) {
   const { data } = useCollaboratorRoleSuspense(collaboratorRoleId);
-  return <ViewCollaboratorRoleCard collaboratorRole={data} />;
+  return (
+    <ViewCollaboratorRoleCard collaboratorRole={data} onCancel={onCancel} />
+  );
 }

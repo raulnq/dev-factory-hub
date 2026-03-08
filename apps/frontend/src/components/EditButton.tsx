@@ -1,26 +1,18 @@
-import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 import { Button } from './ui/button';
 import { Pencil } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 type EditButtonProps = {
   link: string;
-  className?: string;
-  children?: ReactNode;
+  text: string;
 };
 
-export function EditButton({ link, className, children }: EditButtonProps) {
+export function EditButton({ link, text }: EditButtonProps) {
   return (
-    <Button
-      variant={children ? 'default' : 'ghost'}
-      size={children ? 'default' : 'icon'}
-      className={className}
-      asChild
-    >
+    <Button className="sm:self-start" asChild>
       <Link to={link}>
-        <Pencil className={cn('h-4 w-4', children && 'mr-2')} />
-        {children}
+        <Pencil className="h-4 w-4 mr-2" />
+        {text}
       </Link>
     </Button>
   );

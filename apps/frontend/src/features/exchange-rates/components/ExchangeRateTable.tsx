@@ -11,7 +11,7 @@ import {
 import { useExchangeRatesSuspense } from '../stores/useExchangeRates';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 
 function InnerTableHeader() {
@@ -68,11 +68,9 @@ export function ExchangeRateTable() {
               <TextTableCell value={item.toCurrency} />
               <TableCell>{item.rate.toFixed(4)}</TableCell>
               <TableCell>
-                <div className="flex gap-2">
-                  <EditButton
-                    link={`/exchange-rates/${item.exchangeRateId}/edit`}
-                  />
-                </div>
+                <EditCellButton
+                  link={`/exchange-rates/${item.exchangeRateId}/edit`}
+                />
               </TableCell>
             </TableRow>
           ))}

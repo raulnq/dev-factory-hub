@@ -233,11 +233,9 @@ export function View<Entity>Page() {
           description="View an existing <entity>."
         >
           <EditButton
-            className="sm:self-start"
+            text="Edit"
             link={`/<entities>/${<entityId>!}/edit`}
-          >
-            Edit
-          </EditButton>
+          />
         </ViewCardHeader>
 
         <QueryErrorResetBoundary>
@@ -252,12 +250,14 @@ export function View<Entity>Page() {
               )}
             >
               <Suspense fallback={<<Entity>Skeleton />}>
-                <Inner<Entity> <entityId>={<entityId>!} />
+                <Inner<Entity>
+                  <entityId>={<entityId>!}
+                  onCancel={() => navigate('/<entities>')}
+                />
               </Suspense>
             </ErrorBoundary>
           )}
         </QueryErrorResetBoundary>
-        <ViewCardFooter onCancel={() => navigate('/<entities>')} />
       </Card>
     </div>
   );
@@ -265,10 +265,12 @@ export function View<Entity>Page() {
 
 type Inner<Entity>Props = {
   <entityId>: string;
+  onCancel: () => void;
 };
 
-function Inner<Entity>({ <entityId> }: Inner<Entity>Props) {
+function Inner<Entity>({ <entityId>, onCancel }: Inner<Entity>Props) {
   const { data } = use<Entity>Suspense(<entityId>);
-  return <View<Entity>Card <entity>={data} />;
+  return <View<Entity>Card <entity>={data} onCancel={onCancel} />;
 }
+
 ```

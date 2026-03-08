@@ -14,7 +14,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import type { BadgeProps } from '@/components/ui/badge';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
@@ -88,7 +88,7 @@ export function InvoiceTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <EditButton link={`/invoices/${item.invoiceId}/edit`} />
+                <EditCellButton link={`/invoices/${item.invoiceId}/edit`} />
               </TableCell>
             </TableRow>
           ))}

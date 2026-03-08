@@ -15,7 +15,7 @@ import { getStatusVariant } from '../utils/status-variants';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { DateTableCell } from '@/components/DateTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 
 const currentYear = new Date().getFullYear();
@@ -84,7 +84,9 @@ export function TaxPaymentTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <EditButton link={`/tax-payments/${item.taxPaymentId}/edit`} />
+                <EditCellButton
+                  link={`/tax-payments/${item.taxPaymentId}/edit`}
+                />
               </TableCell>
             </TableRow>
           ))}

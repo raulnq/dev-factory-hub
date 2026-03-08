@@ -136,7 +136,9 @@ import {
 import { use<Entities>Suspense } from '../stores/use<Entities>';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
+import { ViewCellButton } from '@/components/ViewCellButton';
+import { TextTableCell } from '@/components/TextTableCell';
 
 function InnerTableHeader() {
   return (
@@ -187,20 +189,12 @@ export function <Entity>Table() {
         <TableBody>
           {data?.items.map(item => (
             <TableRow key={item.<entityId>}>
-              <TableCell className="font-medium">
-                <Link to={`/<entities>/${item.<entityId>}`} className="hover:underline">
-                  {item.name}
-                </Link>
-              </TableCell>
+              <TextTableCell className="font-medium" value={item.name} />
               {/* Add data columns */}
               <TableCell>
                 <div className="flex gap-2">
-                  <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/<entities>/${item.<entityId>}`}>
-                      <Search className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <EditButton link={`/<entities>/${item.<entityId>}/edit`} />
+                  <ViewCellButton link={`/<entities>/${item.<entityId>}`} />
+                  <EditCellButton link={`/<entities>/${item.<entityId>}/edit`} />
                 </div>
               </TableCell>
             </TableRow>
@@ -211,6 +205,7 @@ export function <Entity>Table() {
     </div>
   );
 }
+
 
 
 ```

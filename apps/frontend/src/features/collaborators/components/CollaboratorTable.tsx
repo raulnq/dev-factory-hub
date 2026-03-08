@@ -1,7 +1,5 @@
 import { Link, useSearchParams } from 'react-router';
-import { Search } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -13,8 +11,9 @@ import {
 import { useCollaboratorsSuspense } from '../stores/useCollaborators';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
+import { ViewCellButton } from '@/components/ViewCellButton';
 
 function InnerTableHeader() {
   return (
@@ -76,12 +75,10 @@ export function CollaboratorTable() {
               <TableCell>{item.withholdingPercentage}%</TableCell>
               <TableCell>
                 <div className="flex gap-2">
-                  <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/collaborators/${item.collaboratorId}`}>
-                      <Search className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <EditButton
+                  <ViewCellButton
+                    link={`/collaborators/${item.collaboratorId}`}
+                  />
+                  <EditCellButton
                     link={`/collaborators/${item.collaboratorId}/edit`}
                   />
                 </div>

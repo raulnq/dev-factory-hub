@@ -15,7 +15,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
@@ -98,7 +98,7 @@ export function PayrollPaymentTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <EditButton
+                <EditCellButton
                   link={`/payroll-payments/${item.payrollPaymentId}/edit`}
                 />
               </TableCell>

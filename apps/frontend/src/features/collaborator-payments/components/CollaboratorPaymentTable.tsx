@@ -15,7 +15,7 @@ import type { BadgeProps } from '@/components/ui/badge';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 
 function statusVariant(status: string): BadgeProps['variant'] {
@@ -102,7 +102,7 @@ export function CollaboratorPaymentTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <EditButton
+                <EditCellButton
                   link={`/collaborator-payments/${item.collaboratorPaymentId}/edit`}
                 />
               </TableCell>

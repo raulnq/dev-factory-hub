@@ -29,7 +29,7 @@ export function AddCollaboratorRoleForm({
     resolver: zodResolver(addCollaboratorRoleSchema),
     defaultValues: {
       name: '',
-      currency: 'PEN',
+      currency: 'USD',
       feeRate: 0,
       costRate: 0,
     },

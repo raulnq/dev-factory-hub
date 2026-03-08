@@ -15,7 +15,7 @@ import { getStatusVariant } from '../utils/status-variants';
 import { DateTableCell } from '@/components/DateTableCell';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
-import { EditButton } from '@/components/EditButton';
+import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 
 function InnerTableHeader() {
@@ -82,7 +82,7 @@ export function ProformaTable() {
                 {item.status}
               </BadgeTableCell>
               <TableCell>
-                <EditButton link={`/proformas/${item.proformaId}/edit`} />
+                <EditCellButton link={`/proformas/${item.proformaId}/edit`} />
               </TableCell>
             </TableRow>
           ))}
