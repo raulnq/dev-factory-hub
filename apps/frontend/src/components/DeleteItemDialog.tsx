@@ -9,23 +9,25 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 
-type DeleteTaxPaymentItemDialogProps = {
-  itemType: string | undefined;
+type DeleteItemDialogProps = {
+  title: string;
+  description: string;
   open: boolean;
   isPending: boolean;
   onOpenChange: (open: boolean) => void;
-  onDelete: () => void;
+  onDelete: () => Promise<void> | void;
 };
 
-export function DeleteTaxPaymentItemDialog({
-  itemType,
+export function DeleteItemDialog({
+  title,
+  description,
   open,
   isPending,
   onOpenChange,
   onDelete,
-}: DeleteTaxPaymentItemDialogProps) {
-  const handleSubmit = async () => {
-    onDelete();
+}: DeleteItemDialogProps) {
+  const handleConfirm = async () => {
+    await onDelete();
     onOpenChange(false);
   };
 
@@ -33,11 +35,8 @@ export function DeleteTaxPaymentItemDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete Item</DialogTitle>
-          <DialogDescription>
-            Are you sure you want to delete the item{' '}
-            {itemType ? `"${itemType}"` : ''}? This action cannot be undone.
-          </DialogDescription>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>
@@ -45,10 +44,10 @@ export function DeleteTaxPaymentItemDialog({
           </DialogClose>
           <Button
             variant="destructive"
-            onClick={handleSubmit}
+            onClick={handleConfirm}
             disabled={isPending}
           >
-            Delete
+            {title}
           </Button>
         </DialogFooter>
       </DialogContent>

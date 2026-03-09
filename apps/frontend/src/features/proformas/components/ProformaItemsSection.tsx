@@ -15,7 +15,7 @@ import {
   useDeleteProformaItem,
   useProformaItemsSuspense,
 } from '../stores/useProformas';
-import { DeleteItemDialog } from './DeleteItemDialog';
+import { DeleteItemDialog } from '@/components/DeleteItemDialog';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { useSearchParams } from 'react-router';
@@ -114,7 +114,8 @@ export function ProformaItemsSection({
       </CardContent>
 
       <DeleteItemDialog
-        description={selectedRow?.description}
+        title="Delete Item"
+        description={`Are you sure you want to delete ${selectedRow?.description}? This action cannot be undone.`}
         open={deleteDialogOpen}
         onOpenChange={handleDeleteDialogChange}
         onDelete={handleDelete}

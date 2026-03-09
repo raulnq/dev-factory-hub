@@ -33,7 +33,7 @@ export function FormCard({
   renderTitleAction,
   renderAction,
   isPending = false,
-  formId = 'formId',
+  formId = 'form',
   cancelText = 'Cancel',
   saveText = 'Save',
 }: FormCardProps) {

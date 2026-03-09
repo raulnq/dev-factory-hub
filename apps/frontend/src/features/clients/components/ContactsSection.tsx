@@ -31,7 +31,7 @@ import {
   type Contact,
 } from '#/features/clients/schemas';
 import { AddContactButton } from './AddContactButton';
-import { DeleteContactDialog } from './DeleteContactDialog';
+import { DeleteItemDialog } from '@/components/DeleteItemDialog';
 import { EditContactDialog } from './EditContactDialog';
 
 type ContactsSectionProps = {
@@ -159,8 +159,9 @@ export function ContactsSection({ clientId }: ContactsSectionProps) {
         isPending={editContactMutation.isPending}
       />
 
-      <DeleteContactDialog
-        name={selectedRow?.name}
+      <DeleteItemDialog
+        title="Delete Contact"
+        description={`Are you sure you want to delete ${selectedRow?.name}? This action cannot be undone.`}
         open={deleteDialogOpen}
         onOpenChange={handleDeleteDialogChange}
         onDelete={handleDelete}
