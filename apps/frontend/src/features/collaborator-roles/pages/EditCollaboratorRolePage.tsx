@@ -11,8 +11,6 @@ import {
 } from '../stores/useCollaboratorRoles';
 import { EditCollaboratorRoleForm } from '../components/EditCollaboratorRoleForm';
 import { CollaboratorRoleSkeleton } from '../components/CollaboratorRoleSkeleton';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
 export function EditCollaboratorRolePage() {
@@ -36,34 +34,28 @@ export function EditCollaboratorRolePage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Edit Collaborator Role"
-          description="Update an existing collaborator role record."
-        />
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={({ resetErrorBoundary }) => (
-                <ErrorFallback
-                  resetErrorBoundary={resetErrorBoundary}
-                  message="Failed to load collaborator role"
-                />
-              )}
-            >
-              <Suspense fallback={<CollaboratorRoleSkeleton />}>
-                <InnerCollaboratorRole
-                  isPending={edit.isPending}
-                  onSubmit={onSubmit}
-                  collaboratorRoleId={collaboratorRoleId!}
-                  onCancel={() => navigate('/collaborator-roles')}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Card>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={({ resetErrorBoundary }) => (
+              <ErrorFallback
+                resetErrorBoundary={resetErrorBoundary}
+                message="Failed to load collaborator role"
+              />
+            )}
+          >
+            <Suspense fallback={<CollaboratorRoleSkeleton />}>
+              <InnerCollaboratorRole
+                isPending={edit.isPending}
+                onSubmit={onSubmit}
+                collaboratorRoleId={collaboratorRoleId!}
+                onCancel={() => navigate('/collaborator-roles')}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </div>
   );
 }

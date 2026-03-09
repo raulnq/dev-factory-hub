@@ -12,7 +12,7 @@ import {
   type EditExchangeRate,
   type ExchangeRate,
 } from '#/features/exchange-rates/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
 type EditExchangeRateFormProps = {
@@ -34,12 +34,13 @@ export function EditExchangeRateForm({
   });
 
   return (
-    <FormCardContent
-      formId="form"
+    <FormCard
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Exchange Rate"
       isPending={isPending}
+      title="Edit Exchange Rate"
+      description="Edit an existing exchange rate."
     >
       <FieldGroup>
         <Controller
@@ -119,6 +120,6 @@ export function EditExchangeRateForm({
           )}
         />
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

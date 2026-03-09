@@ -4,8 +4,6 @@ import { toast } from 'sonner';
 import type { AddTimesheet } from '#/features/timesheets/schemas';
 import { useAddTimesheet } from '../stores/useTimesheets';
 import { AddTimesheetForm } from '../components/AddTimesheetForm';
-import { FormCardHeader } from '@/components/FormCardHeader';
-import { Card } from '@/components/ui/card';
 
 export function AddTimesheetPage() {
   const navigate = useNavigate();
@@ -25,17 +23,11 @@ export function AddTimesheetPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Timesheet"
-          description="Initialize a new timesheet period."
-        />
-        <AddTimesheetForm
-          isPending={add.isPending}
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/timesheets')}
-        />
-      </Card>
+      <AddTimesheetForm
+        isPending={add.isPending}
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/timesheets')}
+      />
     </div>
   );
 }

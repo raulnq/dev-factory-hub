@@ -11,7 +11,7 @@ import {
   addTimesheetSchema,
   type AddTimesheet,
 } from '#/features/timesheets/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import { CollaboratorCombobox } from '../../collaborators/components/CollaboratorCombobox';
 import { CollaboratorRoleCombobox } from '@/features/collaborator-roles/components/CollaboratorRoleCombobox';
 
@@ -37,12 +37,14 @@ export function AddTimesheetForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Create Timesheet"
       isPending={isPending}
+      title="Add Timesheet"
+      description="Initialize a new timesheet period."
     >
       <FieldGroup>
         <Controller
@@ -116,6 +118,6 @@ export function AddTimesheetForm({
           />
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

@@ -2,10 +2,7 @@ import { useNavigate, useParams } from 'react-router';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
-
 import { EditProformaForm } from '../components/EditProformaForm';
 import { ProformaItemsSection } from '../components/ProformaItemsSection';
 import { ProformaSkeleton } from '../components/ProformaSkeleton';
@@ -17,9 +14,6 @@ import {
 } from '../stores/useProformas';
 import { toast } from 'sonner';
 import type { EditProforma, IssueProforma } from '#/features/proformas/schemas';
-import { Badge } from '@/components/ui/badge';
-import { getStatusVariant } from '../utils/status-variants';
-import { ProformaToolbar } from '../components/ProformaToolbar';
 
 export function EditProformaPage() {
   const { proformaId } = useParams() as { proformaId: string };
@@ -94,33 +88,14 @@ function EditProformaInner({
 
   return (
     <div className="space-y-6">
-      <Card>
-        <FormCardHeader
-          title={`Edit Proforma ${proforma.number}`}
-          description="Update proforma details."
-          renderAction={
-            proforma.status && (
-              <Badge variant={getStatusVariant(proforma.status)}>
-                {proforma.status}
-              </Badge>
-            )
-          }
-        >
-          <ProformaToolbar
-            onCancel={handleCancel}
-            onIssue={handleIssue}
-            total={proforma.total}
-            isPending={isPending}
-            status={proforma.status}
-          />
-        </FormCardHeader>
-        <EditProformaForm
-          proforma={proforma}
-          onSubmit={handleSubmit}
-          onCancel={onCancel}
-          isPending={edit.isPending}
-        />
-      </Card>
+      <EditProformaForm
+        proforma={proforma}
+        onSubmit={handleSubmit}
+        onCancel={onCancel}
+        isPending={isPending}
+        onProformaCancel={handleCancel}
+        onProformaIssue={handleIssue}
+      />
 
       <ProformaItemsSection proformaId={proformaId} status={proforma.status} />
     </div>

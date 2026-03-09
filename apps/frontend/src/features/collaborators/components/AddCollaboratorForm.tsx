@@ -11,7 +11,7 @@ import {
   addCollaboratorSchema,
   type AddCollaborator,
 } from '#/features/collaborators/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 
 type AddCollaboratorFormProps = {
   isPending: boolean;
@@ -34,12 +34,14 @@ export function AddCollaboratorForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Collaborator"
       isPending={isPending}
+      title="Add Collaborator"
+      description="Create a new collaborator record."
     >
       <FieldGroup>
         <Controller
@@ -103,6 +105,6 @@ export function AddCollaboratorForm({
           )}
         />
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

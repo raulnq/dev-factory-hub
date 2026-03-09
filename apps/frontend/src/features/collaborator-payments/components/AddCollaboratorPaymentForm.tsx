@@ -4,7 +4,6 @@ import {
   addCollaboratorPaymentSchema,
   type AddCollaboratorPayment,
 } from '#/features/collaborator-payments/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
 import {
   Field,
   FieldError,
@@ -14,6 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { CurrencySelect } from '@/components/CurrencySelect';
 import { CollaboratorCombobox } from '../../collaborators/components/CollaboratorCombobox';
+import { FormCard } from '@/components/FormCard';
 
 type AddCollaboratorPaymentFormProps = {
   isPending: boolean;
@@ -35,12 +35,14 @@ export function AddCollaboratorPaymentForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Payment"
       isPending={isPending}
+      title="Add Payment"
+      description="Create a new collaborator payment."
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -104,6 +106,6 @@ export function AddCollaboratorPaymentForm({
           )}
         />
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

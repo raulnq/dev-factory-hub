@@ -12,27 +12,9 @@ import {
 } from '../stores/useInvoices';
 import { EditInvoiceForm } from '../components/EditInvoiceForm';
 import { InvoiceSkeleton } from '../components/InvoiceSkeleton';
-import { IssueInvoiceButton } from '../components/IssueInvoiceButton';
-import { CancelInvoiceButton } from '../components/CancelInvoiceButton';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
-import { Badge } from '@/components/ui/badge';
-
-import type { BadgeProps } from '@/components/ui/badge';
 import type { Invoice } from '#/features/invoices/schemas';
 import type { SubmitHandler } from 'react-hook-form';
-
-function statusVariant(status: string): BadgeProps['variant'] {
-  switch (status) {
-    case 'Issued':
-      return 'secondary';
-    case 'Canceled':
-      return 'destructive';
-    default:
-      return 'outline';
-  }
-}
 
 export function EditInvoicePage() {
   const { invoiceId } = useParams() as { invoiceId: string };
@@ -110,34 +92,15 @@ function EditInvoiceInner({
   };
 
   const isPending = edit.isPending || issue.isPending || cancel.isPending;
-  const isStatusPending = invoice.status === 'Pending';
 
   return (
-    <Card>
-      <FormCardHeader
-        title={`Edit Invoice`}
-        description="Update invoice details."
-        renderAction={
-          <Badge variant={statusVariant(invoice.status)}>
-            {invoice.status}
-          </Badge>
-        }
-      >
-        <IssueInvoiceButton
-          disabled={isPending || !isStatusPending}
-          onIssue={handleIssue}
-        />
-        <CancelInvoiceButton
-          disabled={isPending || invoice.status === 'Canceled'}
-          onCancel={handleCancel}
-        />
-      </FormCardHeader>
-      <EditInvoiceForm
-        invoice={invoice as Invoice}
-        isPending={edit.isPending}
-        onSubmit={handleSubmit}
-        onCancel={onCancel}
-      />
-    </Card>
+    <EditInvoiceForm
+      invoice={invoice as Invoice}
+      isPending={isPending}
+      onSubmit={handleSubmit}
+      onCancel={onCancel}
+      onInvoiceCancel={handleCancel}
+      onInvoiceIssue={handleIssue}
+    />
   );
 }

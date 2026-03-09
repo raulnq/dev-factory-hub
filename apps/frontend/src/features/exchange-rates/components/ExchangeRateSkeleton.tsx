@@ -1,10 +1,10 @@
 import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { Skeleton } from '@/components/ui/skeleton';
-import { FormCardSkeleton } from '@/components/FormCardSkeleton';
+import { FormSkeleton } from '@/components/FormCard';
 
 export function ExchangeRateSkeleton() {
   return (
-    <FormCardSkeleton>
+    <FormSkeleton>
       <FieldGroup>
         <Field>
           <FieldLabel>Date</FieldLabel>
@@ -25,6 +25,6 @@ export function ExchangeRateSkeleton() {
           <Skeleton className="h-9 w-full" />
         </Field>
       </FieldGroup>
-    </FormCardSkeleton>
+    </FormSkeleton>
   );
 }

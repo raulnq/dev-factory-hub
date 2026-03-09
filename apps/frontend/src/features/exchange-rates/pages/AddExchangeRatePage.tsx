@@ -4,8 +4,6 @@ import { toast } from 'sonner';
 import type { AddExchangeRate } from '#/features/exchange-rates/schemas';
 import { useAddExchangeRate } from '../stores/useExchangeRates';
 import { AddExchangeRateForm } from '../components/AddExchangeRateForm';
-import { FormCardHeader } from '@/components/FormCardHeader';
-import { Card } from '@/components/ui/card';
 
 export function AddExchangeRatePage() {
   const navigate = useNavigate();
@@ -25,17 +23,11 @@ export function AddExchangeRatePage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Exchange Rate"
-          description="Create a new exchange rate."
-        />
-        <AddExchangeRateForm
-          isPending={add.isPending}
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/exchange-rates')}
-        />
-      </Card>
+      <AddExchangeRateForm
+        isPending={add.isPending}
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/exchange-rates')}
+      />
     </div>
   );
 }

@@ -4,8 +4,6 @@ import { toast } from 'sonner';
 import type { AddPayrollPayment } from '#/features/payroll-payments/schemas';
 import { useAddPayrollPayment } from '../stores/usePayrollPayments';
 import { AddPayrollPaymentForm } from '../components/AddPayrollPaymentForm';
-import { FormCardHeader } from '@/components/FormCardHeader';
-import { Card } from '@/components/ui/card';
 
 export function AddPayrollPaymentPage() {
   const navigate = useNavigate();
@@ -27,17 +25,11 @@ export function AddPayrollPaymentPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Payroll Payment"
-          description="Create a new payroll payment."
-        />
-        <AddPayrollPaymentForm
-          isPending={add.isPending}
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/payroll-payments')}
-        />
-      </Card>
+      <AddPayrollPaymentForm
+        isPending={add.isPending}
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/payroll-payments')}
+      />
     </div>
   );
 }

@@ -11,7 +11,7 @@ import {
   addMoneyExchangeSchema,
   type AddMoneyExchange,
 } from '#/features/money-exchanges/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
 type AddMoneyExchangeFormProps = {
@@ -39,12 +39,14 @@ export function AddMoneyExchangeForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Money Exchange"
       isPending={isPending}
+      title="Add Money Exchange"
+      description="Create a new money exchange."
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -203,6 +205,6 @@ export function AddMoneyExchangeForm({
           />
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

@@ -4,7 +4,7 @@ import {
   addCollectionSchema,
   type AddCollection,
 } from '#/features/collections/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import {
   Field,
   FieldLabel,
@@ -38,12 +38,13 @@ export function AddCollectionForm({
   });
 
   return (
-    <FormCardContent
-      formId="form"
+    <FormCard
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Collection"
       isPending={isPending}
+      title="Add Collection"
+      description="Create a new collection."
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -161,6 +162,6 @@ export function AddCollectionForm({
           />
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

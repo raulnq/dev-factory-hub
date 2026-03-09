@@ -1,7 +1,8 @@
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import type { CollaboratorRole } from '#/features/collaborator-roles/schemas';
-import { ViewCardContent } from '@/components/ViewCardContent';
+import { FormCard } from '@/components/FormCard';
+import { EditButton } from '@/components/EditButton';
 
 type ViewCollaboratorRoleCardProps = {
   collaboratorRole: CollaboratorRole;
@@ -13,7 +14,17 @@ export function ViewCollaboratorRoleCard({
   onCancel,
 }: ViewCollaboratorRoleCardProps) {
   return (
-    <ViewCardContent onCancel={onCancel}>
+    <FormCard
+      onCancel={onCancel}
+      title="View Collaborator Role"
+      description="View collaborator role record details."
+      renderAction={
+        <EditButton
+          text="Edit"
+          link={`/collaborator-roles/${collaboratorRole.collaboratorRoleId}/edit`}
+        />
+      }
+    >
       <FieldGroup>
         <Field>
           <FieldLabel>Name</FieldLabel>
@@ -34,6 +45,6 @@ export function ViewCollaboratorRoleCard({
           </Field>
         </div>
       </FieldGroup>
-    </ViewCardContent>
+    </FormCard>
   );
 }

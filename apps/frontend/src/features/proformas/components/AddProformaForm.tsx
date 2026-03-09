@@ -1,7 +1,6 @@
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addProformaSchema } from '#/features/proformas/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
 import {
   Field,
   FieldLabel,
@@ -13,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { ProjectCombobox } from '../../clients/components/ProjectCombobox';
 import type { AddProforma } from '#/features/proformas/schemas';
 import { CurrencySelect } from '@/components/CurrencySelect';
+import { FormCard } from '@/components/FormCard';
 
 type AddProformaFormProps = {
   isPending: boolean;
@@ -36,12 +36,14 @@ export function AddProformaForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       formId="proforma-form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       isPending={isPending}
       saveText="Save Proforma"
+      title="Add Proforma"
+      description="Create a new proforma."
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -138,6 +140,6 @@ export function AddProformaForm({
           )}
         />
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

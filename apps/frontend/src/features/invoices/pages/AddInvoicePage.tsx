@@ -4,8 +4,6 @@ import { toast } from 'sonner';
 import type { AddInvoice } from '#/features/invoices/schemas';
 import { useAddInvoice } from '../stores/useInvoices';
 import { AddInvoiceForm } from '../components/AddInvoiceForm';
-import { FormCardHeader } from '@/components/FormCardHeader';
-import { Card } from '@/components/ui/card';
 
 export function AddInvoicePage() {
   const navigate = useNavigate();
@@ -25,17 +23,11 @@ export function AddInvoicePage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Invoice"
-          description="Create a new invoice."
-        />
-        <AddInvoiceForm
-          isPending={add.isPending}
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/invoices')}
-        />
-      </Card>
+      <AddInvoiceForm
+        isPending={add.isPending}
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/invoices')}
+      />
     </div>
   );
 }

@@ -18,25 +18,7 @@ import {
 } from '../stores/useTransactions';
 import { EditTransactionForm } from '../components/EditTransactionForm';
 import { TransactionSkeleton } from '../components/TransactionSkeleton';
-import { TransactionToolbar } from '../components/TransactionToolbar';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
-import { Badge } from '@/components/ui/badge';
-
-import type { BadgeProps } from '@/components/ui/badge';
-import type { Transaction } from '#/features/transactions/schemas';
-
-function statusVariant(status: string): BadgeProps['variant'] {
-  switch (status) {
-    case 'Issued':
-      return 'secondary';
-    case 'Canceled':
-      return 'destructive';
-    default:
-      return 'outline';
-  }
-}
 
 export function EditTransactionPage() {
   const { transactionId } = useParams() as { transactionId: string };
@@ -44,28 +26,26 @@ export function EditTransactionPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={({ resetErrorBoundary }) => (
-                <ErrorFallback
-                  resetErrorBoundary={resetErrorBoundary}
-                  message="Failed to load transaction"
-                />
-              )}
-            >
-              <Suspense fallback={<TransactionSkeleton />}>
-                <EditTransactionInner
-                  transactionId={transactionId}
-                  onCancel={() => navigate('/transactions')}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Card>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={({ resetErrorBoundary }) => (
+              <ErrorFallback
+                resetErrorBoundary={resetErrorBoundary}
+                message="Failed to load transaction"
+              />
+            )}
+          >
+            <Suspense fallback={<TransactionSkeleton />}>
+              <EditTransactionInner
+                transactionId={transactionId}
+                onCancel={() => navigate('/transactions')}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </div>
   );
 }
@@ -149,32 +129,15 @@ function EditTransactionInner({
     downloadUrl.isPending;
 
   return (
-    <>
-      <FormCardHeader
-        title={`Edit Transaction`}
-        description="Update transaction details."
-        renderAction={
-          <Badge variant={statusVariant(transaction.status)}>
-            {transaction.status}
-          </Badge>
-        }
-      >
-        <TransactionToolbar
-          status={transaction.status}
-          filePath={transaction.filePath}
-          isPending={isPending}
-          onIssue={handleIssue}
-          onCancel={handleCancel}
-          onUpload={handleUpload}
-          onDownload={handleDownload}
-        />
-      </FormCardHeader>
-      <EditTransactionForm
-        transaction={transaction as Transaction}
-        isPending={edit.isPending}
-        onSubmit={handleSubmit}
-        onCancel={onCancel}
-      />
-    </>
+    <EditTransactionForm
+      transaction={transaction}
+      isPending={isPending}
+      onSubmit={handleSubmit}
+      onCancel={onCancel}
+      onTransactionIssue={handleIssue}
+      onTransactionCancel={handleCancel}
+      onTransactionUpload={handleUpload}
+      onTransactionDownload={handleDownload}
+    />
   );
 }

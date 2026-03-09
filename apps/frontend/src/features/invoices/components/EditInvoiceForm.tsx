@@ -13,15 +13,22 @@ import {
   type EditInvoice,
   type Invoice,
 } from '#/features/invoices/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 import { CurrencySelect } from '@/components/CurrencySelect';
+import { IssueInvoiceButton } from './IssueInvoiceButton';
+import { CancelInvoiceButton } from './CancelInvoiceButton';
+import { StatusBadge } from '@/components/StatusBadge';
+import { getStatusVariant } from '../utils/status-variants';
+import { type IssueInvoice } from '#/features/invoices/schemas';
 
 type EditInvoiceFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditInvoice>;
   onCancel: () => void;
   invoice: Invoice;
+  onInvoiceCancel: () => void;
+  onInvoiceIssue: (data: IssueInvoice) => void;
 };
 
 export function EditInvoiceForm({
@@ -29,6 +36,8 @@ export function EditInvoiceForm({
   onSubmit,
   onCancel,
   invoice,
+  onInvoiceCancel,
+  onInvoiceIssue,
 }: EditInvoiceFormProps) {
   const isStatusPending = invoice.status === 'Pending';
 
@@ -41,20 +50,37 @@ export function EditInvoiceForm({
     },
   });
 
-  const subtotal = form.watch('subtotal') ?? 0;
-  const taxes = form.watch('taxes') ?? 0;
+  const [subtotal, taxes] = form.watch(['subtotal', 'taxes']);
   const total = isStatusPending
     ? (Number(subtotal) + Number(taxes)).toFixed(2)
     : invoice.total.toFixed(2);
 
   return (
-    <FormCardContent
-      formId={isStatusPending ? 'form' : undefined}
-      onSubmit={form.handleSubmit(onSubmit)}
+    <FormCard
+      onSubmit={isStatusPending ? form.handleSubmit(onSubmit) : undefined}
       onCancel={onCancel}
       saveText="Save Invoice"
-      cancelText={isStatusPending ? 'Cancel' : 'Back'}
       isPending={isPending}
+      title={`Edit Invoice`}
+      description="Update invoice details."
+      renderTitleAction={
+        <StatusBadge
+          variant={getStatusVariant(invoice.status)}
+          status={invoice.status}
+        />
+      }
+      renderAction={
+        <>
+          <IssueInvoiceButton
+            disabled={isPending || !isStatusPending}
+            onIssue={onInvoiceIssue}
+          />
+          <CancelInvoiceButton
+            disabled={isPending || invoice.status === 'Canceled'}
+            onCancel={onInvoiceCancel}
+          />
+        </>
+      }
     >
       <FieldGroup>
         <Field>
@@ -162,6 +188,6 @@ export function EditInvoiceForm({
           </Field>
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

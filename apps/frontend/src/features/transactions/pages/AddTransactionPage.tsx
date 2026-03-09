@@ -4,9 +4,6 @@ import { toast } from 'sonner';
 import type { AddTransaction } from '#/features/transactions/schemas';
 import { useAddTransaction } from '../stores/useTransactions';
 import { AddTransactionForm } from '../components/AddTransactionForm';
-import { FormCardHeader } from '@/components/FormCardHeader';
-import { Card } from '@/components/ui/card';
-
 export function AddTransactionPage() {
   const navigate = useNavigate();
   const add = useAddTransaction();
@@ -25,17 +22,11 @@ export function AddTransactionPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Transaction"
-          description="Create a new transaction."
-        />
-        <AddTransactionForm
-          isPending={add.isPending}
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/transactions')}
-        />
-      </Card>
+      <AddTransactionForm
+        isPending={add.isPending}
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/transactions')}
+      />
     </div>
   );
 }

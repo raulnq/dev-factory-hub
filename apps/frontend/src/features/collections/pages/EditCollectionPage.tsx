@@ -18,26 +18,7 @@ import {
 } from '../stores/useCollections';
 import { EditCollectionForm } from '../components/EditCollectionForm';
 import { CollectionSkeleton } from '../components/CollectionSkeleton';
-import { CollectionToolbar } from '../components/CollectionToolbar';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
-import { Badge } from '@/components/ui/badge';
-
-import type { BadgeProps } from '@/components/ui/badge';
-
-function statusVariant(status: string): BadgeProps['variant'] {
-  switch (status) {
-    case 'Pending':
-      return 'default';
-    case 'Confirmed':
-      return 'secondary';
-    case 'Canceled':
-      return 'destructive';
-    default:
-      return 'secondary';
-  }
-}
 
 export function EditCollectionPage() {
   const { collectionId } = useParams() as { collectionId: string };
@@ -45,28 +26,26 @@ export function EditCollectionPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={({ resetErrorBoundary }) => (
-                <ErrorFallback
-                  resetErrorBoundary={resetErrorBoundary}
-                  message="Failed to load collection"
-                />
-              )}
-            >
-              <Suspense fallback={<CollectionSkeleton />}>
-                <EditCollectionInner
-                  collectionId={collectionId}
-                  onCancel={() => navigate('/collections')}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Card>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={({ resetErrorBoundary }) => (
+              <ErrorFallback
+                resetErrorBoundary={resetErrorBoundary}
+                message="Failed to load collection"
+              />
+            )}
+          >
+            <Suspense fallback={<CollectionSkeleton />}>
+              <EditCollectionInner
+                collectionId={collectionId}
+                onCancel={() => navigate('/collections')}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </div>
   );
 }
@@ -150,32 +129,15 @@ function EditCollectionInner({
     downloadUrl.isPending;
 
   return (
-    <>
-      <FormCardHeader
-        title="Edit Collection"
-        description="Update collection details."
-        renderAction={
-          <Badge variant={statusVariant(collection.status)}>
-            {collection.status}
-          </Badge>
-        }
-      >
-        <CollectionToolbar
-          status={collection.status}
-          filePath={collection.filePath}
-          isPending={isPending}
-          onConfirm={handleConfirm}
-          onCancel={handleCancel}
-          onUpload={handleUpload}
-          onDownload={handleDownload}
-        />
-      </FormCardHeader>
-      <EditCollectionForm
-        collection={collection}
-        isPending={edit.isPending}
-        onSubmit={handleSubmit}
-        onCancel={onCancel}
-      />
-    </>
+    <EditCollectionForm
+      collection={collection}
+      isPending={isPending}
+      onSubmit={handleSubmit}
+      onCancel={onCancel}
+      onCollectionConfirm={handleConfirm}
+      onCollectionCancel={handleCancel}
+      onCollectionUpload={handleUpload}
+      onCollectionDownload={handleDownload}
+    />
   );
 }

@@ -4,8 +4,6 @@ import { toast } from 'sonner';
 import type { AddCollaboratorPayment } from '#/features/collaborator-payments/schemas';
 import { useAddCollaboratorPayment } from '../stores/useCollaboratorPayments';
 import { AddCollaboratorPaymentForm } from '../components/AddCollaboratorPaymentForm';
-import { FormCardHeader } from '@/components/FormCardHeader';
-import { Card } from '@/components/ui/card';
 
 export function AddCollaboratorPaymentPage() {
   const navigate = useNavigate();
@@ -25,17 +23,11 @@ export function AddCollaboratorPaymentPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Payment"
-          description="Create a new collaborator payment."
-        />
-        <AddCollaboratorPaymentForm
-          isPending={add.isPending}
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/collaborator-payments')}
-        />
-      </Card>
+      <AddCollaboratorPaymentForm
+        isPending={add.isPending}
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/collaborator-payments')}
+      />
     </div>
   );
 }

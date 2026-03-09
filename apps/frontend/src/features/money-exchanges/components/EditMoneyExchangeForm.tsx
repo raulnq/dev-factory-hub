@@ -11,17 +11,25 @@ import {
 import {
   editMoneyExchangeSchema,
   type EditMoneyExchange,
+  type IssueMoneyExchange,
   type MoneyExchange,
 } from '#/features/money-exchanges/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 import { CurrencySelect } from '@/components/CurrencySelect';
+import { MoneyExchangeToolbar } from './MoneyExchangeToolbar';
+import { getStatusVariant } from '../utils/status-variants';
+import { StatusBadge } from '@/components/StatusBadge';
 
 type EditMoneyExchangeFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditMoneyExchange>;
   onCancel: () => void;
   moneyExchange: MoneyExchange;
+  onMoneyExchangeIssue: (data: IssueMoneyExchange) => void;
+  onMoneyExchangeCancel: () => void;
+  onMoneyExchangeUpload: (file: File) => void;
+  onMoneyExchangeDownload: () => void;
 };
 
 export function EditMoneyExchangeForm({
@@ -29,6 +37,10 @@ export function EditMoneyExchangeForm({
   onSubmit,
   onCancel,
   moneyExchange,
+  onMoneyExchangeIssue,
+  onMoneyExchangeCancel,
+  onMoneyExchangeUpload,
+  onMoneyExchangeDownload,
 }: EditMoneyExchangeFormProps) {
   const isStatusPending = moneyExchange.status === 'Pending';
 
@@ -46,13 +58,30 @@ export function EditMoneyExchangeForm({
   });
 
   return (
-    <FormCardContent
-      formId={isStatusPending ? 'form' : undefined}
-      onSubmit={form.handleSubmit(onSubmit)}
+    <FormCard
+      onSubmit={isStatusPending ? form.handleSubmit(onSubmit) : undefined}
       onCancel={onCancel}
       saveText="Save Money Exchange"
-      cancelText={isStatusPending ? 'Cancel' : 'Back'}
       isPending={isPending}
+      title="Edit Money Exchange"
+      description="Update money exchange details."
+      renderTitleAction={
+        <StatusBadge
+          variant={getStatusVariant(moneyExchange.status)}
+          status={moneyExchange.status}
+        />
+      }
+      renderAction={
+        <MoneyExchangeToolbar
+          status={moneyExchange.status}
+          filePath={moneyExchange.filePath}
+          isPending={isPending}
+          onIssue={onMoneyExchangeIssue}
+          onCancel={onMoneyExchangeCancel}
+          onUpload={onMoneyExchangeUpload}
+          onDownload={onMoneyExchangeDownload}
+        />
+      }
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -226,6 +255,6 @@ export function EditMoneyExchangeForm({
           </Field>
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

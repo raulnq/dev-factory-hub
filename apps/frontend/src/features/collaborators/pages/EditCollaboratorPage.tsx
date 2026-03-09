@@ -11,8 +11,6 @@ import {
 } from '../stores/useCollaborators';
 import { EditCollaboratorForm } from '../components/EditCollaboratorForm';
 import { CollaboratorSkeleton } from '../components/CollaboratorSkeleton';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
 export function EditCollaboratorPage() {
@@ -34,34 +32,28 @@ export function EditCollaboratorPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Edit Collaborator"
-          description="Update an existing collaborator record."
-        />
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={({ resetErrorBoundary }) => (
-                <ErrorFallback
-                  resetErrorBoundary={resetErrorBoundary}
-                  message="Failed to load collaborator"
-                />
-              )}
-            >
-              <Suspense fallback={<CollaboratorSkeleton />}>
-                <InnerCollaborator
-                  isPending={edit.isPending}
-                  onSubmit={onSubmit}
-                  collaboratorId={collaboratorId!}
-                  onCancel={() => navigate('/collaborators')}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Card>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={({ resetErrorBoundary }) => (
+              <ErrorFallback
+                resetErrorBoundary={resetErrorBoundary}
+                message="Failed to load collaborator"
+              />
+            )}
+          >
+            <Suspense fallback={<CollaboratorSkeleton />}>
+              <InnerCollaborator
+                isPending={edit.isPending}
+                onSubmit={onSubmit}
+                collaboratorId={collaboratorId!}
+                onCancel={() => navigate('/collaborators')}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </div>
   );
 }

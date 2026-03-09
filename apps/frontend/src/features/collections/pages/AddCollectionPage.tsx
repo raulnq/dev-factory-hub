@@ -4,8 +4,6 @@ import { toast } from 'sonner';
 import type { AddCollection } from '#/features/collections/schemas';
 import { useAddCollection } from '../stores/useCollections';
 import { AddCollectionForm } from '../components/AddCollectionForm';
-import { FormCardHeader } from '@/components/FormCardHeader';
-import { Card } from '@/components/ui/card';
 
 export function AddCollectionPage() {
   const navigate = useNavigate();
@@ -25,17 +23,11 @@ export function AddCollectionPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Collection"
-          description="Create a new collection."
-        />
-        <AddCollectionForm
-          isPending={add.isPending}
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/collections')}
-        />
-      </Card>
+      <AddCollectionForm
+        isPending={add.isPending}
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/collections')}
+      />
     </div>
   );
 }

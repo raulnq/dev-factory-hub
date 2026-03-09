@@ -8,7 +8,7 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { addInvoiceSchema, type AddInvoice } from '#/features/invoices/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import { ClientCombobox } from '../../clients/components/ClientCombobox';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
@@ -33,16 +33,17 @@ export function AddInvoiceForm({
     },
   });
 
-  const subtotal = form.watch('subtotal') ?? 0;
-  const taxes = form.watch('taxes') ?? 0;
+  const [subtotal, taxes] = form.watch(['subtotal', 'taxes']);
   const total = (Number(subtotal) + Number(taxes)).toFixed(2);
 
   return (
-    <FormCardContent
+    <FormCard
       formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Invoice"
+      title="Add Invoice"
+      description="Create a new invoice."
       isPending={isPending}
     >
       <FieldGroup>
@@ -130,6 +131,6 @@ export function AddInvoiceForm({
           </Field>
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

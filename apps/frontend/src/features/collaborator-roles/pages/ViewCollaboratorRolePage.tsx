@@ -5,10 +5,7 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { useCollaboratorRoleSuspense } from '../stores/useCollaboratorRoles';
 import { ViewCollaboratorRoleCard } from '../components/ViewCollaboratorRoleCard';
 import { CollaboratorRoleSkeleton } from '../components/CollaboratorRoleSkeleton';
-import { Card } from '@/components/ui/card';
-import { ViewCardHeader } from '@/components/ViewCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
-import { EditButton } from '@/components/EditButton';
 
 export function ViewCollaboratorRolePage() {
   const { collaboratorRoleId } = useParams<{ collaboratorRoleId: string }>();
@@ -16,38 +13,26 @@ export function ViewCollaboratorRolePage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <ViewCardHeader
-          title="View Collaborator Role"
-          description="View collaborator role record details."
-        >
-          <EditButton
-            text="Edit"
-            link={`/collaborator-roles/${collaboratorRoleId!}/edit`}
-          />
-        </ViewCardHeader>
-
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={({ resetErrorBoundary }) => (
-                <ErrorFallback
-                  resetErrorBoundary={resetErrorBoundary}
-                  message="Failed to load collaborator role"
-                />
-              )}
-            >
-              <Suspense fallback={<CollaboratorRoleSkeleton />}>
-                <InnerCollaboratorRole
-                  collaboratorRoleId={collaboratorRoleId!}
-                  onCancel={() => navigate('/collaborator-roles')}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Card>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={({ resetErrorBoundary }) => (
+              <ErrorFallback
+                resetErrorBoundary={resetErrorBoundary}
+                message="Failed to load collaborator role"
+              />
+            )}
+          >
+            <Suspense fallback={<CollaboratorRoleSkeleton />}>
+              <InnerCollaboratorRole
+                collaboratorRoleId={collaboratorRoleId!}
+                onCancel={() => navigate('/collaborator-roles')}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </div>
   );
 }

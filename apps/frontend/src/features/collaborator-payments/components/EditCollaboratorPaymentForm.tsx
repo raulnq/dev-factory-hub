@@ -3,9 +3,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   editCollaboratorPaymentSchema,
   type CollaboratorPayment,
+  type ConfirmCollaboratorPayment,
   type EditCollaboratorPayment,
+  type PayCollaboratorPayment,
 } from '#/features/collaborator-payments/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
 import {
   Field,
   FieldError,
@@ -16,12 +17,19 @@ import {
 import { Input } from '@/components/ui/input';
 import { CurrencySelect } from '@/components/CurrencySelect';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
+import { FormCard } from '@/components/FormCard';
+import { CollaboratorPaymentToolbar } from './CollaboratorPaymentToolbar';
+import { StatusBadge } from '@/components/StatusBadge';
+import { getStatusVariant } from '../utils/status-variants';
 
 type EditCollaboratorPaymentFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditCollaboratorPayment>;
   onCancel: () => void;
   collaboratorPayment: CollaboratorPayment;
+  onCollaboratorPaymentPay: (data: PayCollaboratorPayment) => void;
+  onCollaboratorPaymentConfirm: (data: ConfirmCollaboratorPayment) => void;
+  onCollaboratorPaymentCancel: () => void;
 };
 
 export function EditCollaboratorPaymentForm({
@@ -29,6 +37,9 @@ export function EditCollaboratorPaymentForm({
   onSubmit,
   onCancel,
   collaboratorPayment,
+  onCollaboratorPaymentPay,
+  onCollaboratorPaymentConfirm,
+  onCollaboratorPaymentCancel,
 }: EditCollaboratorPaymentFormProps) {
   const isEditable = collaboratorPayment.status === 'Pending';
 
@@ -48,13 +59,28 @@ export function EditCollaboratorPaymentForm({
     Math.round((Number(grossSalary) - Number(withholding)) * 100) / 100;
 
   return (
-    <FormCardContent
-      formId={isEditable ? 'form' : undefined}
-      onSubmit={form.handleSubmit(onSubmit)}
+    <FormCard
+      onSubmit={isEditable ? form.handleSubmit(onSubmit) : undefined}
       onCancel={onCancel}
       saveText="Save Payment"
-      cancelText={isEditable ? 'Cancel' : 'Back'}
       isPending={isPending}
+      title="Edit Payment"
+      description="Update payment details."
+      renderTitleAction={
+        <StatusBadge
+          variant={getStatusVariant(collaboratorPayment.status)}
+          status={collaboratorPayment.status}
+        />
+      }
+      renderAction={
+        <CollaboratorPaymentToolbar
+          status={collaboratorPayment.status}
+          isPending={isPending}
+          onPay={onCollaboratorPaymentPay}
+          onConfirm={onCollaboratorPaymentConfirm}
+          onCancel={onCollaboratorPaymentCancel}
+        />
+      }
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -201,6 +227,6 @@ export function EditCollaboratorPaymentForm({
           </Field>
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

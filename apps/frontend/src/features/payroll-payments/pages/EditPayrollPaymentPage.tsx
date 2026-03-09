@@ -8,7 +8,6 @@ import type {
   EditPayrollPayment,
   PayPayrollPayment,
   PayPensionPayrollPayment,
-  PayrollPayment,
 } from '#/features/payroll-payments/schemas';
 import {
   usePayrollPaymentSuspense,
@@ -21,26 +20,7 @@ import {
 } from '../stores/usePayrollPayments';
 import { EditPayrollPaymentForm } from '../components/EditPayrollPaymentForm';
 import { PayrollPaymentSkeleton } from '../components/PayrollPaymentSkeleton';
-import { PayrollPaymentToolbar } from '../components/PayrollPaymentToolbar';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
-import { Badge } from '@/components/ui/badge';
-
-import type { BadgeProps } from '@/components/ui/badge';
-
-function statusVariant(status: string): BadgeProps['variant'] {
-  switch (status) {
-    case 'Paid':
-      return 'secondary';
-    case 'PensionPaid':
-      return 'outline';
-    case 'Canceled':
-      return 'destructive';
-    default:
-      return 'default';
-  }
-}
 
 export function EditPayrollPaymentPage() {
   const { payrollPaymentId } = useParams() as { payrollPaymentId: string };
@@ -48,28 +28,26 @@ export function EditPayrollPaymentPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={({ resetErrorBoundary }) => (
-                <ErrorFallback
-                  resetErrorBoundary={resetErrorBoundary}
-                  message="Failed to load payroll payment"
-                />
-              )}
-            >
-              <Suspense fallback={<PayrollPaymentSkeleton />}>
-                <EditPayrollPaymentInner
-                  payrollPaymentId={payrollPaymentId}
-                  onCancel={() => navigate('/payroll-payments')}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Card>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={({ resetErrorBoundary }) => (
+              <ErrorFallback
+                resetErrorBoundary={resetErrorBoundary}
+                message="Failed to load payroll payment"
+              />
+            )}
+          >
+            <Suspense fallback={<PayrollPaymentSkeleton />}>
+              <EditPayrollPaymentInner
+                payrollPaymentId={payrollPaymentId}
+                onCancel={() => navigate('/payroll-payments')}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </div>
   );
 }
@@ -172,33 +150,16 @@ function EditPayrollPaymentInner({
     downloadUrl.isPending;
 
   return (
-    <>
-      <FormCardHeader
-        title="Edit Payroll Payment"
-        description="Update payroll payment details."
-        renderAction={
-          <Badge variant={statusVariant(payrollPayment.status)}>
-            {payrollPayment.status}
-          </Badge>
-        }
-      >
-        <PayrollPaymentToolbar
-          status={payrollPayment.status}
-          filePath={payrollPayment.filePath}
-          isPending={isPending}
-          onPay={handlePay}
-          onPayPension={handlePayPension}
-          onCancel={handleCancel}
-          onUpload={handleUpload}
-          onDownload={handleDownload}
-        />
-      </FormCardHeader>
-      <EditPayrollPaymentForm
-        payrollPayment={payrollPayment as PayrollPayment}
-        isPending={edit.isPending}
-        onSubmit={handleSubmit}
-        onCancel={onCancel}
-      />
-    </>
+    <EditPayrollPaymentForm
+      payrollPayment={payrollPayment}
+      isPending={isPending}
+      onSubmit={handleSubmit}
+      onCancel={onCancel}
+      onPayrollPaymentPay={handlePay}
+      onPayrollPaymentPayPension={handlePayPension}
+      onPayrollPaymentCancel={handleCancel}
+      onPayrollPaymentUpload={handleUpload}
+      onPayrollPaymentDownload={handleDownload}
+    />
   );
 }

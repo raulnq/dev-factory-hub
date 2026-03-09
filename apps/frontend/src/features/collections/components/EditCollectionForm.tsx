@@ -3,9 +3,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   editCollectionSchema,
   type Collection,
+  type ConfirmCollection,
   type EditCollection,
 } from '#/features/collections/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import {
   Field,
   FieldLabel,
@@ -16,12 +17,19 @@ import {
 import { Input } from '@/components/ui/input';
 import { CurrencySelect } from '@/components/CurrencySelect';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
+import { CollectionToolbar } from './CollectionToolbar';
+import { StatusBadge } from '@/components/StatusBadge';
+import { getStatusVariant } from '../utils/status-variants';
 
 type EditCollectionFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditCollection>;
   onCancel: () => void;
   collection: Collection;
+  onCollectionConfirm: (data: ConfirmCollection) => void;
+  onCollectionCancel: () => void;
+  onCollectionUpload: (file: File) => void;
+  onCollectionDownload: () => void;
 };
 
 export function EditCollectionForm({
@@ -29,6 +37,10 @@ export function EditCollectionForm({
   onSubmit,
   onCancel,
   collection,
+  onCollectionConfirm,
+  onCollectionCancel,
+  onCollectionUpload,
+  onCollectionDownload,
 }: EditCollectionFormProps) {
   const isEditable = collection.status === 'Pending';
 
@@ -43,13 +55,30 @@ export function EditCollectionForm({
   });
 
   return (
-    <FormCardContent
-      formId={isEditable ? 'form' : undefined}
-      onSubmit={form.handleSubmit(onSubmit)}
+    <FormCard
+      onSubmit={isEditable ? form.handleSubmit(onSubmit) : undefined}
       onCancel={onCancel}
       saveText="Save Collection"
-      cancelText={isEditable ? 'Cancel' : 'Back'}
       isPending={isPending}
+      title="Edit Collection"
+      description="Update collection details."
+      renderTitleAction={
+        <StatusBadge
+          variant={getStatusVariant(collection.status)}
+          status={collection.status}
+        />
+      }
+      renderAction={
+        <CollectionToolbar
+          status={collection.status}
+          filePath={collection.filePath}
+          isPending={isPending}
+          onConfirm={onCollectionConfirm}
+          onCancel={onCollectionCancel}
+          onUpload={onCollectionUpload}
+          onDownload={onCollectionDownload}
+        />
+      }
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -173,6 +202,6 @@ export function EditCollectionForm({
           </Field>
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

@@ -4,8 +4,6 @@ import { toast } from 'sonner';
 import type { AddCollaborator } from '#/features/collaborators/schemas';
 import { useAddCollaborator } from '../stores/useCollaborators';
 import { AddCollaboratorForm } from '../components/AddCollaboratorForm';
-import { FormCardHeader } from '@/components/FormCardHeader';
-import { Card } from '@/components/ui/card';
 
 export function AddCollaboratorPage() {
   const navigate = useNavigate();
@@ -25,17 +23,11 @@ export function AddCollaboratorPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Collaborator"
-          description="Create a new collaborator record."
-        />
-        <AddCollaboratorForm
-          isPending={add.isPending}
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/collaborators')}
-        />
-      </Card>
+      <AddCollaboratorForm
+        isPending={add.isPending}
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/collaborators')}
+      />
     </div>
   );
 }

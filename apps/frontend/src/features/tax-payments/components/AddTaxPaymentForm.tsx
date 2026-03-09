@@ -4,7 +4,7 @@ import {
   addTaxPaymentSchema,
   type AddTaxPayment,
 } from '#/features/tax-payments/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import {
   Field,
   FieldLabel,
@@ -47,12 +47,14 @@ export function AddTaxPaymentForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       formId="tax-payment-form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       isPending={isPending}
       saveText="Save Tax Payment"
+      title="Add Tax Payment"
+      description="Create a new tax payment."
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -158,6 +160,6 @@ export function AddTaxPaymentForm({
           />
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

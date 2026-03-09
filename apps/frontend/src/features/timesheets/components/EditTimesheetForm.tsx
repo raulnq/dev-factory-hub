@@ -1,16 +1,47 @@
 import { Input } from '@/components/ui/input';
 import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
-import { type Timesheet } from '#/features/timesheets/schemas';
-import { CardContent } from '@/components/ui/card';
+import {
+  type CompleteTimesheet,
+  type Timesheet,
+} from '#/features/timesheets/schemas';
+import { FormCard } from '@/components/FormCard';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
+import { TimesheetToolbar } from './TimesheetToolbar';
+import { StatusBadge } from '@/components/StatusBadge';
+import { getStatusVariant } from '../utils/status-variants';
 
 type EditTimesheetFormProps = {
   timesheet: Timesheet;
+  onCancel: () => void;
+  onComplete: (data: CompleteTimesheet) => void;
+  isPending: boolean;
 };
 
-export function EditTimesheetForm({ timesheet }: EditTimesheetFormProps) {
+export function EditTimesheetForm({
+  timesheet,
+  onCancel,
+  onComplete,
+  isPending,
+}: EditTimesheetFormProps) {
   return (
-    <CardContent className="space-y-6">
+    <FormCard
+      title="Edit Timesheet"
+      description="Edit timesheet details."
+      onCancel={onCancel}
+      renderAction={
+        <TimesheetToolbar
+          status={timesheet.status}
+          onComplete={onComplete}
+          isPending={isPending}
+        />
+      }
+      renderTitleAction={
+        <StatusBadge
+          status={timesheet.status}
+          variant={getStatusVariant(timesheet.status)}
+        />
+      }
+    >
       <FieldGroup>
         <Field>
           <FieldLabel>Collaborator</FieldLabel>
@@ -29,20 +60,16 @@ export function EditTimesheetForm({ timesheet }: EditTimesheetFormProps) {
             <FieldLabel>End Date</FieldLabel>
             <DateReadOnlyField value={timesheet.endDate} />
           </Field>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel>Created At</FieldLabel>
             <DateReadOnlyField value={timesheet.createdAt} />
           </Field>
-          {timesheet.completedAt && (
-            <Field>
-              <FieldLabel>Completed At</FieldLabel>
-              <DateReadOnlyField value={timesheet.completedAt} />
-            </Field>
-          )}
+          <Field>
+            <FieldLabel>Completed At</FieldLabel>
+            <DateReadOnlyField value={timesheet.completedAt} />
+          </Field>
         </div>
       </FieldGroup>
-    </CardContent>
+    </FormCard>
   );
 }

@@ -12,7 +12,7 @@ import {
   type EditCollaborator,
   type Collaborator,
 } from '#/features/collaborators/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 
 type EditCollaboratorFormProps = {
   isPending: boolean;
@@ -33,12 +33,14 @@ export function EditCollaboratorForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Collaborator"
       isPending={isPending}
+      title="Edit Collaborator"
+      description="Update an existing collaborator record."
     >
       <FieldGroup>
         <Controller
@@ -102,6 +104,6 @@ export function EditCollaboratorForm({
           )}
         />
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

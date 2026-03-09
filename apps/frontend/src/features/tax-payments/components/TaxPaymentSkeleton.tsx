@@ -1,10 +1,10 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
-import { FormCardSkeleton } from '@/components/FormCardSkeleton';
+import { FormSkeleton } from '@/components/FormCard';
 
 export function TaxPaymentSkeleton() {
   return (
-    <FormCardSkeleton>
+    <FormSkeleton>
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Field>
@@ -24,7 +24,7 @@ export function TaxPaymentSkeleton() {
             <Skeleton className="h-10 w-full" />
           </Field>
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           <Field>
             <FieldLabel>Number</FieldLabel>
             <Skeleton className="h-10 w-full" />
@@ -34,11 +34,22 @@ export function TaxPaymentSkeleton() {
             <Skeleton className="h-10 w-full" />
           </Field>
           <Field>
+            <FieldLabel>Paid At</FieldLabel>
+            <Skeleton className="h-10 w-full" />
+          </Field>
+          <Field>
+            <FieldLabel>Cancelled At</FieldLabel>
+            <Skeleton className="h-10 w-full" />
+          </Field>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <Field>
             <FieldLabel>Total</FieldLabel>
             <Skeleton className="h-10 w-full" />
           </Field>
         </div>
       </FieldGroup>
-    </FormCardSkeleton>
+    </FormSkeleton>
   );
 }

@@ -4,8 +4,6 @@ import { toast } from 'sonner';
 import type { AddCollaboratorRole } from '#/features/collaborator-roles/schemas';
 import { useAddCollaboratorRole } from '../stores/useCollaboratorRoles';
 import { AddCollaboratorRoleForm } from '../components/AddCollaboratorRoleForm';
-import { FormCardHeader } from '@/components/FormCardHeader';
-import { Card } from '@/components/ui/card';
 
 export function AddCollaboratorRolePage() {
   const navigate = useNavigate();
@@ -27,17 +25,11 @@ export function AddCollaboratorRolePage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Collaborator Role"
-          description="Create a new collaborator role record."
-        />
-        <AddCollaboratorRoleForm
-          isPending={add.isPending}
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/collaborator-roles')}
-        />
-      </Card>
+      <AddCollaboratorRoleForm
+        isPending={add.isPending}
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/collaborator-roles')}
+      />
     </div>
   );
 }

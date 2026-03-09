@@ -11,14 +11,9 @@ import {
 import type { CompleteTimesheet } from '#/features/timesheets/schemas';
 import { TimesheetGrid } from '../components/TimesheetGrid';
 import { Card, CardContent } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { EditTimesheetForm } from '../components/EditTimesheetForm';
 import { TimesheetSkeleton } from '../components/TimesheetSkeleton';
-import { FormCardFooter } from '@/components/FormCardFooter';
-import { TimesheetToolbar } from '../components/TimesheetToolbar';
-import { getStatusVariant } from '../utils/status-variants';
-import { Badge } from '@/components/ui/badge';
 import { ListCardHeader } from '@/components/ListCardHeader';
 import { AddProjectButton } from '../components/AddProjectButton';
 
@@ -90,28 +85,12 @@ function InnerEditTimesheet({
   const navigate = useNavigate();
   return (
     <>
-      <Card>
-        <FormCardHeader
-          title="Edit Timesheet"
-          description="Edit timesheet details."
-          renderAction={
-            ts.status && (
-              <Badge variant={getStatusVariant(ts.status)}>{ts.status}</Badge>
-            )
-          }
-        >
-          <TimesheetToolbar
-            status={ts.status}
-            onComplete={onComplete}
-            isPending={isPending}
-          />
-        </FormCardHeader>
-        <EditTimesheetForm timesheet={ts} />
-        <FormCardFooter
-          cancelText="Back to List"
-          onCancel={() => navigate('/timesheets')}
-        />
-      </Card>
+      <EditTimesheetForm
+        timesheet={ts}
+        onCancel={() => navigate('/timesheets')}
+        onComplete={onComplete}
+        isPending={isPending}
+      />
 
       <Card>
         <ListCardHeader

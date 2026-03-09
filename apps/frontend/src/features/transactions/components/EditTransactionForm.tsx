@@ -19,11 +19,15 @@ import {
 import {
   editTransactionSchema,
   type EditTransaction,
+  type IssueTransaction,
   type Transaction,
 } from '#/features/transactions/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 import { CurrencySelect } from '@/components/CurrencySelect';
+import { TransactionToolbar } from './TransactionToolbar';
+import { getStatusVariant } from '../utils/status-variants';
+import { StatusBadge } from '@/components/StatusBadge';
 
 const TRANSACTION_TYPES = ['Income', 'Outcome'];
 
@@ -32,6 +36,10 @@ type EditTransactionFormProps = {
   onSubmit: SubmitHandler<EditTransaction>;
   onCancel: () => void;
   transaction: Transaction;
+  onTransactionIssue: (data: IssueTransaction) => void;
+  onTransactionCancel: () => void;
+  onTransactionUpload: (file: File) => void;
+  onTransactionDownload: () => void;
 };
 
 export function EditTransactionForm({
@@ -39,6 +47,10 @@ export function EditTransactionForm({
   onSubmit,
   onCancel,
   transaction,
+  onTransactionIssue,
+  onTransactionCancel,
+  onTransactionUpload,
+  onTransactionDownload,
 }: EditTransactionFormProps) {
   const isStatusPending = transaction.status === 'Pending';
 
@@ -53,20 +65,36 @@ export function EditTransactionForm({
     },
   });
 
-  const subtotal = form.watch('subtotal') ?? 0;
-  const taxes = form.watch('taxes') ?? 0;
+  const [subtotal, taxes] = form.watch(['subtotal', 'taxes']);
   const total = isStatusPending
     ? (Number(subtotal) + Number(taxes)).toFixed(2)
     : transaction.total.toFixed(2);
 
   return (
-    <FormCardContent
-      formId={isStatusPending ? 'form' : undefined}
-      onSubmit={form.handleSubmit(onSubmit)}
+    <FormCard
+      onSubmit={isStatusPending ? form.handleSubmit(onSubmit) : undefined}
       onCancel={onCancel}
       saveText="Save Transaction"
-      cancelText={isStatusPending ? 'Cancel' : 'Back'}
       isPending={isPending}
+      title={`Edit Transaction`}
+      description="Update transaction details."
+      renderTitleAction={
+        <StatusBadge
+          variant={getStatusVariant(transaction.status)}
+          status={transaction.status}
+        />
+      }
+      renderAction={
+        <TransactionToolbar
+          status={transaction.status}
+          filePath={transaction.filePath}
+          isPending={isPending}
+          onIssue={onTransactionIssue}
+          onCancel={onTransactionCancel}
+          onUpload={onTransactionUpload}
+          onDownload={onTransactionDownload}
+        />
+      }
     >
       <FieldGroup>
         <Controller
@@ -207,6 +235,6 @@ export function EditTransactionForm({
           <DateReadOnlyField value={transaction.canceledAt} />
         </Field>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

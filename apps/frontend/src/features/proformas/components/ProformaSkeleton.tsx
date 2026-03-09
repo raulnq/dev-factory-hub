@@ -1,10 +1,10 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
-import { FormCardSkeleton } from '@/components/FormCardSkeleton';
+import { FormSkeleton } from '@/components/FormCard';
 
 export function ProformaSkeleton() {
   return (
-    <FormCardSkeleton>
+    <FormSkeleton>
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Field>
@@ -51,6 +51,6 @@ export function ProformaSkeleton() {
           </Field>
         </div>
       </FieldGroup>
-    </FormCardSkeleton>
+    </FormSkeleton>
   );
 }

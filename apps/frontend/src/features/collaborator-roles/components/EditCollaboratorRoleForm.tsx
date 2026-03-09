@@ -12,7 +12,7 @@ import {
   type EditCollaboratorRole,
   type CollaboratorRole,
 } from '#/features/collaborator-roles/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
 type EditCollaboratorRoleFormProps = {
@@ -34,12 +34,14 @@ export function EditCollaboratorRoleForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Role"
       isPending={isPending}
+      title="Edit Collaborator Role"
+      description="Update an existing collaborator role record."
     >
       <FieldGroup>
         <Controller
@@ -124,6 +126,6 @@ export function EditCollaboratorRoleForm({
           />
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

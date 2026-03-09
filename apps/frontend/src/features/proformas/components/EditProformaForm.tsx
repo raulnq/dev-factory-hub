@@ -1,7 +1,6 @@
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { editProformaSchema } from '#/features/proformas/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
 import {
   Field,
   FieldLabel,
@@ -10,14 +9,24 @@ import {
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import type { Proforma, EditProforma } from '#/features/proformas/schemas';
+import type {
+  Proforma,
+  EditProforma,
+  IssueProforma,
+} from '#/features/proformas/schemas';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
+import { FormCard } from '@/components/FormCard';
+import { ProformaToolbar } from './ProformaToolbar';
+import { getStatusVariant } from '../utils/status-variants';
+import { StatusBadge } from '@/components/StatusBadge';
 
 type EditProformaFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditProforma>;
   onCancel: () => void;
   proforma: Proforma;
+  onProformaCancel: () => void;
+  onProformaIssue: (data: IssueProforma) => void;
 };
 
 export function EditProformaForm({
@@ -25,6 +34,8 @@ export function EditProformaForm({
   onSubmit,
   onCancel,
   isPending,
+  onProformaCancel,
+  onProformaIssue,
 }: EditProformaFormProps) {
   const isStatusPending = proforma.status === 'Pending';
   const form = useForm<EditProforma>({
@@ -38,13 +49,29 @@ export function EditProformaForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       formId="proforma-form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       isPending={isPending}
       saveText="Save Proforma"
-      cancelText={isStatusPending ? 'Cancel' : 'Back'}
+      title={`Edit Proforma ${proforma.number}`}
+      description="Update proforma details."
+      renderTitleAction={
+        <StatusBadge
+          status={proforma.status}
+          variant={getStatusVariant(proforma.status)}
+        />
+      }
+      renderAction={
+        <ProformaToolbar
+          onCancel={onProformaCancel}
+          onIssue={onProformaIssue}
+          total={proforma.total}
+          isPending={isPending}
+          status={proforma.status}
+        />
+      }
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -161,6 +188,6 @@ export function EditProformaForm({
           </Field>
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

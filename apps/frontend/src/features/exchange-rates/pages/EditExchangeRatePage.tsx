@@ -11,8 +11,6 @@ import {
 } from '../stores/useExchangeRates';
 import { EditExchangeRateForm } from '../components/EditExchangeRateForm';
 import { ExchangeRateSkeleton } from '../components/ExchangeRateSkeleton';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
 export function EditExchangeRatePage() {
@@ -34,34 +32,28 @@ export function EditExchangeRatePage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Edit Exchange Rate"
-          description="Edit an existing exchange rate."
-        />
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={({ resetErrorBoundary }) => (
-                <ErrorFallback
-                  resetErrorBoundary={resetErrorBoundary}
-                  message="Failed to load exchange rate"
-                />
-              )}
-            >
-              <Suspense fallback={<ExchangeRateSkeleton />}>
-                <InnerExchangeRate
-                  isPending={edit.isPending}
-                  onSubmit={onSubmit}
-                  exchangeRateId={exchangeRateId!}
-                  onCancel={() => navigate('/exchange-rates')}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Card>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={({ resetErrorBoundary }) => (
+              <ErrorFallback
+                resetErrorBoundary={resetErrorBoundary}
+                message="Failed to load exchange rate"
+              />
+            )}
+          >
+            <Suspense fallback={<ExchangeRateSkeleton />}>
+              <InnerExchangeRate
+                isPending={edit.isPending}
+                onSubmit={onSubmit}
+                exchangeRateId={exchangeRateId!}
+                onCancel={() => navigate('/exchange-rates')}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </div>
   );
 }

@@ -2,8 +2,6 @@ import { useNavigate, useParams } from 'react-router';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
 import { EditTaxPaymentForm } from '../components/EditTaxPaymentForm';
@@ -20,9 +18,6 @@ import type {
   EditTaxPayment,
   PayTaxPayment,
 } from '#/features/tax-payments/schemas';
-import { Badge } from '@/components/ui/badge';
-import { getStatusVariant } from '../utils/status-variants';
-import { TaxPaymentToolbar } from '../components/TaxPaymentToolbar';
 
 export function EditTaxPaymentPage() {
   const { taxPaymentId } = useParams() as { taxPaymentId: string };
@@ -93,36 +88,18 @@ function EditTaxPaymentInner({
     }
   };
 
-  const isMutating = edit.isPending || pay.isPending || cancel.isPending;
+  const isPending = edit.isPending || pay.isPending || cancel.isPending;
 
   return (
     <div className="space-y-6">
-      <Card>
-        <FormCardHeader
-          title={`Edit Tax Payment`}
-          description="Update tax payment details."
-          renderAction={
-            taxPayment.status && (
-              <Badge variant={getStatusVariant(taxPayment.status)}>
-                {taxPayment.status}
-              </Badge>
-            )
-          }
-        >
-          <TaxPaymentToolbar
-            onCancel={handleCancel}
-            onPay={handlePay}
-            isPending={isMutating}
-            status={taxPayment.status}
-          />
-        </FormCardHeader>
-        <EditTaxPaymentForm
-          taxPayment={taxPayment}
-          onSubmit={handleSubmit}
-          onCancel={onCancel}
-          isPending={edit.isPending}
-        />
-      </Card>
+      <EditTaxPaymentForm
+        taxPayment={taxPayment}
+        onSubmit={handleSubmit}
+        onCancel={onCancel}
+        isPending={isPending}
+        onTaxPaymentCancel={handleCancel}
+        onTaxPaymentPay={handlePay}
+      />
 
       <TaxPaymentItemsSection
         taxPaymentId={taxPaymentId}

@@ -3,9 +3,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   editTaxPaymentSchema,
   type EditTaxPayment,
+  type PayTaxPayment,
   type TaxPayment,
 } from '#/features/tax-payments/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import {
   Field,
   FieldLabel,
@@ -15,12 +16,17 @@ import {
 import { Input } from '@/components/ui/input';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 import { CurrencySelect } from '@/components/CurrencySelect';
+import { TaxPaymentToolbar } from './TaxPaymentToolbar';
+import { StatusBadge } from '@/components/StatusBadge';
+import { getStatusVariant } from '../utils/status-variants';
 
 type EditTaxPaymentFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditTaxPayment>;
   onCancel: () => void;
   taxPayment: TaxPayment;
+  onTaxPaymentPay: (data: PayTaxPayment) => void;
+  onTaxPaymentCancel: () => void;
 };
 
 export function EditTaxPaymentForm({
@@ -28,6 +34,8 @@ export function EditTaxPaymentForm({
   onSubmit,
   onCancel,
   isPending,
+  onTaxPaymentPay,
+  onTaxPaymentCancel,
 }: EditTaxPaymentFormProps) {
   const isStatusPending = taxPayment.status === 'Pending';
   const form = useForm<EditTaxPayment>({
@@ -39,13 +47,30 @@ export function EditTaxPaymentForm({
   });
 
   return (
-    <FormCardContent
-      formId={isStatusPending ? 'tax-payment-form' : undefined}
-      onSubmit={form.handleSubmit(onSubmit)}
+    <FormCard
+      formId={'tax-payment-form'}
+      onSubmit={isStatusPending ? form.handleSubmit(onSubmit) : undefined}
       onCancel={onCancel}
       isPending={isPending}
       saveText="Save Tax Payment"
-      cancelText={isStatusPending ? 'Cancel' : 'Back'}
+      title={`Edit Tax Payment`}
+      description="Update tax payment details."
+      renderTitleAction={
+        taxPayment.status && (
+          <StatusBadge
+            variant={getStatusVariant(taxPayment.status)}
+            status={taxPayment.status}
+          />
+        )
+      }
+      renderAction={
+        <TaxPaymentToolbar
+          onCancel={onTaxPaymentCancel}
+          onPay={onTaxPaymentPay}
+          isPending={isPending}
+          status={taxPayment.status}
+        />
+      }
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -128,6 +153,6 @@ export function EditTaxPaymentForm({
           </Field>
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

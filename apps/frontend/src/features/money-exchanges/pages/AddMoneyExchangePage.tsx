@@ -4,8 +4,6 @@ import { toast } from 'sonner';
 import type { AddMoneyExchange } from '#/features/money-exchanges/schemas';
 import { useAddMoneyExchange } from '../stores/useMoneyExchanges';
 import { AddMoneyExchangeForm } from '../components/AddMoneyExchangeForm';
-import { FormCardHeader } from '@/components/FormCardHeader';
-import { Card } from '@/components/ui/card';
 
 export function AddMoneyExchangePage() {
   const navigate = useNavigate();
@@ -25,17 +23,11 @@ export function AddMoneyExchangePage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Money Exchange"
-          description="Create a new money exchange."
-        />
-        <AddMoneyExchangeForm
-          isPending={add.isPending}
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/money-exchanges')}
-        />
-      </Card>
+      <AddMoneyExchangeForm
+        isPending={add.isPending}
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/money-exchanges')}
+      />
     </div>
   );
 }

@@ -21,7 +21,7 @@ type FormCardProps = {
   description: string;
   onCancel: () => void;
   renderTitleAction?: React.ReactNode;
-  renderHeaderAction?: React.ReactNode;
+  renderAction?: React.ReactNode;
 };
 
 export function FormCard({
@@ -31,7 +31,7 @@ export function FormCard({
   title,
   description,
   renderTitleAction,
-  renderHeaderAction,
+  renderAction,
   isPending = false,
   formId = 'formId',
   cancelText = 'Cancel',
@@ -50,9 +50,7 @@ export function FormCard({
             </div>
             <CardDescription>{description}</CardDescription>
           </div>
-          {renderHeaderAction && (
-            <div className="flex gap-2">{renderHeaderAction}</div>
-          )}
+          {renderAction && <div className="flex gap-2">{renderAction}</div>}
         </div>
       </CardHeader>
       <CardContent>

@@ -16,7 +16,7 @@ import {
   addPayrollPaymentSchema,
   type AddPayrollPayment,
 } from '#/features/payroll-payments/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import { CollaboratorCombobox } from '../../collaborators/components/CollaboratorCombobox';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
@@ -45,12 +45,14 @@ export function AddPayrollPaymentForm({
   const grossSalary = Number(netSalary);
 
   return (
-    <FormCardContent
+    <FormCard
       formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Payroll Payment"
       isPending={isPending}
+      title="Add Payroll Payment"
+      description="Create a new payroll payment."
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -189,6 +191,6 @@ export function AddPayrollPaymentForm({
           />
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

@@ -11,7 +11,7 @@ import {
   addCollaboratorRoleSchema,
   type AddCollaboratorRole,
 } from '#/features/collaborator-roles/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
 type AddCollaboratorRoleFormProps = {
@@ -36,12 +36,14 @@ export function AddCollaboratorRoleForm({
   });
 
   return (
-    <FormCardContent
+    <FormCard
       formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Role"
       isPending={isPending}
+      title="Add Collaborator Role"
+      description="Create a new collaborator role record."
     >
       <FieldGroup>
         <Controller
@@ -126,6 +128,6 @@ export function AddCollaboratorRoleForm({
           />
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

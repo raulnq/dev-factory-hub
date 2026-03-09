@@ -19,7 +19,7 @@ import {
   addTransactionSchema,
   type AddTransaction,
 } from '#/features/transactions/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
+import { FormCard } from '@/components/FormCard';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
 const TRANSACTION_TYPES = ['Income', 'Outcome'];
@@ -46,17 +46,18 @@ export function AddTransactionForm({
     },
   });
 
-  const subtotal = form.watch('subtotal') ?? 0;
-  const taxes = form.watch('taxes') ?? 0;
+  const [subtotal, taxes] = form.watch(['subtotal', 'taxes']);
   const total = (Number(subtotal) + Number(taxes)).toFixed(2);
 
   return (
-    <FormCardContent
+    <FormCard
       formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Transaction"
       isPending={isPending}
+      title="Add Transaction"
+      description="Create a new transaction."
     >
       <FieldGroup>
         <Controller
@@ -178,6 +179,6 @@ export function AddTransactionForm({
           </Field>
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

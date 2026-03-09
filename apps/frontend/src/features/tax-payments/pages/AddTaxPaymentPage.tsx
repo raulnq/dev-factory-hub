@@ -1,6 +1,4 @@
 import { useNavigate } from 'react-router';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { AddTaxPaymentForm } from '../components/AddTaxPaymentForm';
 import { useAddTaxPayment } from '../stores/useTaxPayments';
 
@@ -26,17 +24,11 @@ export function AddTaxPaymentPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Tax Payment"
-          description="Create a new tax payment."
-        />
-        <AddTaxPaymentForm
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/tax-payments')}
-          isPending={add.isPending}
-        />
-      </Card>
+      <AddTaxPaymentForm
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/tax-payments')}
+        isPending={add.isPending}
+      />
     </div>
   );
 }

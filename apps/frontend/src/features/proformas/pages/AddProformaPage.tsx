@@ -1,6 +1,4 @@
 import { useNavigate } from 'react-router';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { AddProformaForm } from '../components/AddProformaForm';
 import { useAddProforma } from '../stores/useProformas';
 
@@ -26,17 +24,11 @@ export function AddProformaPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <FormCardHeader
-          title="Add Proforma"
-          description="Create a new proforma."
-        />
-        <AddProformaForm
-          onSubmit={onSubmit}
-          onCancel={() => navigate('/proformas')}
-          isPending={add.isPending}
-        />
-      </Card>
+      <AddProformaForm
+        onSubmit={onSubmit}
+        onCancel={() => navigate('/proformas')}
+        isPending={add.isPending}
+      />
     </div>
   );
 }

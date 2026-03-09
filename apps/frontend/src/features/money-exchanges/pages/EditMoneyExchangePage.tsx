@@ -7,7 +7,6 @@ import { toast } from 'sonner';
 import type {
   EditMoneyExchange,
   IssueMoneyExchange,
-  MoneyExchange,
 } from '#/features/money-exchanges/schemas';
 import {
   useMoneyExchangeSuspense,
@@ -19,53 +18,33 @@ import {
 } from '../stores/useMoneyExchanges';
 import { EditMoneyExchangeForm } from '../components/EditMoneyExchangeForm';
 import { MoneyExchangeSkeleton } from '../components/MoneyExchangeSkeleton';
-import { MoneyExchangeToolbar } from '../components/MoneyExchangeToolbar';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
-import { Badge } from '@/components/ui/badge';
-
-import type { BadgeProps } from '@/components/ui/badge';
-
-function statusVariant(status: string): BadgeProps['variant'] {
-  switch (status) {
-    case 'Issued':
-      return 'secondary';
-    case 'Canceled':
-      return 'destructive';
-    default:
-      return 'outline';
-  }
-}
-
 export function EditMoneyExchangePage() {
   const { moneyExchangeId } = useParams() as { moneyExchangeId: string };
   const navigate = useNavigate();
 
   return (
     <div className="space-y-4">
-      <Card>
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={({ resetErrorBoundary }) => (
-                <ErrorFallback
-                  resetErrorBoundary={resetErrorBoundary}
-                  message="Failed to load money exchange"
-                />
-              )}
-            >
-              <Suspense fallback={<MoneyExchangeSkeleton />}>
-                <EditMoneyExchangeInner
-                  moneyExchangeId={moneyExchangeId}
-                  onCancel={() => navigate('/money-exchanges')}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Card>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={({ resetErrorBoundary }) => (
+              <ErrorFallback
+                resetErrorBoundary={resetErrorBoundary}
+                message="Failed to load money exchange"
+              />
+            )}
+          >
+            <Suspense fallback={<MoneyExchangeSkeleton />}>
+              <EditMoneyExchangeInner
+                moneyExchangeId={moneyExchangeId}
+                onCancel={() => navigate('/money-exchanges')}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </div>
   );
 }
@@ -155,32 +134,15 @@ function EditMoneyExchangeInner({
     downloadUrl.isPending;
 
   return (
-    <>
-      <FormCardHeader
-        title="Edit Money Exchange"
-        description="Update money exchange details."
-        renderAction={
-          <Badge variant={statusVariant(moneyExchange.status)}>
-            {moneyExchange.status}
-          </Badge>
-        }
-      >
-        <MoneyExchangeToolbar
-          status={moneyExchange.status}
-          filePath={moneyExchange.filePath}
-          isPending={isPending}
-          onIssue={handleIssue}
-          onCancel={handleCancel}
-          onUpload={handleUpload}
-          onDownload={handleDownload}
-        />
-      </FormCardHeader>
-      <EditMoneyExchangeForm
-        moneyExchange={moneyExchange as MoneyExchange}
-        isPending={edit.isPending}
-        onSubmit={handleSubmit}
-        onCancel={onCancel}
-      />
-    </>
+    <EditMoneyExchangeForm
+      moneyExchange={moneyExchange}
+      isPending={isPending}
+      onSubmit={handleSubmit}
+      onCancel={onCancel}
+      onMoneyExchangeIssue={handleIssue}
+      onMoneyExchangeCancel={handleCancel}
+      onMoneyExchangeUpload={handleUpload}
+      onMoneyExchangeDownload={handleDownload}
+    />
   );
 }

@@ -16,17 +16,27 @@ import {
 import {
   editPayrollPaymentSchema,
   type EditPayrollPayment,
+  type PayPayrollPayment,
+  type PayPensionPayrollPayment,
   type PayrollPayment,
 } from '#/features/payroll-payments/schemas';
-import { FormCardContent } from '@/components/FormCardContent';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 import { CurrencySelect } from '@/components/CurrencySelect';
+import { PayrollPaymentToolbar } from './PayrollPaymentToolbar';
+import { StatusBadge } from '@/components/StatusBadge';
+import { getStatusVariant } from '../utils/status-variants';
+import { FormCard } from '@/components/FormCard';
 
 type EditPayrollPaymentFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditPayrollPayment>;
   onCancel: () => void;
   payrollPayment: PayrollPayment;
+  onPayrollPaymentPay: (data: PayPayrollPayment) => void;
+  onPayrollPaymentPayPension: (data: PayPensionPayrollPayment) => void;
+  onPayrollPaymentCancel: () => void;
+  onPayrollPaymentUpload: (file: File) => void;
+  onPayrollPaymentDownload: () => void;
 };
 
 export function EditPayrollPaymentForm({
@@ -34,6 +44,11 @@ export function EditPayrollPaymentForm({
   onSubmit,
   onCancel,
   payrollPayment,
+  onPayrollPaymentPay,
+  onPayrollPaymentPayPension,
+  onPayrollPaymentCancel,
+  onPayrollPaymentUpload,
+  onPayrollPaymentDownload,
 }: EditPayrollPaymentFormProps) {
   const isStatusPending = payrollPayment.status === 'Pending';
 
@@ -53,13 +68,31 @@ export function EditPayrollPaymentForm({
   const grossSalary = Number(netSalary) + Number(payrollPayment.pensionAmount);
 
   return (
-    <FormCardContent
-      formId={isStatusPending ? 'form' : undefined}
-      onSubmit={form.handleSubmit(onSubmit)}
+    <FormCard
+      onSubmit={isStatusPending ? form.handleSubmit(onSubmit) : undefined}
       onCancel={onCancel}
       saveText="Save Payroll Payment"
-      cancelText={isStatusPending ? 'Cancel' : 'Back'}
       isPending={isPending}
+      title="Edit Payroll Payment"
+      description="Update payroll payment details."
+      renderTitleAction={
+        <StatusBadge
+          variant={getStatusVariant(payrollPayment.status)}
+          status={payrollPayment.status}
+        />
+      }
+      renderAction={
+        <PayrollPaymentToolbar
+          status={payrollPayment.status}
+          filePath={payrollPayment.filePath}
+          isPending={isPending}
+          onPay={onPayrollPaymentPay}
+          onPayPension={onPayrollPaymentPayPension}
+          onCancel={onPayrollPaymentCancel}
+          onUpload={onPayrollPaymentUpload}
+          onDownload={onPayrollPaymentDownload}
+        />
+      }
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
@@ -210,6 +243,6 @@ export function EditPayrollPaymentForm({
           </Field>
         </div>
       </FieldGroup>
-    </FormCardContent>
+    </FormCard>
   );
 }

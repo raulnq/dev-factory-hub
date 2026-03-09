@@ -1,7 +1,8 @@
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import type { Collaborator } from '#/features/collaborators/schemas';
-import { ViewCardContent } from '@/components/ViewCardContent';
+import { FormCard } from '@/components/FormCard';
+import { EditButton } from '@/components/EditButton';
 
 type ViewCollaboratorCardProps = {
   collaborator: Collaborator;
@@ -13,7 +14,17 @@ export function ViewCollaboratorCard({
   onCancel,
 }: ViewCollaboratorCardProps) {
   return (
-    <ViewCardContent onCancel={onCancel}>
+    <FormCard
+      onCancel={onCancel}
+      title="View Collaborator"
+      description="View collaborator record details."
+      renderAction={
+        <EditButton
+          text="Edit"
+          link={`/collaborators/${collaborator.collaboratorId}/edit`}
+        />
+      }
+    >
       <FieldGroup>
         <Field>
           <FieldLabel>Name</FieldLabel>
@@ -28,6 +39,6 @@ export function ViewCollaboratorCard({
           <Input value={`${collaborator.withholdingPercentage}%`} disabled />
         </Field>
       </FieldGroup>
-    </ViewCardContent>
+    </FormCard>
   );
 }

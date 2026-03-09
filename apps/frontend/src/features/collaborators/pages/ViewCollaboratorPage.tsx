@@ -5,10 +5,7 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { useCollaboratorSuspense } from '../stores/useCollaborators';
 import { ViewCollaboratorCard } from '../components/ViewCollaboratorCard';
 import { CollaboratorSkeleton } from '../components/CollaboratorSkeleton';
-import { Card } from '@/components/ui/card';
-import { ViewCardHeader } from '@/components/ViewCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
-import { EditButton } from '@/components/EditButton';
 
 export function ViewCollaboratorPage() {
   const { collaboratorId } = useParams<{ collaboratorId: string }>();
@@ -16,38 +13,26 @@ export function ViewCollaboratorPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <ViewCardHeader
-          title="View Collaborator"
-          description="View collaborator record details."
-        >
-          <EditButton
-            text="Edit"
-            link={`/collaborators/${collaboratorId!}/edit`}
-          />
-        </ViewCardHeader>
-
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={({ resetErrorBoundary }) => (
-                <ErrorFallback
-                  resetErrorBoundary={resetErrorBoundary}
-                  message="Failed to load collaborator"
-                />
-              )}
-            >
-              <Suspense fallback={<CollaboratorSkeleton />}>
-                <InnerCollaborator
-                  collaboratorId={collaboratorId!}
-                  onCancel={() => navigate('/collaborators')}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Card>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={({ resetErrorBoundary }) => (
+              <ErrorFallback
+                resetErrorBoundary={resetErrorBoundary}
+                message="Failed to load collaborator"
+              />
+            )}
+          >
+            <Suspense fallback={<CollaboratorSkeleton />}>
+              <InnerCollaborator
+                collaboratorId={collaboratorId!}
+                onCancel={() => navigate('/collaborators')}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </div>
   );
 }

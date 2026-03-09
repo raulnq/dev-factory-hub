@@ -18,28 +18,7 @@ import {
 } from '../stores/useCollaboratorPayments';
 import { EditCollaboratorPaymentForm } from '../components/EditCollaboratorPaymentForm';
 import { CollaboratorPaymentSkeleton } from '../components/CollaboratorPaymentSkeleton';
-import { CollaboratorPaymentToolbar } from '../components/CollaboratorPaymentToolbar';
-import { Card } from '@/components/ui/card';
-import { FormCardHeader } from '@/components/FormCardHeader';
 import { ErrorFallback } from '@/components/ErrorFallback';
-import { Badge } from '@/components/ui/badge';
-
-import type { BadgeProps } from '@/components/ui/badge';
-
-function statusVariant(status: string): BadgeProps['variant'] {
-  switch (status) {
-    case 'Pending':
-      return 'default';
-    case 'Paid':
-      return 'secondary';
-    case 'Confirmed':
-      return 'outline';
-    case 'Canceled':
-      return 'destructive';
-    default:
-      return 'secondary';
-  }
-}
 
 export function EditCollaboratorPaymentPage() {
   const { collaboratorPaymentId } = useParams() as {
@@ -49,28 +28,26 @@ export function EditCollaboratorPaymentPage() {
 
   return (
     <div className="space-y-4">
-      <Card>
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={({ resetErrorBoundary }) => (
-                <ErrorFallback
-                  resetErrorBoundary={resetErrorBoundary}
-                  message="Failed to load payment"
-                />
-              )}
-            >
-              <Suspense fallback={<CollaboratorPaymentSkeleton />}>
-                <EditCollaboratorPaymentInner
-                  collaboratorPaymentId={collaboratorPaymentId}
-                  onCancel={() => navigate('/collaborator-payments')}
-                />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-      </Card>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={({ resetErrorBoundary }) => (
+              <ErrorFallback
+                resetErrorBoundary={resetErrorBoundary}
+                message="Failed to load payment"
+              />
+            )}
+          >
+            <Suspense fallback={<CollaboratorPaymentSkeleton />}>
+              <EditCollaboratorPaymentInner
+                collaboratorPaymentId={collaboratorPaymentId}
+                onCancel={() => navigate('/collaborator-payments')}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </div>
   );
 }
@@ -140,30 +117,14 @@ function EditCollaboratorPaymentInner({
     edit.isPending || pay.isPending || confirm.isPending || cancel.isPending;
 
   return (
-    <>
-      <FormCardHeader
-        title={`Edit Payment`}
-        description="Update payment details."
-        renderAction={
-          <Badge variant={statusVariant(payment.status)}>
-            {payment.status}
-          </Badge>
-        }
-      >
-        <CollaboratorPaymentToolbar
-          status={payment.status}
-          isPending={isPending}
-          onPay={handlePay}
-          onConfirm={handleConfirm}
-          onCancel={handleCancel}
-        />
-      </FormCardHeader>
-      <EditCollaboratorPaymentForm
-        collaboratorPayment={payment}
-        isPending={edit.isPending}
-        onSubmit={handleSubmit}
-        onCancel={onCancel}
-      />
-    </>
+    <EditCollaboratorPaymentForm
+      collaboratorPayment={payment}
+      isPending={isPending}
+      onSubmit={handleSubmit}
+      onCancel={onCancel}
+      onCollaboratorPaymentCancel={handleCancel}
+      onCollaboratorPaymentConfirm={handleConfirm}
+      onCollaboratorPaymentPay={handlePay}
+    />
   );
 }
