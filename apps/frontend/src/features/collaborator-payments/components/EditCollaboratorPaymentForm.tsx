@@ -53,20 +53,20 @@ export function EditCollaboratorPaymentForm({
     },
   });
 
-  const grossSalary = form.watch('grossSalary');
-  const withholding = form.watch('withholding');
+  const [grossSalary, withholding] = form.watch(['grossSalary', 'withholding']);
   const netSalary =
     Math.round((Number(grossSalary) - Number(withholding)) * 100) / 100;
 
   return (
     <FormCard
-      onSubmit={isEditable ? form.handleSubmit(onSubmit) : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      readOnly={!isEditable}
       onCancel={onCancel}
       saveText="Save Payment"
       isPending={isPending}
       title="Edit Payment"
       description="Update payment details."
-      renderTitleAction={
+      renderTitleSuffix={
         <StatusBadge
           variant={getStatusVariant(collaboratorPayment.status)}
           status={collaboratorPayment.status}

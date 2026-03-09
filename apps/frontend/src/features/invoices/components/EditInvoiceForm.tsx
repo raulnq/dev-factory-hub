@@ -57,13 +57,14 @@ export function EditInvoiceForm({
 
   return (
     <FormCard
-      onSubmit={isStatusPending ? form.handleSubmit(onSubmit) : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      readOnly={!isStatusPending}
       onCancel={onCancel}
       saveText="Save Invoice"
       isPending={isPending}
       title={`Edit Invoice`}
       description="Update invoice details."
-      renderTitleAction={
+      renderTitleSuffix={
         <StatusBadge
           variant={getStatusVariant(invoice.status)}
           status={invoice.status}

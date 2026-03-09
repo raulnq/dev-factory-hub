@@ -25,6 +25,7 @@ export function AddItemButton({ onAdd, isPending }: AddItemButtonProps) {
       onAdd={onAdd}
       isPending={isPending}
       label="Add Item"
+      saveLabel="Save Item"
       description="Add a new item to this proforma."
     >
       {form => (

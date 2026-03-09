@@ -49,13 +49,14 @@ export function EditTaxPaymentForm({
   return (
     <FormCard
       formId={'tax-payment-form'}
-      onSubmit={isStatusPending ? form.handleSubmit(onSubmit) : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      readOnly={!isStatusPending}
       onCancel={onCancel}
       isPending={isPending}
       saveText="Save Tax Payment"
       title={`Edit Tax Payment`}
       description="Update tax payment details."
-      renderTitleAction={
+      renderTitleSuffix={
         taxPayment.status && (
           <StatusBadge
             variant={getStatusVariant(taxPayment.status)}

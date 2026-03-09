@@ -22,6 +22,7 @@ export function AddProjectButton({ onAdd }: AddProjectButtonProps) {
       onAdd={data => onAdd(data.projectId)}
       isPending={false}
       label="Add Project"
+      saveLabel="Save Project"
       description="Add a new project for this timesheet."
     >
       {form => (

@@ -22,8 +22,9 @@ export function AddContactButton({ onAdd, isPending }: AddContactButtonProps) {
       onAdd={onAdd}
       isPending={isPending}
       label="Add Contact"
+      saveLabel="Save Contact"
       description="Add a new contact to this client."
-      formId="contact-form"
+      formId="add-contact-form"
     >
       {form => (
         <FieldGroup>

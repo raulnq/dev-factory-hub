@@ -57,7 +57,7 @@ export function EditProformaForm({
       saveText="Save Proforma"
       title={`Edit Proforma ${proforma.number}`}
       description="Update proforma details."
-      renderTitleAction={
+      renderTitleSuffix={
         <StatusBadge
           status={proforma.status}
           variant={getStatusVariant(proforma.status)}

@@ -12,6 +12,7 @@ import { Skeleton } from './ui/skeleton';
 
 type FormCardProps = {
   onSubmit?: React.FormEventHandler<HTMLFormElement>;
+  readOnly?: boolean;
   children: React.ReactNode;
   formId?: string;
   isPending?: boolean;
@@ -20,17 +21,18 @@ type FormCardProps = {
   title: string;
   description: string;
   onCancel: () => void;
-  renderTitleAction?: React.ReactNode;
+  renderTitleSuffix?: React.ReactNode;
   renderAction?: React.ReactNode;
 };
 
 export function FormCard({
   onSubmit,
+  readOnly = false,
   children,
   onCancel,
   title,
   description,
-  renderTitleAction,
+  renderTitleSuffix,
   renderAction,
   isPending = false,
   formId = 'form',
@@ -44,8 +46,8 @@ export function FormCard({
           <div>
             <div className="flex items-center gap-3">
               <CardTitle className="text-base">{title}</CardTitle>
-              {renderTitleAction && (
-                <div className="flex gap-2">{renderTitleAction}</div>
+              {renderTitleSuffix && (
+                <div className="flex gap-2">{renderTitleSuffix}</div>
               )}
             </div>
             <CardDescription>{description}</CardDescription>
@@ -54,19 +56,19 @@ export function FormCard({
         </div>
       </CardHeader>
       <CardContent>
-        {onSubmit && (
+        {!readOnly && (
           <form id={formId} onSubmit={onSubmit} className="space-y-4">
             {children}
           </form>
         )}
-        {!onSubmit && <div className="space-y-4">{children}</div>}
+        {readOnly && <div className="space-y-4">{children}</div>}
       </CardContent>
       <CardFooter className="border-t">
         <Field orientation="horizontal" className="flex justify-end">
           <Button type="button" variant="outline" onClick={onCancel}>
             {cancelText}
           </Button>
-          {onSubmit && (
+          {!readOnly && (
             <Button type="submit" form={formId} disabled={isPending}>
               {saveText}
             </Button>

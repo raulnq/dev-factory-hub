@@ -22,8 +22,9 @@ export function AddProjectButton({ onAdd, isPending }: AddProjectButtonProps) {
       onAdd={onAdd}
       isPending={isPending}
       label="Add Project"
+      saveLabel="Save Project"
       description="Add a new project to this client."
-      formId="project-form"
+      formId="add-project-form"
     >
       {form => (
         <FieldGroup>

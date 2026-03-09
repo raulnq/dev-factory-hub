@@ -42,6 +42,7 @@ export function AddTaxPaymentItemButton({
       onAdd={onAdd}
       isPending={isPending}
       label="Add Item"
+      saveLabel="Save Item"
       description="Add a new item to this tax payment."
     >
       {form => (

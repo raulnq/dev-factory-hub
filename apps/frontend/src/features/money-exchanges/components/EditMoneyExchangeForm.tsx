@@ -59,13 +59,14 @@ export function EditMoneyExchangeForm({
 
   return (
     <FormCard
-      onSubmit={isStatusPending ? form.handleSubmit(onSubmit) : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      readOnly={!isStatusPending}
       onCancel={onCancel}
       saveText="Save Money Exchange"
       isPending={isPending}
       title="Edit Money Exchange"
       description="Update money exchange details."
-      renderTitleAction={
+      renderTitleSuffix={
         <StatusBadge
           variant={getStatusVariant(moneyExchange.status)}
           status={moneyExchange.status}

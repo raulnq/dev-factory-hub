@@ -72,13 +72,14 @@ export function EditTransactionForm({
 
   return (
     <FormCard
-      onSubmit={isStatusPending ? form.handleSubmit(onSubmit) : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      readOnly={!isStatusPending}
       onCancel={onCancel}
       saveText="Save Transaction"
       isPending={isPending}
       title={`Edit Transaction`}
       description="Update transaction details."
-      renderTitleAction={
+      renderTitleSuffix={
         <StatusBadge
           variant={getStatusVariant(transaction.status)}
           status={transaction.status}

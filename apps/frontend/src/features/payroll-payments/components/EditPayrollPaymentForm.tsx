@@ -69,13 +69,14 @@ export function EditPayrollPaymentForm({
 
   return (
     <FormCard
-      onSubmit={isStatusPending ? form.handleSubmit(onSubmit) : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      readOnly={!isStatusPending}
       onCancel={onCancel}
       saveText="Save Payroll Payment"
       isPending={isPending}
       title="Edit Payroll Payment"
       description="Update payroll payment details."
-      renderTitleAction={
+      renderTitleSuffix={
         <StatusBadge
           variant={getStatusVariant(payrollPayment.status)}
           status={payrollPayment.status}

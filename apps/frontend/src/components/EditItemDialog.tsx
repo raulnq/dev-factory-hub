@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import {
   useForm,
   type DefaultValues,
@@ -8,6 +6,7 @@ import {
   type UseFormReturn,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -16,63 +15,57 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
-import { Plus } from 'lucide-react';
 import type { ZodType } from 'zod';
 import type { ReactNode } from 'react';
 import type { Resolver } from 'react-hook-form';
 
-type AddItemDialogProps<TData extends FieldValues> = {
+type EditItemDialogProps<TData extends FieldValues> = {
   schema: ZodType<TData, TData>;
   defaultValues: DefaultValues<TData>;
+  open: boolean;
   formId?: string;
-  onAdd: (data: TData) => Promise<void> | void;
   isPending: boolean;
+  onOpenChange: (open: boolean) => void;
+  onEdit: (data: TData) => Promise<void> | void;
   label: string;
   saveLabel: string;
   description?: string;
   children: (form: UseFormReturn<TData>) => ReactNode;
 };
 
-export function AddItemDialog<TData extends FieldValues>({
+export function EditItemDialog<TData extends FieldValues>({
   schema,
   defaultValues,
-  onAdd,
+  open,
   isPending,
+  onOpenChange,
+  onEdit,
   label,
+  saveLabel,
   description,
   children,
-  saveLabel,
-  formId = "add-item-form'",
-}: AddItemDialogProps<TData>) {
-  const [dialogOpen, setDialogOpen] = useState(false);
-
+  formId = 'edit-item-form',
+}: EditItemDialogProps<TData>) {
   const form = useForm<TData>({
     resolver: zodResolver(schema) as Resolver<TData>,
     defaultValues,
   });
 
-  const handleSubmit: SubmitHandler<TData> = async data => {
-    await onAdd(data);
-    handleOpenChange(false);
-  };
-
   const handleOpenChange = (open: boolean) => {
     if (!open) {
       form.reset();
     }
-    setDialogOpen(open);
+    onOpenChange(open);
+  };
+
+  const handleSubmit: SubmitHandler<TData> = async data => {
+    await onEdit(data);
+    handleOpenChange(false);
   };
 
   return (
-    <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button type="button" size="sm">
-          <Plus className="h-4 w-4 mr-1" />
-          {label}
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{label}</DialogTitle>

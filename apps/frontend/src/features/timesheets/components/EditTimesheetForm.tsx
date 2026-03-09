@@ -35,7 +35,7 @@ export function EditTimesheetForm({
           isPending={isPending}
         />
       }
-      renderTitleAction={
+      renderTitleSuffix={
         <StatusBadge
           status={timesheet.status}
           variant={getStatusVariant(timesheet.status)}

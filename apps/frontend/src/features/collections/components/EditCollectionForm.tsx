@@ -56,13 +56,14 @@ export function EditCollectionForm({
 
   return (
     <FormCard
-      onSubmit={isEditable ? form.handleSubmit(onSubmit) : undefined}
+      onSubmit={form.handleSubmit(onSubmit)}
+      readOnly={!isEditable}
       onCancel={onCancel}
       saveText="Save Collection"
       isPending={isPending}
       title="Edit Collection"
       description="Update collection details."
-      renderTitleAction={
+      renderTitleSuffix={
         <StatusBadge
           variant={getStatusVariant(collection.status)}
           status={collection.status}
