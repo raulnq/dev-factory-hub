@@ -1,17 +1,17 @@
 import { XCircle } from 'lucide-react';
 import { UncontrolledConfirmDialog } from '@/components/UncontrolledConfirmDialog';
 
-type CancelActionProps = {
+type CollaboratorPaymentCancelActionProps = {
   disabled: boolean;
   isPending: boolean;
   onCancel: () => void;
 };
 
-export function CancelAction({
+export function CollaboratorPaymentCancelAction({
   disabled,
   isPending,
   onCancel,
-}: CancelActionProps) {
+}: CollaboratorPaymentCancelActionProps) {
   return (
     <UncontrolledConfirmDialog
       label="Cancel Payment"

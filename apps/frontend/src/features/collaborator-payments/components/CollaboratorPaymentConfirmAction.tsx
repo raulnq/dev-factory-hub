@@ -8,17 +8,17 @@ import {
   type ConfirmCollaboratorPayment,
 } from '#/features/collaborator-payments/schemas';
 
-type ConfirmActionProps = {
+type CollaboratorPaymentConfirmActionProps = {
   disabled: boolean;
   isPending: boolean;
   onConfirm: (data: ConfirmCollaboratorPayment) => void;
 };
 
-export function ConfirmAction({
+export function CollaboratorPaymentConfirmAction({
   disabled,
   isPending,
   onConfirm,
-}: ConfirmActionProps) {
+}: CollaboratorPaymentConfirmActionProps) {
   const today = new Date().toISOString().split('T')[0];
 
   return (

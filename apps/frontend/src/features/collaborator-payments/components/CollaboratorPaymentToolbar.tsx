@@ -2,9 +2,9 @@ import type {
   PayCollaboratorPayment,
   ConfirmCollaboratorPayment,
 } from '#/features/collaborator-payments/schemas';
-import { PayAction } from './PayAction';
-import { ConfirmAction } from './ConfirmAction';
-import { CancelAction } from './CancelAction';
+import { CollaboratorPaymentPayAction } from './CollaboratorPaymentPayAction';
+import { CollaboratorPaymentConfirmAction } from './CollaboratorPaymentConfirmAction';
+import { CollaboratorPaymentCancelAction } from './CollaboratorPaymentCancelAction';
 
 type CollaboratorPaymentToolbarProps = {
   status: string;
@@ -27,13 +27,17 @@ export function CollaboratorPaymentToolbar({
 
   return (
     <>
-      <PayAction disabled={!canPay} isPending={isPending} onPay={onPay} />
-      <ConfirmAction
+      <CollaboratorPaymentPayAction
+        disabled={!canPay}
+        isPending={isPending}
+        onPay={onPay}
+      />
+      <CollaboratorPaymentConfirmAction
         disabled={!canConfirm}
         isPending={isPending}
         onConfirm={onConfirm}
       />
-      <CancelAction
+      <CollaboratorPaymentCancelAction
         disabled={!canCancel}
         isPending={isPending}
         onCancel={onCancel}

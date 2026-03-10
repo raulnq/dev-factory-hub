@@ -8,13 +8,17 @@ import {
   type PayCollaboratorPayment,
 } from '#/features/collaborator-payments/schemas';
 
-type PayActionProps = {
+type CollaboratorPaymentPayActionProps = {
   disabled: boolean;
   isPending: boolean;
   onPay: (data: PayCollaboratorPayment) => void;
 };
 
-export function PayAction({ disabled, isPending, onPay }: PayActionProps) {
+export function CollaboratorPaymentPayAction({
+  disabled,
+  isPending,
+  onPay,
+}: CollaboratorPaymentPayActionProps) {
   const today = new Date().toISOString().split('T')[0];
 
   return (

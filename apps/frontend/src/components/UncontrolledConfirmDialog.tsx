@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { useState, type ReactNode } from 'react';
 
-type ControlledConfirmDialogProps = {
+type UncontrolledConfirmDialogProps = {
   label: string;
   description: string;
   isPending: boolean;
@@ -20,14 +20,14 @@ type ControlledConfirmDialogProps = {
   disabled?: boolean;
 };
 
-export function ControlledConfirmDialog({
+export function UncontrolledConfirmDialog({
   label,
   description,
   isPending,
   onConfirm,
   icon,
   disabled,
-}: ControlledConfirmDialogProps) {
+}: UncontrolledConfirmDialogProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const handleConfirm = async () => {
     await onConfirm();
