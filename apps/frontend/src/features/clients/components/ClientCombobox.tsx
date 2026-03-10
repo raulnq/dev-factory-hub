@@ -1,21 +1,6 @@
-import { useId, useState } from 'react';
-import { Check, ChevronDownIcon, Loader2, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { SearchCombobox } from '@/components/SearchCombobox';
 import { useClients } from '../stores/useClients';
 
 type Props = {
@@ -25,12 +10,8 @@ type Props = {
   label?: string | null;
 };
 
-const DEFAULT_LABEL = 'Select client...';
-
 export function ClientCombobox({ value, onChange, disabled, label }: Props) {
-  const listId = useId();
   const [open, setOpen] = useState(false);
-  const [display, setDisplay] = useState(label || DEFAULT_LABEL);
   const [search, setSearch] = useState('');
   const [debouncedSearch] = useDebounce(search, 300);
 
@@ -41,92 +22,26 @@ export function ClientCombobox({ value, onChange, disabled, label }: Props) {
     enabled: open,
   });
 
-  const displayValue = !value ? DEFAULT_LABEL : display;
-
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <div className="relative">
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className="w-full justify-between font-normal"
-            disabled={disabled || isLoading}
-          >
-            <span
-              className={cn(
-                'truncate',
-                displayValue === DEFAULT_LABEL && 'text-muted-foreground'
-              )}
-            >
-              {displayValue}
-            </span>
-            <ChevronDownIcon className="size-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        {value && !disabled && (
-          <button
-            type="button"
-            className="absolute right-8 top-1/2 -translate-y-1/2 p-1 hover:bg-accent rounded-sm"
-            onClick={e => {
-              e.stopPropagation();
-              onChange('');
-              setDisplay(DEFAULT_LABEL);
-            }}
-          >
-            <X className="size-3 opacity-50 hover:opacity-100" />
-          </button>
-        )}
-      </div>
-      <PopoverContent
-        className="p-0"
-        style={{ width: 'var(--radix-popover-trigger-width)' }}
-      >
-        <Command shouldFilter={false}>
-          <CommandInput
-            placeholder="Search clients..."
-            value={search}
-            onValueChange={setSearch}
-          />
-          <CommandList id={listId}>
-            {isError ? (
-              <div className="py-6 text-center text-sm text-destructive">
-                Failed to load clients. Please try again.
-              </div>
-            ) : isLoading ? (
-              <div className="flex items-center justify-center py-6">
-                <Loader2 className="size-4 animate-spin opacity-50" />
-              </div>
-            ) : (
-              <>
-                <CommandEmpty>No clients found.</CommandEmpty>
-                <CommandGroup>
-                  {data?.items.map(c => (
-                    <CommandItem
-                      key={c.clientId}
-                      value={c.clientId}
-                      onSelect={selected => {
-                        onChange(selected);
-                        setOpen(false);
-                        setDisplay(c.name);
-                      }}
-                    >
-                      <span className="font-medium">{c.name}</span>
-                      <Check
-                        className={cn(
-                          'ml-auto',
-                          value === c.clientId ? 'opacity-100' : 'opacity-0'
-                        )}
-                      />
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </>
-            )}
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+    <SearchCombobox
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
+      label={label}
+      defaultLabel="Select client..."
+      searchPlaceholder="Search clients..."
+      errorMessage="Failed to load clients. Please try again."
+      emptyMessage="No clients found."
+      items={data?.items}
+      isLoading={isLoading}
+      isError={isError}
+      open={open}
+      onOpenChange={setOpen}
+      search={search}
+      onSearchChange={setSearch}
+      getItemId={c => c.clientId}
+      getItemLabel={c => c.name}
+      renderItem={c => <span className="font-medium">{c.name}</span>}
+    />
   );
 }
