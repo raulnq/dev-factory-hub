@@ -15,19 +15,19 @@ type DeleteItemDialogProps = {
   open: boolean;
   isPending: boolean;
   onOpenChange: (open: boolean) => void;
-  onDelete: () => Promise<void> | void;
+  onConfirm: () => Promise<void> | void;
 };
 
-export function DeleteItemDialog({
+export function ConfirmDialog({
   title,
   description,
   open,
   isPending,
   onOpenChange,
-  onDelete,
+  onConfirm,
 }: DeleteItemDialogProps) {
   const handleConfirm = async () => {
-    await onDelete();
+    await onConfirm();
     onOpenChange(false);
   };
 

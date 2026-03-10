@@ -15,6 +15,7 @@ import { DateTableCell } from '@/components/DateTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
+import { getStatusVariant } from '../utils/status-variants';
 
 function InnerTableHeader() {
   return (
@@ -75,9 +76,7 @@ export function TimesheetTable() {
               <DateTableCell value={item.startDate} />
               <DateTableCell value={item.endDate} />
               <DateTableCell value={item.completedAt} />
-              <BadgeTableCell
-                variant={item.status === 'Completed' ? 'default' : 'secondary'}
-              >
+              <BadgeTableCell variant={getStatusVariant(item.status)}>
                 {item.status}
               </BadgeTableCell>
               <TableCell>

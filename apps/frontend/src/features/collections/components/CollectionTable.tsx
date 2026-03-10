@@ -1,6 +1,5 @@
 import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
-import type { BadgeProps } from '@/components/ui/badge';
 import {
   Table,
   TableBody,
@@ -17,19 +16,7 @@ import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
-
-function statusVariant(status: string): BadgeProps['variant'] {
-  switch (status) {
-    case 'Pending':
-      return 'default';
-    case 'Confirmed':
-      return 'outline';
-    case 'Canceled':
-      return 'destructive';
-    default:
-      return 'secondary';
-  }
-}
+import { getStatusVariant } from '../utils/status-variants';
 
 function InnerTableHeader() {
   return (
@@ -89,7 +76,7 @@ export function CollectionTable() {
               <NumberTableCell value={Number(item.commission)} />
               <NumberTableCell value={Number(item.taxes)} />
               <DateTableCell value={item.confirmedAt} />
-              <BadgeTableCell variant={statusVariant(item.status)}>
+              <BadgeTableCell variant={getStatusVariant(item.status)}>
                 {item.status}
               </BadgeTableCell>
               <TableCell>

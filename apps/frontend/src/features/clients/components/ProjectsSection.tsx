@@ -31,7 +31,7 @@ import {
   type Project,
 } from '#/features/clients/schemas';
 import { AddProjectButton } from './AddProjectButton';
-import { DeleteItemDialog } from '@/components/DeleteItemDialog';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { EditProjectDialog } from './EditProjectDialog';
 
 type ProjectsSectionProps = {
@@ -158,12 +158,12 @@ export function ProjectsSection({ clientId }: ProjectsSectionProps) {
         isPending={editProjectMutation.isPending}
       />
 
-      <DeleteItemDialog
+      <ConfirmDialog
         title="Delete Project"
         description={`Are you sure you want to delete ${selectedRow?.name}? This action cannot be undone.`}
         open={deleteDialogOpen}
         onOpenChange={handleDeleteDialogChange}
-        onDelete={handleDelete}
+        onConfirm={handleDelete}
         isPending={deleteProjectMutation.isPending}
       />
     </>

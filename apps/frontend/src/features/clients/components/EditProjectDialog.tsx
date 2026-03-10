@@ -10,7 +10,7 @@ import {
   editProjectSchema,
   type EditProject,
 } from '#/features/clients/schemas';
-import { EditItemDialog } from '@/components/EditItemDialog';
+import { ControlledFormDialog } from '@/components/ControlledFormDialog';
 
 type EditProjectDialogProps = {
   name: string | null | undefined;
@@ -28,13 +28,13 @@ export function EditProjectDialog({
   onEdit,
 }: EditProjectDialogProps) {
   return (
-    <EditItemDialog
+    <ControlledFormDialog
       schema={editProjectSchema}
       defaultValues={{ name: name ?? '' }}
       open={open}
       isPending={isPending}
       onOpenChange={onOpenChange}
-      onEdit={onEdit}
+      onSubmit={onEdit}
       label="Edit Project"
       saveLabel="Save Project"
       description="Update the project details."
@@ -63,6 +63,6 @@ export function EditProjectDialog({
           />
         </FieldGroup>
       )}
-    </EditItemDialog>
+    </ControlledFormDialog>
   );
 }

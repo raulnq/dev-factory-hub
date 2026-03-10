@@ -18,7 +18,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Plus } from 'lucide-react';
 import type { ZodType } from 'zod';
 import type { ReactNode } from 'react';
 import type { Resolver } from 'react-hook-form';
@@ -27,24 +26,26 @@ type AddItemDialogProps<TData extends FieldValues> = {
   schema: ZodType<TData, TData>;
   defaultValues: DefaultValues<TData>;
   formId?: string;
-  onAdd: (data: TData) => Promise<void> | void;
+  onSubmit: (data: TData) => Promise<void> | void;
   isPending: boolean;
   label: string;
   saveLabel: string;
   description?: string;
   children: (form: UseFormReturn<TData>) => ReactNode;
+  icon?: ReactNode;
 };
 
-export function AddItemDialog<TData extends FieldValues>({
+export function UncontrolledFormDialog<TData extends FieldValues>({
   schema,
   defaultValues,
-  onAdd,
+  onSubmit,
   isPending,
   label,
   description,
   children,
   saveLabel,
-  formId = "add-item-form'",
+  formId = 'form-dialog',
+  icon,
 }: AddItemDialogProps<TData>) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -54,13 +55,13 @@ export function AddItemDialog<TData extends FieldValues>({
   });
 
   const handleSubmit: SubmitHandler<TData> = async data => {
-    await onAdd(data);
+    await onSubmit(data);
     handleOpenChange(false);
   };
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
-      form.reset();
+      form.reset(defaultValues);
     }
     setDialogOpen(open);
   };
@@ -69,7 +70,7 @@ export function AddItemDialog<TData extends FieldValues>({
     <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button type="button" size="sm">
-          <Plus className="h-4 w-4 mr-1" />
+          {icon}
           {label}
         </Button>
       </DialogTrigger>

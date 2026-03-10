@@ -17,7 +17,7 @@ import {
   useDeleteTimesheetProject,
   useEditWorklog,
 } from '../stores/useTimesheets';
-import { DeleteItemDialog } from '@/components/DeleteItemDialog';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 import type { TimesheetProjectWithWorklogs } from '#/features/timesheets/schemas';
 
 type Props = {
@@ -192,13 +192,13 @@ export function TimesheetGrid({
           </TableFooter>
         </Table>
       </div>
-      <DeleteItemDialog
+      <ConfirmDialog
         title="Delete Project"
         description={`Are you sure you want to delete ${selectedProject?.projectName} project? This action cannot be undone.`}
         open={deleteDialogOpen}
         isPending={deleteProject.isPending}
         onOpenChange={handleDeleteDialogChange}
-        onDelete={handleDeleteProject}
+        onConfirm={handleDeleteProject}
       />
     </div>
   );

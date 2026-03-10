@@ -2,7 +2,8 @@ import { Controller } from 'react-hook-form';
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { z } from 'zod';
 import { ProjectCombobox } from '@/features/clients/components/ProjectCombobox';
-import { AddItemDialog } from '@/components/AddItemDialog';
+import { UncontrolledFormDialog } from '@/components/UncontrolledFormDialog';
+import { Plus } from 'lucide-react';
 
 const addTimesheetProjectSchema = z.object({
   projectId: z.uuidv7(),
@@ -16,14 +17,15 @@ type AddProjectButtonProps = {
 
 export function AddProjectButton({ onAdd }: AddProjectButtonProps) {
   return (
-    <AddItemDialog
+    <UncontrolledFormDialog
       schema={addTimesheetProjectSchema}
       defaultValues={{ projectId: '' }}
-      onAdd={data => onAdd(data.projectId)}
+      onSubmit={data => onAdd(data.projectId)}
       isPending={false}
       label="Add Project"
       saveLabel="Save Project"
       description="Add a new project for this timesheet."
+      icon={<Plus className="h-4 w-4 mr-1" />}
     >
       {form => (
         <Controller
@@ -38,6 +40,6 @@ export function AddProjectButton({ onAdd }: AddProjectButtonProps) {
           )}
         />
       )}
-    </AddItemDialog>
+    </UncontrolledFormDialog>
   );
 }

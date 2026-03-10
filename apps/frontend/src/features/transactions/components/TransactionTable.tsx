@@ -1,7 +1,5 @@
 import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
-
-import type { BadgeProps } from '@/components/ui/badge';
 import {
   Table,
   TableBody,
@@ -18,17 +16,7 @@ import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
-
-function statusVariant(status: string): BadgeProps['variant'] {
-  switch (status) {
-    case 'Issued':
-      return 'secondary';
-    case 'Canceled':
-      return 'destructive';
-    default:
-      return 'outline';
-  }
-}
+import { getStatusVariant } from '../utils/status-variants';
 
 function InnerTableHeader() {
   return (
@@ -91,7 +79,7 @@ export function TransactionTable() {
               <NumberTableCell value={item.taxes} />
               <NumberTableCell value={item.total} />
               <DateTableCell value={item.issuedAt} />
-              <BadgeTableCell variant={statusVariant(item.status)}>
+              <BadgeTableCell variant={getStatusVariant(item.status)}>
                 {item.status}
               </BadgeTableCell>
               <TableCell>

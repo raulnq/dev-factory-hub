@@ -10,7 +10,8 @@ import {
   addProformaItemSchema,
   type AddProformaItem,
 } from '#/features/proformas/schemas';
-import { AddItemDialog } from '@/components/AddItemDialog';
+import { UncontrolledFormDialog } from '@/components/UncontrolledFormDialog';
+import { Plus } from 'lucide-react';
 
 type AddItemButtonProps = {
   onAdd: (data: AddProformaItem) => void;
@@ -19,14 +20,15 @@ type AddItemButtonProps = {
 
 export function AddItemButton({ onAdd, isPending }: AddItemButtonProps) {
   return (
-    <AddItemDialog
+    <UncontrolledFormDialog
       schema={addProformaItemSchema}
       defaultValues={{ description: '', amount: 0 }}
-      onAdd={onAdd}
+      onSubmit={onAdd}
       isPending={isPending}
       label="Add Item"
       saveLabel="Save Item"
       description="Add a new item to this proforma."
+      icon={<Plus className="h-4 w-4 mr-1" />}
     >
       {form => (
         <FieldGroup>
@@ -74,6 +76,6 @@ export function AddItemButton({ onAdd, isPending }: AddItemButtonProps) {
           />
         </FieldGroup>
       )}
-    </AddItemDialog>
+    </UncontrolledFormDialog>
   );
 }

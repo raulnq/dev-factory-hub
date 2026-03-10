@@ -17,7 +17,8 @@ import {
   addTaxPaymentItemSchema,
   type AddTaxPaymentItem,
 } from '#/features/tax-payments/schemas';
-import { AddItemDialog } from '@/components/AddItemDialog';
+import { UncontrolledFormDialog } from '@/components/UncontrolledFormDialog';
+import { Plus } from 'lucide-react';
 
 const ITEM_TYPES = [
   'ESSALUD',
@@ -36,14 +37,15 @@ export function AddTaxPaymentItemButton({
   isPending,
 }: AddTaxPaymentItemButtonProps) {
   return (
-    <AddItemDialog
+    <UncontrolledFormDialog
       schema={addTaxPaymentItemSchema}
       defaultValues={{ type: 'ESSALUD', amount: 0 }}
-      onAdd={onAdd}
+      onSubmit={onAdd}
       isPending={isPending}
       label="Add Item"
       saveLabel="Save Item"
       description="Add a new item to this tax payment."
+      icon={<Plus className="h-4 w-4 mr-1" />}
     >
       {form => (
         <FieldGroup>
@@ -101,6 +103,6 @@ export function AddTaxPaymentItemButton({
           />
         </FieldGroup>
       )}
-    </AddItemDialog>
+    </UncontrolledFormDialog>
   );
 }

@@ -15,7 +15,7 @@ import {
   useDeleteTaxPaymentItem,
   useTaxPaymentItemsSuspense,
 } from '../stores/useTaxPayments';
-import { DeleteItemDialog } from '@/components/DeleteItemDialog';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { useSearchParams } from 'react-router';
@@ -117,12 +117,12 @@ export function TaxPaymentItemsSection({
         </QueryErrorResetBoundary>
       </CardContent>
 
-      <DeleteItemDialog
+      <ConfirmDialog
         title="Delete Item"
         description={`Are you sure you want to delete the item "${selectedRow?.type}"? This action cannot be undone.`}
         open={deleteDialogOpen}
         onOpenChange={handleDeleteDialogChange}
-        onDelete={handleDelete}
+        onConfirm={handleDelete}
         isPending={del.isPending}
       />
     </Card>

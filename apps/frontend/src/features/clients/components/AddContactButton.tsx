@@ -7,7 +7,8 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { addContactSchema, type AddContact } from '#/features/clients/schemas';
-import { AddItemDialog } from '@/components/AddItemDialog';
+import { UncontrolledFormDialog } from '@/components/UncontrolledFormDialog';
+import { Plus } from 'lucide-react';
 
 type AddContactButtonProps = {
   onAdd: (data: AddContact) => Promise<void>;
@@ -16,15 +17,16 @@ type AddContactButtonProps = {
 
 export function AddContactButton({ onAdd, isPending }: AddContactButtonProps) {
   return (
-    <AddItemDialog
+    <UncontrolledFormDialog
       schema={addContactSchema}
       defaultValues={{ name: '', email: null }}
-      onAdd={onAdd}
+      onSubmit={onAdd}
       isPending={isPending}
       label="Add Contact"
       saveLabel="Save Contact"
       description="Add a new contact to this client."
       formId="add-contact-form"
+      icon={<Plus className="h-4 w-4 mr-1" />}
     >
       {form => (
         <FieldGroup>
@@ -70,6 +72,6 @@ export function AddContactButton({ onAdd, isPending }: AddContactButtonProps) {
           />
         </FieldGroup>
       )}
-    </AddItemDialog>
+    </UncontrolledFormDialog>
   );
 }

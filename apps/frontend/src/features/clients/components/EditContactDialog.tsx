@@ -10,7 +10,7 @@ import {
   editContactSchema,
   type EditContact,
 } from '#/features/clients/schemas';
-import { EditItemDialog } from '@/components/EditItemDialog';
+import { ControlledFormDialog } from '@/components/ControlledFormDialog';
 
 type EditContactDialogProps = {
   name: string | null | undefined;
@@ -30,13 +30,13 @@ export function EditContactDialog({
   onEdit,
 }: EditContactDialogProps) {
   return (
-    <EditItemDialog
+    <ControlledFormDialog
       schema={editContactSchema}
       defaultValues={{ name: name ?? '', email: email ?? null }}
       open={open}
       isPending={isPending}
       onOpenChange={onOpenChange}
-      onEdit={onEdit}
+      onSubmit={onEdit}
       label="Edit Contact"
       saveLabel="Save Contact"
       description="Update the contact details."
@@ -86,6 +86,6 @@ export function EditContactDialog({
           />
         </FieldGroup>
       )}
-    </EditItemDialog>
+    </ControlledFormDialog>
   );
 }

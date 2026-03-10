@@ -27,25 +27,25 @@ type EditItemDialogProps<TData extends FieldValues> = {
   formId?: string;
   isPending: boolean;
   onOpenChange: (open: boolean) => void;
-  onEdit: (data: TData) => Promise<void> | void;
+  onSubmit: (data: TData) => Promise<void> | void;
   label: string;
   saveLabel: string;
   description?: string;
   children: (form: UseFormReturn<TData>) => ReactNode;
 };
 
-export function EditItemDialog<TData extends FieldValues>({
+export function ControlledFormDialog<TData extends FieldValues>({
   schema,
   defaultValues,
   open,
   isPending,
   onOpenChange,
-  onEdit,
+  onSubmit,
   label,
   saveLabel,
   description,
   children,
-  formId = 'edit-item-form',
+  formId = 'form-dialog',
 }: EditItemDialogProps<TData>) {
   const form = useForm<TData>({
     resolver: zodResolver(schema) as Resolver<TData>,
@@ -54,13 +54,13 @@ export function EditItemDialog<TData extends FieldValues>({
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
-      form.reset();
+      form.reset(defaultValues);
     }
     onOpenChange(open);
   };
 
   const handleSubmit: SubmitHandler<TData> = async data => {
-    await onEdit(data);
+    await onSubmit(data);
     handleOpenChange(false);
   };
 

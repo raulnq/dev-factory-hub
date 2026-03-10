@@ -13,20 +13,9 @@ import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
-import type { BadgeProps } from '@/components/ui/badge';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
-
-function statusVariant(status: string): BadgeProps['variant'] {
-  switch (status) {
-    case 'Issued':
-      return 'secondary';
-    case 'Canceled':
-      return 'destructive';
-    default:
-      return 'outline';
-  }
-}
+import { getStatusVariant } from '../utils/status-variants';
 
 function InnerTableHeader() {
   return (
@@ -84,7 +73,7 @@ export function InvoiceTable() {
               <NumberTableCell value={item.subtotal} />
               <NumberTableCell value={item.taxes} />
               <NumberTableCell value={item.total} />
-              <BadgeTableCell variant={statusVariant(item.status)}>
+              <BadgeTableCell variant={getStatusVariant(item.status)}>
                 {item.status}
               </BadgeTableCell>
               <TableCell>

@@ -7,7 +7,8 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { addProjectSchema, type AddProject } from '#/features/clients/schemas';
-import { AddItemDialog } from '@/components/AddItemDialog';
+import { UncontrolledFormDialog } from '@/components/UncontrolledFormDialog';
+import { Plus } from 'lucide-react';
 
 type AddProjectButtonProps = {
   onAdd: (data: AddProject) => Promise<void>;
@@ -16,15 +17,16 @@ type AddProjectButtonProps = {
 
 export function AddProjectButton({ onAdd, isPending }: AddProjectButtonProps) {
   return (
-    <AddItemDialog
+    <UncontrolledFormDialog
       schema={addProjectSchema}
       defaultValues={{ name: '' }}
-      onAdd={onAdd}
+      onSubmit={onAdd}
       isPending={isPending}
       label="Add Project"
       saveLabel="Save Project"
       description="Add a new project to this client."
       formId="add-project-form"
+      icon={<Plus className="h-4 w-4 mr-1" />}
     >
       {form => (
         <FieldGroup>
@@ -49,6 +51,6 @@ export function AddProjectButton({ onAdd, isPending }: AddProjectButtonProps) {
           />
         </FieldGroup>
       )}
-    </AddItemDialog>
+    </UncontrolledFormDialog>
   );
 }
