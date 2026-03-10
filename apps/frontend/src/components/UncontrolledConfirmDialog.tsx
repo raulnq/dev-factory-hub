@@ -7,35 +7,44 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '@/components/ui/dialog';
+import { useState, type ReactNode } from 'react';
 
-type DeleteItemDialogProps = {
-  title: string;
+type ControlledConfirmDialogProps = {
+  label: string;
   description: string;
-  open: boolean;
   isPending: boolean;
-  onOpenChange: (open: boolean) => void;
   onConfirm: () => Promise<void> | void;
+  icon?: ReactNode;
+  disabled?: boolean;
 };
 
-export function ConfirmDialog({
-  title,
+export function ControlledConfirmDialog({
+  label,
   description,
-  open,
   isPending,
-  onOpenChange,
   onConfirm,
-}: DeleteItemDialogProps) {
+  icon,
+  disabled,
+}: ControlledConfirmDialogProps) {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const handleConfirm = async () => {
     await onConfirm();
-    onOpenChange(false);
+    setDialogOpen(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <DialogTrigger asChild>
+        <Button type="button" size="sm" disabled={disabled}>
+          {icon}
+          {label}
+        </Button>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle>{label}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -47,7 +56,7 @@ export function ConfirmDialog({
             onClick={handleConfirm}
             disabled={isPending}
           >
-            {title}
+            {label}
           </Button>
         </DialogFooter>
       </DialogContent>

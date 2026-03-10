@@ -1,4 +1,4 @@
-import { CompleteButton } from './CompleteButton';
+import { CompleteAction } from './CompleteAction';
 import type { CompleteTimesheet } from '#/features/timesheets/schemas';
 
 type TimesheetToolbarProps = {
@@ -16,8 +16,9 @@ export function TimesheetToolbar({
 
   return (
     <>
-      <CompleteButton
-        disabled={isPending || !canComplete}
+      <CompleteAction
+        disabled={!canComplete}
+        isPending={isPending}
         onComplete={onComplete}
       />
     </>

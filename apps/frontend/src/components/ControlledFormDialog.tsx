@@ -20,7 +20,7 @@ import type { ZodType } from 'zod';
 import type { ReactNode } from 'react';
 import type { Resolver } from 'react-hook-form';
 
-type EditItemDialogProps<TData extends FieldValues> = {
+type ControlledFormDialogProps<TData extends FieldValues> = {
   schema: ZodType<TData, TData>;
   defaultValues: DefaultValues<TData>;
   open: boolean;
@@ -46,7 +46,7 @@ export function ControlledFormDialog<TData extends FieldValues>({
   description,
   children,
   formId = 'form-dialog',
-}: EditItemDialogProps<TData>) {
+}: ControlledFormDialogProps<TData>) {
   const form = useForm<TData>({
     resolver: zodResolver(schema) as Resolver<TData>,
     defaultValues,

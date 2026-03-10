@@ -15,7 +15,7 @@ import {
   useDeleteProformaItem,
   useProformaItemsSuspense,
 } from '../stores/useProformas';
-import { ConfirmDialog } from '@/components/ConfirmDialog';
+import { ControlledConfirmDialog } from '@/components/ControlledConfirmDialog';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { useSearchParams } from 'react-router';
@@ -113,8 +113,8 @@ export function ProformaItemsSection({
         </QueryErrorResetBoundary>
       </CardContent>
 
-      <ConfirmDialog
-        title="Delete Item"
+      <ControlledConfirmDialog
+        label="Delete Item"
         description={`Are you sure you want to delete ${selectedRow?.description}? This action cannot be undone.`}
         open={deleteDialogOpen}
         onOpenChange={handleDeleteDialogChange}

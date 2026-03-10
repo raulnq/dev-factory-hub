@@ -15,7 +15,7 @@ import {
   useDeleteTaxPaymentItem,
   useTaxPaymentItemsSuspense,
 } from '../stores/useTaxPayments';
-import { ConfirmDialog } from '@/components/ConfirmDialog';
+import { ControlledConfirmDialog } from '@/components/ControlledConfirmDialog';
 import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { useSearchParams } from 'react-router';
@@ -117,8 +117,8 @@ export function TaxPaymentItemsSection({
         </QueryErrorResetBoundary>
       </CardContent>
 
-      <ConfirmDialog
-        title="Delete Item"
+      <ControlledConfirmDialog
+        label="Delete Item"
         description={`Are you sure you want to delete the item "${selectedRow?.type}"? This action cannot be undone.`}
         open={deleteDialogOpen}
         onOpenChange={handleDeleteDialogChange}

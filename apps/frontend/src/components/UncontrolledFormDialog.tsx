@@ -22,7 +22,7 @@ import type { ZodType } from 'zod';
 import type { ReactNode } from 'react';
 import type { Resolver } from 'react-hook-form';
 
-type AddItemDialogProps<TData extends FieldValues> = {
+type UncontrolledFormDialogProps<TData extends FieldValues> = {
   schema: ZodType<TData, TData>;
   defaultValues: DefaultValues<TData>;
   formId?: string;
@@ -33,6 +33,7 @@ type AddItemDialogProps<TData extends FieldValues> = {
   description?: string;
   children: (form: UseFormReturn<TData>) => ReactNode;
   icon?: ReactNode;
+  disabled?: boolean;
 };
 
 export function UncontrolledFormDialog<TData extends FieldValues>({
@@ -46,7 +47,8 @@ export function UncontrolledFormDialog<TData extends FieldValues>({
   saveLabel,
   formId = 'form-dialog',
   icon,
-}: AddItemDialogProps<TData>) {
+  disabled,
+}: UncontrolledFormDialogProps<TData>) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const form = useForm<TData>({
@@ -69,7 +71,7 @@ export function UncontrolledFormDialog<TData extends FieldValues>({
   return (
     <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button type="button" size="sm">
+        <Button type="button" size="sm" disabled={disabled}>
           {icon}
           {label}
         </Button>
