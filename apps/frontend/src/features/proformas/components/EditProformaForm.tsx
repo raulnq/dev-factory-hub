@@ -37,7 +37,7 @@ export function EditProformaForm({
   onProformaCancel,
   onProformaIssue,
 }: EditProformaFormProps) {
-  const isStatusPending = proforma.status === 'Pending';
+  const isEditable = proforma.status === 'Pending';
   const form = useForm<EditProforma>({
     resolver: zodResolver(editProformaSchema),
     defaultValues: {
@@ -57,6 +57,7 @@ export function EditProformaForm({
       saveText="Save Proforma"
       title={`Edit Proforma ${proforma.number}`}
       description="Update proforma details."
+      readOnly={!isEditable}
       renderTitleSuffix={
         <StatusBadge
           status={proforma.status}
@@ -102,7 +103,7 @@ export function EditProformaForm({
                 {...field}
                 value={field.value ?? ''}
                 aria-invalid={fieldState.invalid}
-                disabled={isPending}
+                disabled={isPending || !isEditable}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -128,7 +129,7 @@ export function EditProformaForm({
                   onChange={e => field.onChange(Number(e.target.value))}
                   aria-invalid={fieldState.invalid}
                   placeholder="0.00"
-                  disabled={isPending || !isStatusPending}
+                  disabled={isPending || !isEditable}
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -151,7 +152,7 @@ export function EditProformaForm({
                   onChange={e => field.onChange(Number(e.target.value))}
                   aria-invalid={fieldState.invalid}
                   placeholder="0.00"
-                  disabled={isPending || !isStatusPending}
+                  disabled={isPending || !isEditable}
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -174,7 +175,7 @@ export function EditProformaForm({
                   onChange={e => field.onChange(Number(e.target.value))}
                   aria-invalid={fieldState.invalid}
                   placeholder="0.00"
-                  disabled={isPending || !isStatusPending}
+                  disabled={isPending || !isEditable}
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

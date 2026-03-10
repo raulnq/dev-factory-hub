@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
@@ -15,6 +15,7 @@ import { NumberTableCell } from '@/components/NumberTableCell';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 import { ViewCellButton } from '@/components/ViewCellButton';
+import { LinkTableCell } from '@/components/LinkTableCell';
 
 function InnerTableHeader() {
   return (
@@ -65,14 +66,11 @@ export function CollaboratorRoleTable() {
         <TableBody>
           {data?.items.map(item => (
             <TableRow key={item.collaboratorRoleId}>
-              <TableCell className="font-medium">
-                <Link
-                  to={`/collaborator-roles/${item.collaboratorRoleId}`}
-                  className="hover:underline"
-                >
-                  {item.name}
-                </Link>
-              </TableCell>
+              <LinkTableCell
+                className="font-medium"
+                link={`/collaborator-roles/${item.collaboratorRoleId}`}
+                value={item.name}
+              />
               <TextTableCell value={item.currency} />
               <NumberTableCell value={item.feeRate} />
               <NumberTableCell value={item.costRate} />

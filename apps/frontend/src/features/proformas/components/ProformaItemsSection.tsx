@@ -20,7 +20,7 @@ import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { useSearchParams } from 'react-router';
 import { ListCardHeader } from '@/components/ListCardHeader';
-import { AddItemButton } from './AddItemButton';
+import { AddItemAction } from './AddItemButton';
 import type {
   AddProformaItem,
   ProformaItem,
@@ -85,7 +85,7 @@ export function ProformaItemsSection({
         description="Manage items for this proforma."
         renderAction={
           isPending ? (
-            <AddItemButton onAdd={handleAdd} isPending={add.isPending} />
+            <AddItemAction onAdd={handleAdd} isPending={add.isPending} />
           ) : null
         }
       />

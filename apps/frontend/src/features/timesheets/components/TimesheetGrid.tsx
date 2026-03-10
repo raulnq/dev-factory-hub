@@ -103,15 +103,15 @@ export function TimesheetGrid({
 
   return (
     <div className="space-y-4">
-      <div className="border rounded-md overflow-auto max-h-[600px] max-w-full block">
+      <div className="border rounded-md overflow-auto max-h-150 max-w-full block">
         <Table className="relative w-full border-collapse">
           <TableHeader className="sticky top-0 bg-background z-10 shadow-sm">
             <TableRow>
-              <TableHead className="min-w-[200px] bg-background sticky left-0 z-20 shadow-[1px_0_0_0_rgba(0,0,0,0.1)]">
+              <TableHead className="min-w-50 bg-background sticky left-0 z-20 shadow-[1px_0_0_0_rgba(0,0,0,0.1)]">
                 Project
               </TableHead>
               {dates.map(d => (
-                <TableHead key={d} className="text-center min-w-[100px]">
+                <TableHead key={d} className="text-center min-w-25">
                   {new Date(d + 'T00:00:00').toLocaleDateString(undefined, {
                     weekday: 'short',
                     day: 'numeric',
@@ -119,10 +119,10 @@ export function TimesheetGrid({
                   })}
                 </TableHead>
               ))}
-              <TableHead className="text-center font-bold min-w-[100px]">
+              <TableHead className="text-center font-bold min-w-25">
                 Total
               </TableHead>
-              {!isCompleted && <TableHead className="w-[50px]"></TableHead>}
+              {!isCompleted && <TableHead className="w-12.5"></TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>

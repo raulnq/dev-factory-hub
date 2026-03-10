@@ -11,11 +11,11 @@ const addTimesheetProjectSchema = z.object({
 
 export type AddTimesheetProject = z.infer<typeof addTimesheetProjectSchema>;
 
-type AddProjectButtonProps = {
+type AddProjectActionProps = {
   onAdd: (projectId: string) => Promise<void>;
 };
 
-export function AddProjectButton({ onAdd }: AddProjectButtonProps) {
+export function AddProjectAction({ onAdd }: AddProjectActionProps) {
   return (
     <UncontrolledFormDialog
       schema={addTimesheetProjectSchema}

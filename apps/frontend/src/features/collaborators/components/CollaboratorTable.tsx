@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
@@ -14,6 +14,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 import { ViewCellButton } from '@/components/ViewCellButton';
+import { LinkTableCell } from '@/components/LinkTableCell';
 
 function InnerTableHeader() {
   return (
@@ -63,14 +64,11 @@ export function CollaboratorTable() {
         <TableBody>
           {data?.items.map(item => (
             <TableRow key={item.collaboratorId}>
-              <TableCell className="font-medium">
-                <Link
-                  to={`/collaborators/${item.collaboratorId}`}
-                  className="hover:underline"
-                >
-                  {item.name}
-                </Link>
-              </TableCell>
+              <LinkTableCell
+                className="font-medium"
+                link={`/collaborators/${item.collaboratorId}`}
+                value={item.name}
+              />
               <TextTableCell value={item.email} />
               <TableCell>{item.withholdingPercentage}%</TableCell>
               <TableCell>

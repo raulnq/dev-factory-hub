@@ -8,17 +8,17 @@ import {
   type CompleteTimesheet,
 } from '#/features/timesheets/schemas';
 
-type CompleteButtonProps = {
+type TimesheetCompleteActionProps = {
   disabled: boolean;
   isPending: boolean;
   onComplete: (data: CompleteTimesheet) => void;
 };
 
-export function CompleteAction({
+export function TimesheetCompleteAction({
   disabled,
   isPending,
   onComplete,
-}: CompleteButtonProps) {
+}: TimesheetCompleteActionProps) {
   const today = new Date().toISOString().split('T')[0];
 
   return (

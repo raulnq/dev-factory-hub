@@ -36,7 +36,7 @@ export function TimesheetSearchBar() {
       showClearButton={!!cid}
       onClear={handleClear}
     >
-      <div className="w-[250px]">
+      <div className="w-62.5">
         <CollaboratorCombobox value={cid} onChange={setCid} />
       </div>
     </SearchBar>

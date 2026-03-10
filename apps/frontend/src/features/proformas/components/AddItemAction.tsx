@@ -18,7 +18,7 @@ type AddItemButtonProps = {
   isPending: boolean;
 };
 
-export function AddItemButton({ onAdd, isPending }: AddItemButtonProps) {
+export function AddItemAction({ onAdd, isPending }: AddItemButtonProps) {
   return (
     <UncontrolledFormDialog
       schema={addProformaItemSchema}

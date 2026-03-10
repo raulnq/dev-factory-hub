@@ -15,7 +15,7 @@ import { ErrorFallback } from '@/components/ErrorFallback';
 import { EditTimesheetForm } from '../components/EditTimesheetForm';
 import { TimesheetSkeleton } from '../components/TimesheetSkeleton';
 import { ListCardHeader } from '@/components/ListCardHeader';
-import { AddProjectButton } from '../components/AddProjectButton';
+import { AddProjectAction } from '../components/AddProjectAction';
 
 export function EditTimesheetPage() {
   const { timesheetId } = useParams<{ timesheetId: string }>();
@@ -98,7 +98,7 @@ function InnerEditTimesheet({
           description="Manage your projects."
           renderAction={
             ts.status === 'Pending' && (
-              <AddProjectButton onAdd={handleAddProject} />
+              <AddProjectAction onAdd={handleAddProject} />
             )
           }
         />

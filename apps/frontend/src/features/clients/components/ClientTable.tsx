@@ -13,6 +13,7 @@ import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { TextTableCell } from '@/components/TextTableCell';
 import { EditCellButton } from '@/components/EditCellButton';
+import { LinkTableCell } from '@/components/LinkTableCell';
 
 function InnerTableHeader() {
   return (
@@ -63,7 +64,11 @@ export function ClientTable() {
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.clientId}>
-              <TextTableCell className="font-medium" value={item.name} />
+              <LinkTableCell
+                link={`/clients/${item.clientId}/edit`}
+                className="font-medium"
+                value={item.name}
+              />
               <TextTableCell value={item.documentNumber} />
               <TextTableCell value={item.phone} />
               <TextTableCell value={item.email} />

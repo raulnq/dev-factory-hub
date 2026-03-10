@@ -23,11 +23,13 @@ export function EditTimesheetForm({
   onComplete,
   isPending,
 }: EditTimesheetFormProps) {
+  const isEditable = timesheet.status === 'Pending';
   return (
     <FormCard
       title="Edit Timesheet"
       description="Edit timesheet details."
       onCancel={onCancel}
+      readOnly={!isEditable}
       renderAction={
         <TimesheetToolbar
           status={timesheet.status}
