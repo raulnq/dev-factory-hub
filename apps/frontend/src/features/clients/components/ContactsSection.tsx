@@ -30,9 +30,9 @@ import {
   type EditContact,
   type Contact,
 } from '#/features/clients/schemas';
-import { AddContactButton } from './AddContactButton';
+import { ContactAddAction } from './ContactAddAction';
 import { ControlledConfirmDialog } from '@/components/ControlledConfirmDialog';
-import { EditContactDialog } from './EditContactDialog';
+import { ContactEditAction } from './ContactEditAction';
 
 type ContactsSectionProps = {
   clientId: string;
@@ -118,7 +118,7 @@ export function ContactsSection({ clientId }: ContactsSectionProps) {
           title="Contacts"
           description="Manage contacts for this client."
           renderAction={
-            <AddContactButton
+            <ContactAddAction
               onAdd={handleAdd}
               isPending={addContactMutation.isPending}
             />
@@ -149,7 +149,7 @@ export function ContactsSection({ clientId }: ContactsSectionProps) {
         </CardContent>
       </Card>
 
-      <EditContactDialog
+      <ContactEditAction
         key={`${selectedRow?.contactId ?? 'new'}-contact-edit`}
         name={selectedRow?.name}
         email={selectedRow?.email}

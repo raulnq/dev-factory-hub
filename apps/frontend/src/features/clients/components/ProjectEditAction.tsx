@@ -6,27 +6,39 @@ import {
   FieldGroup,
   FieldLabel,
 } from '@/components/ui/field';
-import { addProjectSchema, type AddProject } from '#/features/clients/schemas';
-import { UncontrolledFormDialog } from '@/components/UncontrolledFormDialog';
-import { Plus } from 'lucide-react';
+import {
+  editProjectSchema,
+  type EditProject,
+} from '#/features/clients/schemas';
+import { ControlledFormDialog } from '@/components/ControlledFormDialog';
 
-type AddProjectButtonProps = {
-  onAdd: (data: AddProject) => Promise<void>;
+type ProjectEditActionProps = {
+  name: string | null | undefined;
+  open: boolean;
   isPending: boolean;
+  onOpenChange: (open: boolean) => void;
+  onEdit: (data: EditProject) => Promise<void>;
 };
 
-export function AddProjectButton({ onAdd, isPending }: AddProjectButtonProps) {
+export function ProjectEditAction({
+  name,
+  open,
+  isPending,
+  onOpenChange,
+  onEdit,
+}: ProjectEditActionProps) {
   return (
-    <UncontrolledFormDialog
-      schema={addProjectSchema}
-      defaultValues={{ name: '' }}
-      onSubmit={onAdd}
+    <ControlledFormDialog
+      schema={editProjectSchema}
+      defaultValues={{ name: name ?? '' }}
+      open={open}
       isPending={isPending}
-      label="Add Project"
+      onOpenChange={onOpenChange}
+      onSubmit={onEdit}
+      label="Edit Project"
       saveLabel="Save Project"
-      description="Add a new project to this client."
-      formId="add-project-form"
-      icon={<Plus className="h-4 w-4 mr-1" />}
+      description="Update the project details."
+      formId="edit-project-form"
     >
       {form => (
         <FieldGroup>
@@ -35,10 +47,10 @@ export function AddProjectButton({ onAdd, isPending }: AddProjectButtonProps) {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="project-name">Name</FieldLabel>
+                <FieldLabel htmlFor="edit-project-name">Name</FieldLabel>
                 <Input
                   {...field}
-                  id="project-name"
+                  id="edit-project-name"
                   aria-invalid={fieldState.invalid}
                   placeholder="Project name"
                   disabled={isPending}
@@ -51,6 +63,6 @@ export function AddProjectButton({ onAdd, isPending }: AddProjectButtonProps) {
           />
         </FieldGroup>
       )}
-    </UncontrolledFormDialog>
+    </ControlledFormDialog>
   );
 }

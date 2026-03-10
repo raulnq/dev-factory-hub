@@ -30,9 +30,9 @@ import {
   type EditProject,
   type Project,
 } from '#/features/clients/schemas';
-import { AddProjectButton } from './AddProjectButton';
+import { ProjectAddAction } from './ProjectAddAction';
 import { ControlledConfirmDialog } from '@/components/ControlledConfirmDialog';
-import { EditProjectDialog } from './EditProjectDialog';
+import { ProjectEditAction } from './ProjectEditAction';
 
 type ProjectsSectionProps = {
   clientId: string;
@@ -118,7 +118,7 @@ export function ProjectsSection({ clientId }: ProjectsSectionProps) {
           title="Projects"
           description="Manage projects for this client."
           renderAction={
-            <AddProjectButton
+            <ProjectAddAction
               onAdd={handleAdd}
               isPending={addProjectMutation.isPending}
             />
@@ -149,7 +149,7 @@ export function ProjectsSection({ clientId }: ProjectsSectionProps) {
         </CardContent>
       </Card>
 
-      <EditProjectDialog
+      <ProjectEditAction
         key={`${selectedRow?.projectId ?? 'new'}-project-edit`}
         name={selectedRow?.name}
         open={editDialogOpen}

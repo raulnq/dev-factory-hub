@@ -46,6 +46,7 @@ export function CompleteAction({
                 id="completedAt"
                 type="date"
                 aria-invalid={fieldState.invalid}
+                disabled={isPending}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>

@@ -6,27 +6,41 @@ import {
   FieldGroup,
   FieldLabel,
 } from '@/components/ui/field';
-import { addContactSchema, type AddContact } from '#/features/clients/schemas';
-import { UncontrolledFormDialog } from '@/components/UncontrolledFormDialog';
-import { Plus } from 'lucide-react';
+import {
+  editContactSchema,
+  type EditContact,
+} from '#/features/clients/schemas';
+import { ControlledFormDialog } from '@/components/ControlledFormDialog';
 
-type AddContactButtonProps = {
-  onAdd: (data: AddContact) => Promise<void>;
+type ContactEditActionProps = {
+  name: string | null | undefined;
+  email: string | null | undefined;
+  open: boolean;
   isPending: boolean;
+  onOpenChange: (open: boolean) => void;
+  onEdit: (data: EditContact) => Promise<void>;
 };
 
-export function AddContactButton({ onAdd, isPending }: AddContactButtonProps) {
+export function ContactEditAction({
+  name,
+  email,
+  open,
+  isPending,
+  onOpenChange,
+  onEdit,
+}: ContactEditActionProps) {
   return (
-    <UncontrolledFormDialog
-      schema={addContactSchema}
-      defaultValues={{ name: '', email: null }}
-      onSubmit={onAdd}
+    <ControlledFormDialog
+      schema={editContactSchema}
+      defaultValues={{ name: name ?? '', email: email ?? null }}
+      open={open}
       isPending={isPending}
-      label="Add Contact"
+      onOpenChange={onOpenChange}
+      onSubmit={onEdit}
+      label="Edit Contact"
       saveLabel="Save Contact"
-      description="Add a new contact to this client."
-      formId="add-contact-form"
-      icon={<Plus className="h-4 w-4 mr-1" />}
+      description="Update the contact details."
+      formId="edit-contact-form"
     >
       {form => (
         <FieldGroup>
@@ -35,10 +49,10 @@ export function AddContactButton({ onAdd, isPending }: AddContactButtonProps) {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="contact-name">Name</FieldLabel>
+                <FieldLabel htmlFor="edit-contact-name">Name</FieldLabel>
                 <Input
                   {...field}
-                  id="contact-name"
+                  id="edit-contact-name"
                   aria-invalid={fieldState.invalid}
                   placeholder="Contact name"
                   disabled={isPending}
@@ -54,12 +68,12 @@ export function AddContactButton({ onAdd, isPending }: AddContactButtonProps) {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="contact-email">Email</FieldLabel>
+                <FieldLabel htmlFor="edit-contact-email">Email</FieldLabel>
                 <Input
                   {...field}
                   value={field.value ?? ''}
                   onChange={e => field.onChange(e.target.value || null)}
-                  id="contact-email"
+                  id="edit-contact-email"
                   aria-invalid={fieldState.invalid}
                   placeholder="Email (optional)"
                   disabled={isPending}
@@ -72,6 +86,6 @@ export function AddContactButton({ onAdd, isPending }: AddContactButtonProps) {
           />
         </FieldGroup>
       )}
-    </UncontrolledFormDialog>
+    </ControlledFormDialog>
   );
 }

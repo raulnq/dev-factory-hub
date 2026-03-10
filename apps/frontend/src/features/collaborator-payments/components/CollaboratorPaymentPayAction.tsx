@@ -46,6 +46,7 @@ export function CollaboratorPaymentPayAction({
                 id="paidAt"
                 type="date"
                 aria-invalid={fieldState.invalid}
+                disabled={isPending}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>

@@ -6,41 +6,27 @@ import {
   FieldGroup,
   FieldLabel,
 } from '@/components/ui/field';
-import {
-  editContactSchema,
-  type EditContact,
-} from '#/features/clients/schemas';
-import { ControlledFormDialog } from '@/components/ControlledFormDialog';
+import { addContactSchema, type AddContact } from '#/features/clients/schemas';
+import { UncontrolledFormDialog } from '@/components/UncontrolledFormDialog';
+import { Plus } from 'lucide-react';
 
-type EditContactDialogProps = {
-  name: string | null | undefined;
-  email: string | null | undefined;
-  open: boolean;
+type ContactAddActionProps = {
+  onAdd: (data: AddContact) => Promise<void>;
   isPending: boolean;
-  onOpenChange: (open: boolean) => void;
-  onEdit: (data: EditContact) => Promise<void>;
 };
 
-export function EditContactDialog({
-  name,
-  email,
-  open,
-  isPending,
-  onOpenChange,
-  onEdit,
-}: EditContactDialogProps) {
+export function ContactAddAction({ onAdd, isPending }: ContactAddActionProps) {
   return (
-    <ControlledFormDialog
-      schema={editContactSchema}
-      defaultValues={{ name: name ?? '', email: email ?? null }}
-      open={open}
+    <UncontrolledFormDialog
+      schema={addContactSchema}
+      defaultValues={{ name: '', email: null }}
+      onSubmit={onAdd}
       isPending={isPending}
-      onOpenChange={onOpenChange}
-      onSubmit={onEdit}
-      label="Edit Contact"
+      label="Add Contact"
       saveLabel="Save Contact"
-      description="Update the contact details."
-      formId="edit-contact-form"
+      description="Add a new contact to this client."
+      formId="add-contact-form"
+      icon={<Plus className="h-4 w-4 mr-1" />}
     >
       {form => (
         <FieldGroup>
@@ -49,10 +35,10 @@ export function EditContactDialog({
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="edit-contact-name">Name</FieldLabel>
+                <FieldLabel htmlFor="contact-name">Name</FieldLabel>
                 <Input
                   {...field}
-                  id="edit-contact-name"
+                  id="contact-name"
                   aria-invalid={fieldState.invalid}
                   placeholder="Contact name"
                   disabled={isPending}
@@ -68,12 +54,12 @@ export function EditContactDialog({
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="edit-contact-email">Email</FieldLabel>
+                <FieldLabel htmlFor="contact-email">Email</FieldLabel>
                 <Input
                   {...field}
                   value={field.value ?? ''}
                   onChange={e => field.onChange(e.target.value || null)}
-                  id="edit-contact-email"
+                  id="contact-email"
                   aria-invalid={fieldState.invalid}
                   placeholder="Email (optional)"
                   disabled={isPending}
@@ -86,6 +72,6 @@ export function EditContactDialog({
           />
         </FieldGroup>
       )}
-    </ControlledFormDialog>
+    </UncontrolledFormDialog>
   );
 }

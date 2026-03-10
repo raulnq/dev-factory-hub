@@ -47,6 +47,7 @@ export function CollaboratorPaymentConfirmAction({
                   id="confirmedAt"
                   type="date"
                   aria-invalid={fieldState.invalid}
+                  disabled={isPending}
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
