@@ -1,5 +1,8 @@
 {
   "permissions": {
-    "allow": ["Bash(npm test -w @node-monorepo/backend)"]
+    "allow": [
+      "Bash(npm test -w @node-monorepo/backend)",
+      "Bash(ls -la /c/Source/dev-factory-hub/apps/frontend/src/components/*.tsx)"
+    ]
   }
 }

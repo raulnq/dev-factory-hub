@@ -5,7 +5,7 @@
 Every function takes `token?: string | null`, passes it as Bearer header, checks `response.ok`.
 
 ```ts
-import { client } from '../../../client';
+import { client } from '@/client';
 import type { Page } from '#/pagination';
 import type {
   Add<Entity>,

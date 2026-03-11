@@ -73,20 +73,22 @@ Use this skill to review code (staged changes, a PR, or specific files) against 
 
 ### Frontend components
 
-- [ ] Page owns the Card — form/view components only render fields inside `FormCardContent`/`ViewCardContent`
-- [ ] Shared card components used: `FormCardHeader`/`FormCardContent`/`FormCardFooter` for forms, `ViewCardHeader`/`ViewCardContent`/`ViewCardFooter` for views, `ListCardHeader` for lists
+- [ ] Form components render `FormCard` directly from `@/components/FormCard` — pages do NOT wrap forms in `Card`
+- [ ] `FormCard` uses `useId()` internally for form ID — no manual `formId`/`form` props needed
+- [ ] `ListCardHeader` uses `renderAction={<AddButton link="..." text="..." />}` — no `addLink`/`addText` props
+- [ ] Form file naming: `<Entity>AddForm.tsx`, `<Entity>EditForm.tsx` (not `Add<Entity>Form`)
 - [ ] Search uses `<Entity>SearchBar` wrapping shared `SearchBar` component (not `<Entity>Search`)
 - [ ] `FieldGroup` wraps form controllers, `FieldSeparator` divides form sections
-- [ ] `<Entity>Skeleton.tsx` is a separate shared file (used by Edit + View pages)
+- [ ] `<Entity>Skeleton.tsx` uses `FormSkeleton` from `@/components/FormCard` (not `FormCardSkeleton`)
 - [ ] Error handling uses shared `ErrorFallback` from `@/components/ErrorFallback` with `message` prop (NOT per-feature error components)
 - [ ] Empty table state uses shared `NoMatchingItems` from `@/components/NoMatchingItems`
-- [ ] `form id="form"` on `FormCardContent` + `form="form"` on submit button in `FormCardFooter`
 - [ ] Page data fetching uses `useSuspenseQuery` — `useQuery` only for combobox search hooks
 - [ ] Combobox search hooks use `useQuery` with `enabled` prop and `placeholderData: keepPreviousData`
+- [ ] Comboboxes are thin wrappers around `SearchCombobox<TItem>` from `@/components/SearchCombobox`
 - [ ] Triple-layer wrapper present: `QueryErrorResetBoundary` > `ErrorBoundary` > `Suspense`
 - [ ] Forms use `Controller` + `zodResolver`, never `register()`
 - [ ] Form fields use `Field`, `FieldLabel`, `FieldError` from `@/components/ui/field`
-- [ ] View cards use `ViewCardContent` with `Field` + `FieldLabel` + disabled `Input`/`Textarea`
+- [ ] View card naming: `<Entity>ViewCard.tsx` (not `View<Entity>Card`), uses `FormCard` without `onSubmit`, with `renderAction={<EditButton>}` and disabled fields
 - [ ] Number fields use `type="number"` with `onChange={e => field.onChange(Number(e.target.value))}`
 - [ ] Boolean fields use `Select` with string conversion (`String(field.value)` / `v === 'true'`)
 - [ ] Nullable fields handle `null` → `''` display and `'' || null` on change
@@ -96,8 +98,13 @@ Use this skill to review code (staged changes, a PR, or specific files) against 
 - [ ] `useSearchParams` is read in table/page components, not in React Query hooks (hooks receive `pageNumber` as parameter)
 - [ ] Toast notifications via `sonner` (`toast.success`, `toast.error`)
 - [ ] Searchable comboboxes have debounce (300ms), loading/error/empty states, clear button
-- [ ] Action buttons with dialogs use separate `form id` + `form="..."` pattern
-- [ ] Delete dialogs use `variant="destructive"` button, no form — just confirmation with `onDelete` callback
+- [ ] Action components follow `{Entity}{Action}Action` naming and use shared dialog components (`UncontrolledFormDialog`, `UncontrolledConfirmDialog`, `UncontrolledFileUploadDialog`)
+- [ ] Toolbar components compose action components with status-based `can{Action}` booleans
+- [ ] Edit forms with status use `readOnly={!isEditable}`, `renderTitleSuffix={<StatusBadge>}`, `renderAction={<Toolbar>}`
+- [ ] Delete actions use `UncontrolledConfirmDialog` or `ControlledConfirmDialog`
+- [ ] Table cells use shared helper components: `TextTableCell`, `DateTableCell`, `NumberTableCell`, `BadgeTableCell`, `ActionTableCell`
+- [ ] Status variants in `utils/status-variants.ts` with `getStatusVariant()` function
+- [ ] Store client files use `import { client } from '@/client'` (not relative paths)
 - [ ] Heavy components (maps, charts) use `React.lazy()` with `.then(m => ({ default: m.Name }))` + `Suspense` fallback
 - [ ] Routes registered in `routes.tsx`
 - [ ] Sidebar entry added in `AppSidebar.tsx`
