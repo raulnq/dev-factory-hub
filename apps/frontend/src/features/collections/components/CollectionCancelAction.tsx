@@ -4,7 +4,7 @@ import { UncontrolledConfirmDialog } from '@/components/UncontrolledConfirmDialo
 type CollectionCancelActionProps = {
   disabled: boolean;
   isPending: boolean;
-  onCancel: () => void;
+  onCancel: () => Promise<void> | void;
 };
 
 export function CollectionCancelAction({

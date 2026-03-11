@@ -3,7 +3,7 @@ import { UncontrolledFileUploadDialog } from '@/components/UncontrolledFileUploa
 type CollectionUploadActionProps = {
   disabled: boolean;
   isPending: boolean;
-  onUpload: (file: File) => void;
+  onUpload: (file: File) => Promise<void> | void;
 };
 
 export function CollectionUploadAction({

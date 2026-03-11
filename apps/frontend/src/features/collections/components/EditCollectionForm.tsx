@@ -26,9 +26,9 @@ type EditCollectionFormProps = {
   onSubmit: SubmitHandler<EditCollection>;
   onCancel: () => void;
   collection: Collection;
-  onCollectionConfirm: (data: ConfirmCollection) => void;
-  onCollectionCancel: () => void;
-  onCollectionUpload: (file: File) => void;
+  onCollectionConfirm: (data: ConfirmCollection) => Promise<void> | void;
+  onCollectionCancel: () => Promise<void> | void;
+  onCollectionUpload: (file: File) => Promise<void> | void;
   onCollectionDownload: () => void;
 };
 

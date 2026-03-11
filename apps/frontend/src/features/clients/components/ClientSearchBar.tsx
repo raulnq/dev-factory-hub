@@ -40,7 +40,7 @@ export function ClientSearchBar() {
         placeholder="Search by name..."
         value={name}
         onChange={e => setName(e.target.value)}
-        className="w-[250px]"
+        className="w-62.5"
       />
     </SearchBar>
   );

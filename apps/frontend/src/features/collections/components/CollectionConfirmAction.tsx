@@ -11,7 +11,7 @@ import {
 type CollectionConfirmActionProps = {
   disabled: boolean;
   isPending: boolean;
-  onConfirm: (data: ConfirmCollection) => void;
+  onConfirm: (data: ConfirmCollection) => Promise<void> | void;
 };
 
 export function CollectionConfirmAction({

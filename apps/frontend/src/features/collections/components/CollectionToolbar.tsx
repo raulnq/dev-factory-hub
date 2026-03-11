@@ -9,9 +9,9 @@ type CollectionToolbarProps = {
   status: string;
   filePath: string | null;
   isPending: boolean;
-  onConfirm: (data: ConfirmCollection) => void;
-  onCancel: () => void;
-  onUpload: (file: File) => void;
+  onConfirm: (data: ConfirmCollection) => Promise<void> | void;
+  onCancel: () => Promise<void> | void;
+  onUpload: (file: File) => Promise<void> | void;
   onDownload: () => void;
 };
 
