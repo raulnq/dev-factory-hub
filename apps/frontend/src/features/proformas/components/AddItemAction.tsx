@@ -13,12 +13,12 @@ import {
 import { UncontrolledFormDialog } from '@/components/UncontrolledFormDialog';
 import { Plus } from 'lucide-react';
 
-type AddItemButtonProps = {
+type AddItemActionProps = {
   onAdd: (data: AddProformaItem) => void;
   isPending: boolean;
 };
 
-export function AddItemAction({ onAdd, isPending }: AddItemButtonProps) {
+export function AddItemAction({ onAdd, isPending }: AddItemActionProps) {
   return (
     <UncontrolledFormDialog
       schema={addProformaItemSchema}

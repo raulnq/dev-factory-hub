@@ -14,6 +14,7 @@ import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { TextTableCell } from '@/components/TextTableCell';
 import { EditCellButton } from '@/components/EditCellButton';
 import { LinkTableCell } from '@/components/LinkTableCell';
+import { ActionTableCell } from '@/components/ActionTableCell';
 
 function InnerTableHeader() {
   return (
@@ -72,9 +73,9 @@ export function ClientTable() {
               <TextTableCell value={item.documentNumber} />
               <TextTableCell value={item.phone} />
               <TextTableCell value={item.email} />
-              <TableCell>
+              <ActionTableCell>
                 <EditCellButton link={`/clients/${item.clientId}/edit`} />
-              </TableCell>
+              </ActionTableCell>
             </TableRow>
           ))}
         </TableBody>

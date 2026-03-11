@@ -37,7 +37,7 @@ export function ProformaSearchBar() {
       showClearButton={!!projectId}
       onClear={handleClear}
     >
-      <div className="w-[300px]">
+      <div className="w-75">
         <ProjectCombobox value={projectId} onChange={setProjectId} />
       </div>
     </SearchBar>

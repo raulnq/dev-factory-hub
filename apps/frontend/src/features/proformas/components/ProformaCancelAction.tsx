@@ -1,21 +1,21 @@
 import { XCircle } from 'lucide-react';
 import { UncontrolledConfirmDialog } from '@/components/UncontrolledConfirmDialog';
 
-type CollaboratorPaymentCancelActionProps = {
+type ProformaCancelActionProps = {
   disabled: boolean;
   isPending: boolean;
   onCancel: () => void;
 };
 
-export function CollaboratorPaymentCancelAction({
+export function ProformaCancelAction({
   disabled,
   isPending,
   onCancel,
-}: CollaboratorPaymentCancelActionProps) {
+}: ProformaCancelActionProps) {
   return (
     <UncontrolledConfirmDialog
       label="Cancel"
-      description="Are you sure you want to cancel this payment? This action cannot be undone."
+      description="Are you sure you want to cancel this proforma? This action cannot be undone."
       isPending={isPending}
       disabled={disabled}
       onConfirm={onCancel}

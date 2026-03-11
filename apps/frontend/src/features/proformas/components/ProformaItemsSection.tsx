@@ -20,7 +20,7 @@ import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { useSearchParams } from 'react-router';
 import { ListCardHeader } from '@/components/ListCardHeader';
-import { AddItemAction } from './AddItemButton';
+import { AddItemAction } from './AddItemAction';
 import type {
   AddProformaItem,
   ProformaItem,
@@ -30,6 +30,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { ErrorBoundary } from 'react-error-boundary';
+import { NumberTableCell } from '@/components/NumberTableCell';
+import { TextTableCell } from '@/components/TextTableCell';
+import { ActionTableCell } from '@/components/ActionTableCell';
 
 export function ProformaItemsSection({
   proformaId,
@@ -132,7 +135,7 @@ function ItemsSkeleton() {
         <TableRow>
           <TableHead>Description</TableHead>
           <TableHead>Amount</TableHead>
-          <TableHead className="w-[100px]">Actions</TableHead>
+          <TableHead className="w-25">Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -174,29 +177,27 @@ function ItemsTable({ proformaId, onDelete, canDelete }: ItemsTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead>Description</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
-            <TableHead className="w-[100px]">Actions</TableHead>
+            <TableHead>Amount</TableHead>
+            <TableHead className="w-25">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.proformaItemId}>
-              <TableCell className="font-medium">{item.description}</TableCell>
-              <TableCell className="text-right">{item.amount}</TableCell>
-              <TableCell>
-                <div className="flex gap-2">
-                  {canDelete && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      type="button"
-                      onClick={() => onDelete(item)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  )}
-                </div>
-              </TableCell>
+              <TextTableCell className="font-medium" value={item.description} />
+              <NumberTableCell value={item.amount} />
+              <ActionTableCell>
+                {canDelete && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    type="button"
+                    onClick={() => onDelete(item)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                )}
+              </ActionTableCell>
             </TableRow>
           ))}
         </TableBody>

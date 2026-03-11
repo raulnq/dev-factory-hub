@@ -1,49 +1,49 @@
-import { Controller } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
+import { Controller } from 'react-hook-form';
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { CheckCircle } from 'lucide-react';
-import { UncontrolledFormDialog } from '@/components/UncontrolledFormDialog';
 import {
-  payCollaboratorPaymentSchema,
-  type PayCollaboratorPayment,
-} from '#/features/collaborator-payments/schemas';
+  issueProformaSchema,
+  type IssueProforma,
+} from '#/features/proformas/schemas';
+import { UncontrolledFormDialog } from '@/components/UncontrolledFormDialog';
 
-type CollaboratorPaymentPayActionProps = {
-  disabled: boolean;
+type ProformaIssueActionProps = {
+  onIssue: (data: IssueProforma) => void;
   isPending: boolean;
-  onPay: (data: PayCollaboratorPayment) => void;
+  disabled: boolean;
 };
 
-export function CollaboratorPaymentPayAction({
-  disabled,
+export function ProformaIssueAction({
+  onIssue,
   isPending,
-  onPay,
-}: CollaboratorPaymentPayActionProps) {
+  disabled,
+}: ProformaIssueActionProps) {
   const today = new Date().toISOString().split('T')[0];
 
   return (
     <UncontrolledFormDialog
-      schema={payCollaboratorPaymentSchema}
-      defaultValues={{ paidAt: today }}
-      formId="pay-collaborator-payments-form"
-      onSubmit={onPay}
+      schema={issueProformaSchema}
+      defaultValues={{ issuedAt: today }}
+      formId="issue-proforma-form"
+      onSubmit={onIssue}
       isPending={isPending}
       disabled={disabled}
-      label="Pay"
-      saveLabel="Pay"
-      description="Enter the payment date to mark this payment as paid."
+      label="Issue"
+      saveLabel="Issue"
+      description="Select the date this proforma was issued."
       icon={<CheckCircle className="h-4 w-4 mr-2" />}
     >
       {form => (
         <Controller
-          name="paidAt"
+          name="issuedAt"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="paidAt">Completion Date</FieldLabel>
+              <FieldLabel htmlFor="issuedAt">Issue Date</FieldLabel>
               <Input
                 {...field}
-                id="paidAt"
+                id="issuedAt"
                 type="date"
                 aria-invalid={fieldState.invalid}
                 disabled={isPending}

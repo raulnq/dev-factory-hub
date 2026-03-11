@@ -17,6 +17,7 @@ import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 import { getStatusVariant } from '../utils/status-variants';
+import { ActionTableCell } from '@/components/ActionTableCell';
 
 function InnerTableHeader() {
   return (
@@ -86,11 +87,11 @@ export function CollaboratorPaymentTable() {
               <BadgeTableCell variant={getStatusVariant(item.status)}>
                 {item.status}
               </BadgeTableCell>
-              <TableCell>
+              <ActionTableCell>
                 <EditCellButton
                   link={`/collaborator-payments/${item.collaboratorPaymentId}/edit`}
                 />
-              </TableCell>
+              </ActionTableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -17,6 +17,8 @@ import { NumberTableCell } from '@/components/NumberTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
+import { LinkTableCell } from '@/components/LinkTableCell';
+import { ActionTableCell } from '@/components/ActionTableCell';
 
 function InnerTableHeader() {
   return (
@@ -71,7 +73,11 @@ export function ProformaTable() {
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.proformaId}>
-              <TextTableCell className="font-medium" value={item.number} />
+              <LinkTableCell
+                className="font-medium"
+                value={item.number}
+                link={`/proformas/${item.proformaId}/edit`}
+              />
               <TextTableCell value={item.projectName} />
               <DateTableCell value={item.startDate} />
               <DateTableCell value={item.endDate} />
@@ -81,9 +87,9 @@ export function ProformaTable() {
               <BadgeTableCell variant={getStatusVariant(item.status)}>
                 {item.status}
               </BadgeTableCell>
-              <TableCell>
+              <ActionTableCell>
                 <EditCellButton link={`/proformas/${item.proformaId}/edit`} />
-              </TableCell>
+              </ActionTableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -33,6 +33,8 @@ import {
 import { ContactAddAction } from './ContactAddAction';
 import { ControlledConfirmDialog } from '@/components/ControlledConfirmDialog';
 import { ContactEditAction } from './ContactEditAction';
+import { TextTableCell } from '@/components/TextTableCell';
+import { ActionTableCell } from '@/components/ActionTableCell';
 
 type ContactsSectionProps = {
   clientId: string;
@@ -223,28 +225,26 @@ function ContactsTable({ clientId, onEdit, onDelete }: ContactsTableProps) {
         <TableBody>
           {data.items.map(item => (
             <TableRow key={item.contactId}>
-              <TableCell className="font-medium">{item.name}</TableCell>
-              <TableCell>{item.email ?? '—'}</TableCell>
-              <TableCell>
-                <div className="flex gap-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    type="button"
-                    onClick={() => onEdit(item)}
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    type="button"
-                    onClick={() => onDelete(item)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </TableCell>
+              <TextTableCell className="font-medium" value={item.name} />
+              <TextTableCell value={item.email} />
+              <ActionTableCell>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  type="button"
+                  onClick={() => onEdit(item)}
+                >
+                  <Pencil className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  type="button"
+                  onClick={() => onDelete(item)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </ActionTableCell>
             </TableRow>
           ))}
         </TableBody>
