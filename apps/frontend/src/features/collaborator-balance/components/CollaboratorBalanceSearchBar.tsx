@@ -76,7 +76,7 @@ export function CollaboratorBalanceSearchBar() {
         allowEmpty
         emptyLabel="Select currency..."
       />
-      <div className="w-[240px]">
+      <div className="w-60">
         <CollaboratorCombobox
           value={collaboratorId}
           onChange={id => setCollaboratorId(id)}
@@ -86,14 +86,14 @@ export function CollaboratorBalanceSearchBar() {
         ref={startDateRef}
         type="date"
         defaultValue={searchParams.get('startDate') ?? ''}
-        className="w-[180px]"
+        className="w-45"
         aria-label="Start date"
       />
       <Input
         ref={endDateRef}
         type="date"
         defaultValue={searchParams.get('endDate') ?? ''}
-        className="w-[180px]"
+        className="w-45"
         aria-label="End date"
       />
       <CurrencySelect

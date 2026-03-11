@@ -20,7 +20,7 @@ import { TaxPaymentToolbar } from './TaxPaymentToolbar';
 import { StatusBadge } from '@/components/StatusBadge';
 import { getStatusVariant } from '../utils/status-variants';
 
-type EditTaxPaymentFormProps = {
+type TaxPaymentEditFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditTaxPayment>;
   onCancel: () => void;
@@ -29,14 +29,14 @@ type EditTaxPaymentFormProps = {
   onTaxPaymentCancel: () => void;
 };
 
-export function EditTaxPaymentForm({
+export function TaxPaymentEditForm({
   taxPayment,
   onSubmit,
   onCancel,
   isPending,
   onTaxPaymentPay,
   onTaxPaymentCancel,
-}: EditTaxPaymentFormProps) {
+}: TaxPaymentEditFormProps) {
   const isStatusPending = taxPayment.status === 'Pending';
   const form = useForm<EditTaxPayment>({
     resolver: zodResolver(editTaxPaymentSchema),

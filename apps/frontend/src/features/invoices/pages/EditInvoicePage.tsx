@@ -10,7 +10,7 @@ import {
   useIssueInvoice,
   useCancelInvoice,
 } from '../stores/useInvoices';
-import { EditInvoiceForm } from '../components/EditInvoiceForm';
+import { InvoiceEditForm } from '../components/InvoiceEditForm';
 import { InvoiceSkeleton } from '../components/InvoiceSkeleton';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import type { Invoice } from '#/features/invoices/schemas';
@@ -94,7 +94,7 @@ function EditInvoiceInner({
   const isPending = edit.isPending || issue.isPending || cancel.isPending;
 
   return (
-    <EditInvoiceForm
+    <InvoiceEditForm
       invoice={invoice as Invoice}
       isPending={isPending}
       onSubmit={handleSubmit}

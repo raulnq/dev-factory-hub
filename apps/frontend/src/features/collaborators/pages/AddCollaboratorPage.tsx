@@ -3,7 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { AddCollaborator } from '#/features/collaborators/schemas';
 import { useAddCollaborator } from '../stores/useCollaborators';
-import { AddCollaboratorForm } from '../components/AddCollaboratorForm';
+import { CollaboratorAddForm } from '../components/CollaboratorAddForm';
 
 export function AddCollaboratorPage() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export function AddCollaboratorPage() {
 
   return (
     <div className="space-y-4">
-      <AddCollaboratorForm
+      <CollaboratorAddForm
         isPending={add.isPending}
         onSubmit={onSubmit}
         onCancel={() => navigate('/collaborators')}

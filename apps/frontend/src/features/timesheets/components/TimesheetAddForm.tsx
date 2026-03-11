@@ -15,17 +15,17 @@ import { FormCard } from '@/components/FormCard';
 import { CollaboratorCombobox } from '../../collaborators/components/CollaboratorCombobox';
 import { CollaboratorRoleCombobox } from '@/features/collaborator-roles/components/CollaboratorRoleCombobox';
 
-type AddTimesheetFormProps = {
+type TimesheetAddFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddTimesheet>;
   onCancel: () => void;
 };
 
-export function AddTimesheetForm({
+export function TimesheetAddForm({
   isPending,
   onSubmit,
   onCancel,
-}: AddTimesheetFormProps) {
+}: TimesheetAddFormProps) {
   const form = useForm<AddTimesheet>({
     resolver: zodResolver(addTimesheetSchema),
     defaultValues: {

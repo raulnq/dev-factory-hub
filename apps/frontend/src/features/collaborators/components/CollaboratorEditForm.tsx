@@ -14,19 +14,19 @@ import {
 } from '#/features/collaborators/schemas';
 import { FormCard } from '@/components/FormCard';
 
-type EditCollaboratorFormProps = {
+type CollaboratorEditFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditCollaborator>;
   onCancel: () => void;
   collaborator: Collaborator;
 };
 
-export function EditCollaboratorForm({
+export function CollaboratorEditForm({
   isPending,
   onSubmit,
   onCancel,
   collaborator,
-}: EditCollaboratorFormProps) {
+}: CollaboratorEditFormProps) {
   const form = useForm<EditCollaborator>({
     resolver: zodResolver(editCollaboratorSchema),
     defaultValues: collaborator,

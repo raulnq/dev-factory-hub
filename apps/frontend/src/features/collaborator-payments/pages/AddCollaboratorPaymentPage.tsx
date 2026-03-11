@@ -3,7 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { AddCollaboratorPayment } from '#/features/collaborator-payments/schemas';
 import { useAddCollaboratorPayment } from '../stores/useCollaboratorPayments';
-import { AddCollaboratorPaymentForm } from '../components/AddCollaboratorPaymentForm';
+import { CollaboratorPaymentAddForm } from '../components/CollaboratorPaymentAddForm';
 
 export function AddCollaboratorPaymentPage() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export function AddCollaboratorPaymentPage() {
 
   return (
     <div className="space-y-4">
-      <AddCollaboratorPaymentForm
+      <CollaboratorPaymentAddForm
         isPending={add.isPending}
         onSubmit={onSubmit}
         onCancel={() => navigate('/collaborator-payments')}

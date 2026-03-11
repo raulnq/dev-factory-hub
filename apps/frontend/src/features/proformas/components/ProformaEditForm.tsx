@@ -20,7 +20,7 @@ import { ProformaToolbar } from './ProformaToolbar';
 import { getStatusVariant } from '../utils/status-variants';
 import { StatusBadge } from '@/components/StatusBadge';
 
-type EditProformaFormProps = {
+type ProformaEditFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditProforma>;
   onCancel: () => void;
@@ -29,14 +29,14 @@ type EditProformaFormProps = {
   onProformaIssue: (data: IssueProforma) => void;
 };
 
-export function EditProformaForm({
+export function ProformaEditForm({
   proforma,
   onSubmit,
   onCancel,
   isPending,
   onProformaCancel,
   onProformaIssue,
-}: EditProformaFormProps) {
+}: ProformaEditFormProps) {
   const isEditable = proforma.status === 'Pending';
   const form = useForm<EditProforma>({
     resolver: zodResolver(editProformaSchema),

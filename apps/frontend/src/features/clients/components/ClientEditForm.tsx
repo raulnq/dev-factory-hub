@@ -15,19 +15,19 @@ import {
 } from '#/features/clients/schemas';
 import { FormCard } from '@/components/FormCard';
 
-type EditClientFormProps = {
+type ClientEditFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditClient>;
   onCancel: () => void;
   client: Client;
 };
 
-export function EditClientForm({
+export function ClientEditForm({
   isPending,
   onSubmit,
   client,
   onCancel,
-}: EditClientFormProps) {
+}: ClientEditFormProps) {
   const form = useForm<EditClient>({
     resolver: zodResolver(editClientSchema),
     defaultValues: client,

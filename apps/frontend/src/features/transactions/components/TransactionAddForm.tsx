@@ -1,17 +1,7 @@
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  addTaxPaymentSchema,
-  type AddTaxPayment,
-} from '#/features/tax-payments/schemas';
-import { FormCard } from '@/components/FormCard';
-import {
-  Field,
-  FieldLabel,
-  FieldError,
-  FieldGroup,
-} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -19,111 +9,113 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '@/components/ui/field';
+import {
+  addTransactionSchema,
+  type AddTransaction,
+} from '#/features/transactions/schemas';
+import { FormCard } from '@/components/FormCard';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
-const currentYear = new Date().getFullYear();
-const YEARS = Array.from({ length: 26 }, (_, i) => currentYear - 20 + i);
-const MONTHS = Array.from({ length: 13 }, (_, i) => i + 1);
+const TRANSACTION_TYPES = ['Income', 'Outcome'];
 
-type AddTaxPaymentFormProps = {
+type TransactionAddFormProps = {
   isPending: boolean;
-  onSubmit: SubmitHandler<AddTaxPayment>;
+  onSubmit: SubmitHandler<AddTransaction>;
   onCancel: () => void;
 };
 
-export function AddTaxPaymentForm({
+export function TransactionAddForm({
+  isPending,
   onSubmit,
   onCancel,
-  isPending,
-}: AddTaxPaymentFormProps) {
-  const form = useForm<AddTaxPayment>({
-    resolver: zodResolver(addTaxPaymentSchema),
+}: TransactionAddFormProps) {
+  const form = useForm<AddTransaction>({
+    resolver: zodResolver(addTransactionSchema),
     defaultValues: {
-      year: currentYear,
-      month: new Date().getMonth() + 1,
+      description: '',
       currency: 'USD',
+      type: 'Income',
+      subtotal: 0,
       taxes: 0,
     },
   });
+
+  const [subtotal, taxes] = form.watch(['subtotal', 'taxes']);
+  const total = (Number(subtotal) + Number(taxes)).toFixed(2);
 
   return (
     <FormCard
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
+      saveText="Save Transaction"
       isPending={isPending}
-      saveText="Save Tax Payment"
-      title="Add Tax Payment"
-      description="Create a new tax payment."
+      title="Add Transaction"
+      description="Create a new transaction."
     >
       <FieldGroup>
+        <Controller
+          name="description"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="description">Description</FieldLabel>
+              <Textarea
+                {...field}
+                id="description"
+                rows={3}
+                aria-invalid={fieldState.invalid}
+                placeholder="Transaction description"
+                disabled={isPending}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
         <div className="grid grid-cols-2 gap-4">
           <Controller
+            name="type"
             control={form.control}
-            name="year"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Year</FieldLabel>
+                <FieldLabel htmlFor="type">Type</FieldLabel>
                 <Select
-                  onValueChange={v => field.onChange(Number(v))}
-                  value={String(field.value)}
-                  disabled={isPending}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select year" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {YEARS.map(y => (
-                      <SelectItem key={y} value={String(y)}>
-                        {y}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-
-          <Controller
-            control={form.control}
-            name="month"
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Month</FieldLabel>
-                <Select
-                  onValueChange={v => field.onChange(Number(v))}
-                  value={String(field.value)}
-                  disabled={isPending}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select month" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {MONTHS.map(m => (
-                      <SelectItem key={m} value={String(m)}>
-                        {m}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-
-          <Controller
-            control={form.control}
-            name="currency"
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Currency</FieldLabel>
-                <CurrencySelect
-                  onValueChange={field.onChange}
                   value={field.value}
+                  onValueChange={field.onChange}
+                  disabled={isPending}
+                >
+                  <SelectTrigger id="type">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TRANSACTION_TYPES.map(t => (
+                      <SelectItem key={t} value={t}>
+                        {t}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          <Controller
+            name="currency"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="currency">Currency</FieldLabel>
+                <CurrencySelect
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  id="currency"
                   disabled={isPending}
                 />
                 {fieldState.invalid && (
@@ -132,19 +124,19 @@ export function AddTaxPaymentForm({
               </Field>
             )}
           />
-
+        </div>
+        <div className="grid grid-cols-3 gap-4">
           <Controller
-            name="taxes"
+            name="subtotal"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="taxes">Taxes</FieldLabel>
+                <FieldLabel htmlFor="subtotal">Subtotal</FieldLabel>
                 <Input
                   {...field}
-                  id="taxes"
+                  id="subtotal"
                   type="number"
                   step="0.01"
-                  min="0"
                   value={field.value ?? ''}
                   onChange={e => field.onChange(Number(e.target.value))}
                   aria-invalid={fieldState.invalid}
@@ -157,6 +149,33 @@ export function AddTaxPaymentForm({
               </Field>
             )}
           />
+          <Controller
+            name="taxes"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="taxes">Taxes</FieldLabel>
+                <Input
+                  {...field}
+                  id="taxes"
+                  type="number"
+                  step="0.01"
+                  value={field.value ?? ''}
+                  onChange={e => field.onChange(Number(e.target.value))}
+                  aria-invalid={fieldState.invalid}
+                  placeholder="0.00"
+                  disabled={isPending}
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          <Field>
+            <FieldLabel>Total</FieldLabel>
+            <Input value={total} disabled />
+          </Field>
         </div>
       </FieldGroup>
     </FormCard>

@@ -16,7 +16,7 @@ import {
   useUploadCollection,
   useCollectionDownloadUrl,
 } from '../stores/useCollections';
-import { EditCollectionForm } from '../components/EditCollectionForm';
+import { CollectionEditForm } from '../components/CollectionEditForm';
 import { CollectionSkeleton } from '../components/CollectionSkeleton';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
@@ -129,7 +129,7 @@ function EditCollectionInner({
     downloadUrl.isPending;
 
   return (
-    <EditCollectionForm
+    <CollectionEditForm
       collection={collection}
       isPending={isPending}
       onSubmit={handleSubmit}

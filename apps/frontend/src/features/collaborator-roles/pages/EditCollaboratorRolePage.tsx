@@ -9,7 +9,7 @@ import {
   useEditCollaboratorRole,
   useCollaboratorRoleSuspense,
 } from '../stores/useCollaboratorRoles';
-import { EditCollaboratorRoleForm } from '../components/EditCollaboratorRoleForm';
+import { CollaboratorRoleEditForm } from '../components/CollaboratorRoleEditForm';
 import { CollaboratorRoleSkeleton } from '../components/CollaboratorRoleSkeleton';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
@@ -75,7 +75,7 @@ function InnerCollaboratorRole({
 }: InnerCollaboratorRoleProps) {
   const { data } = useCollaboratorRoleSuspense(collaboratorRoleId);
   return (
-    <EditCollaboratorRoleForm
+    <CollaboratorRoleEditForm
       isPending={isPending}
       onSubmit={onSubmit}
       collaboratorRole={data}

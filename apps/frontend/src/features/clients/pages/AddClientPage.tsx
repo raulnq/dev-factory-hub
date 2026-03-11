@@ -3,7 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { AddClient } from '#/features/clients/schemas';
 import { useAddClient } from '../stores/useClients';
-import { AddClientForm } from '../components/AddClientForm';
+import { ClientAddForm } from '../components/ClientAddForm';
 
 export function AddClientPage() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export function AddClientPage() {
 
   return (
     <div className="space-y-4">
-      <AddClientForm
+      <ClientAddForm
         isPending={add.isPending}
         onSubmit={onSubmit}
         onCancel={() => navigate('/clients')}

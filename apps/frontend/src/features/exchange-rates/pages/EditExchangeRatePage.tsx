@@ -9,7 +9,7 @@ import {
   useEditExchangeRate,
   useExchangeRateSuspense,
 } from '../stores/useExchangeRates';
-import { EditExchangeRateForm } from '../components/EditExchangeRateForm';
+import { ExchangeRateEditForm } from '../components/ExchangeRateEditForm';
 import { ExchangeRateSkeleton } from '../components/ExchangeRateSkeleton';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
@@ -73,7 +73,7 @@ function InnerExchangeRate({
 }: InnerExchangeRateProps) {
   const { data } = useExchangeRateSuspense(exchangeRateId);
   return (
-    <EditExchangeRateForm
+    <ExchangeRateEditForm
       isPending={isPending}
       onSubmit={onSubmit}
       exchangeRate={data}

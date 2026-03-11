@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { AddProformaForm } from '../components/AddProformaForm';
+import { ProformaAddForm } from '../components/ProformaAddForm';
 import { useAddProforma } from '../stores/useProformas';
 
 import { toast } from 'sonner';
@@ -24,7 +24,7 @@ export function AddProformaPage() {
 
   return (
     <div className="space-y-4">
-      <AddProformaForm
+      <ProformaAddForm
         onSubmit={onSubmit}
         onCancel={() => navigate('/proformas')}
         isPending={add.isPending}

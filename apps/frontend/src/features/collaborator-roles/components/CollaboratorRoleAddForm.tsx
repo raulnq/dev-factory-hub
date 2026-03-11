@@ -14,17 +14,17 @@ import {
 import { FormCard } from '@/components/FormCard';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
-type AddCollaboratorRoleFormProps = {
+type CollaboratorRoleAddFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddCollaboratorRole>;
   onCancel: () => void;
 };
 
-export function AddCollaboratorRoleForm({
+export function CollaboratorRoleAddForm({
   isPending,
   onSubmit,
   onCancel,
-}: AddCollaboratorRoleFormProps) {
+}: CollaboratorRoleAddFormProps) {
   const form = useForm<AddCollaboratorRole>({
     resolver: zodResolver(addCollaboratorRoleSchema),
     defaultValues: {

@@ -3,7 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { AddInvoice } from '#/features/invoices/schemas';
 import { useAddInvoice } from '../stores/useInvoices';
-import { AddInvoiceForm } from '../components/AddInvoiceForm';
+import { InvoiceAddForm } from '../components/InvoiceAddForm';
 
 export function AddInvoicePage() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export function AddInvoicePage() {
 
   return (
     <div className="space-y-4">
-      <AddInvoiceForm
+      <InvoiceAddForm
         isPending={add.isPending}
         onSubmit={onSubmit}
         onCancel={() => navigate('/invoices')}

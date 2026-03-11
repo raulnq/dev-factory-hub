@@ -10,19 +10,19 @@ import { TimesheetToolbar } from './TimesheetToolbar';
 import { StatusBadge } from '@/components/StatusBadge';
 import { getStatusVariant } from '../utils/status-variants';
 
-type EditTimesheetFormProps = {
+type TimesheetEditFormProps = {
   timesheet: Timesheet;
   onCancel: () => void;
   onComplete: (data: CompleteTimesheet) => void;
   isPending: boolean;
 };
 
-export function EditTimesheetForm({
+export function TimesheetEditForm({
   timesheet,
   onCancel,
   onComplete,
   isPending,
-}: EditTimesheetFormProps) {
+}: TimesheetEditFormProps) {
   const isEditable = timesheet.status === 'Pending';
   return (
     <FormCard

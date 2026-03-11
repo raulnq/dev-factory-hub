@@ -12,17 +12,17 @@ import { FormCard } from '@/components/FormCard';
 import { ClientCombobox } from '../../clients/components/ClientCombobox';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
-type AddInvoiceFormProps = {
+type InvoiceAddFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddInvoice>;
   onCancel: () => void;
 };
 
-export function AddInvoiceForm({
+export function InvoiceAddForm({
   isPending,
   onSubmit,
   onCancel,
-}: AddInvoiceFormProps) {
+}: InvoiceAddFormProps) {
   const form = useForm<AddInvoice>({
     resolver: zodResolver(addInvoiceSchema),
     defaultValues: {

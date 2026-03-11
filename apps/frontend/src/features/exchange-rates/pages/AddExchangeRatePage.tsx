@@ -3,7 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { AddExchangeRate } from '#/features/exchange-rates/schemas';
 import { useAddExchangeRate } from '../stores/useExchangeRates';
-import { AddExchangeRateForm } from '../components/AddExchangeRateForm';
+import { ExchangeRateAddForm } from '../components/ExchangeRateAddForm';
 
 export function AddExchangeRatePage() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export function AddExchangeRatePage() {
 
   return (
     <div className="space-y-4">
-      <AddExchangeRateForm
+      <ExchangeRateAddForm
         isPending={add.isPending}
         onSubmit={onSubmit}
         onCancel={() => navigate('/exchange-rates')}

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { AddTaxPaymentForm } from '../components/AddTaxPaymentForm';
+import { TaxPaymentAddForm } from '../components/TaxPaymentAddForm';
 import { useAddTaxPayment } from '../stores/useTaxPayments';
 
 import { toast } from 'sonner';
@@ -24,7 +24,7 @@ export function AddTaxPaymentPage() {
 
   return (
     <div className="space-y-4">
-      <AddTaxPaymentForm
+      <TaxPaymentAddForm
         onSubmit={onSubmit}
         onCancel={() => navigate('/tax-payments')}
         isPending={add.isPending}

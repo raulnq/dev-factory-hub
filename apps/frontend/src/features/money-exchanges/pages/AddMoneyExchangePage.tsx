@@ -3,7 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { AddMoneyExchange } from '#/features/money-exchanges/schemas';
 import { useAddMoneyExchange } from '../stores/useMoneyExchanges';
-import { AddMoneyExchangeForm } from '../components/AddMoneyExchangeForm';
+import { MoneyExchangeAddForm } from '../components/MoneyExchangeAddForm';
 
 export function AddMoneyExchangePage() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export function AddMoneyExchangePage() {
 
   return (
     <div className="space-y-4">
-      <AddMoneyExchangeForm
+      <MoneyExchangeAddForm
         isPending={add.isPending}
         onSubmit={onSubmit}
         onCancel={() => navigate('/money-exchanges')}

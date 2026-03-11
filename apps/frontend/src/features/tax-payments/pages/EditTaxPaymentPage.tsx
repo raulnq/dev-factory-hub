@@ -4,7 +4,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
-import { EditTaxPaymentForm } from '../components/EditTaxPaymentForm';
+import { TaxPaymentEditForm } from '../components/TaxPaymentEditForm';
 import { TaxPaymentItemsSection } from '../components/TaxPaymentItemsSection';
 import { TaxPaymentSkeleton } from '../components/TaxPaymentSkeleton';
 import {
@@ -92,7 +92,7 @@ function EditTaxPaymentInner({
 
   return (
     <div className="space-y-6">
-      <EditTaxPaymentForm
+      <TaxPaymentEditForm
         taxPayment={taxPayment}
         onSubmit={handleSubmit}
         onCancel={onCancel}

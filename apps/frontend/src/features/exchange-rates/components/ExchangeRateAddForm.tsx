@@ -8,29 +8,31 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import {
-  editExchangeRateSchema,
-  type EditExchangeRate,
-  type ExchangeRate,
+  addExchangeRateSchema,
+  type AddExchangeRate,
 } from '#/features/exchange-rates/schemas';
 import { FormCard } from '@/components/FormCard';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
-type EditExchangeRateFormProps = {
+type ExchangeRateAddFormProps = {
   isPending: boolean;
-  onSubmit: SubmitHandler<EditExchangeRate>;
+  onSubmit: SubmitHandler<AddExchangeRate>;
   onCancel: () => void;
-  exchangeRate: ExchangeRate;
 };
 
-export function EditExchangeRateForm({
+export function ExchangeRateAddForm({
   isPending,
   onSubmit,
   onCancel,
-  exchangeRate,
-}: EditExchangeRateFormProps) {
-  const form = useForm<EditExchangeRate>({
-    resolver: zodResolver(editExchangeRateSchema),
-    defaultValues: exchangeRate,
+}: ExchangeRateAddFormProps) {
+  const form = useForm<AddExchangeRate>({
+    resolver: zodResolver(addExchangeRateSchema),
+    defaultValues: {
+      date: new Date().toISOString().split('T')[0],
+      fromCurrency: 'USD',
+      toCurrency: 'USD',
+      rate: 0,
+    },
   });
 
   return (
@@ -39,8 +41,8 @@ export function EditExchangeRateForm({
       onCancel={onCancel}
       saveText="Save Exchange Rate"
       isPending={isPending}
-      title="Edit Exchange Rate"
-      description="Edit an existing exchange rate."
+      title="Add Exchange Rate"
+      description="Create a new exchange rate."
     >
       <FieldGroup>
         <Controller

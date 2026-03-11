@@ -3,7 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { AddCollection } from '#/features/collections/schemas';
 import { useAddCollection } from '../stores/useCollections';
-import { AddCollectionForm } from '../components/AddCollectionForm';
+import { CollectionAddForm } from '../components/CollectionAddForm';
 
 export function AddCollectionPage() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export function AddCollectionPage() {
 
   return (
     <div className="space-y-4">
-      <AddCollectionForm
+      <CollectionAddForm
         isPending={add.isPending}
         onSubmit={onSubmit}
         onCancel={() => navigate('/collections')}

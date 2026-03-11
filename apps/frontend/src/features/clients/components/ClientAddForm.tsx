@@ -11,17 +11,17 @@ import {
 import { addClientSchema, type AddClient } from '#/features/clients/schemas';
 import { FormCard } from '@/components/FormCard';
 
-type AddClientFormProps = {
+type ClientAddFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddClient>;
   onCancel: () => void;
 };
 
-export function AddClientForm({
+export function ClientAddForm({
   isPending,
   onSubmit,
   onCancel,
-}: AddClientFormProps) {
+}: ClientAddFormProps) {
   const form = useForm<AddClient>({
     resolver: zodResolver(addClientSchema),
     defaultValues: {

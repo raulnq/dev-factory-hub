@@ -3,7 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { AddTimesheet } from '#/features/timesheets/schemas';
 import { useAddTimesheet } from '../stores/useTimesheets';
-import { AddTimesheetForm } from '../components/AddTimesheetForm';
+import { TimesheetAddForm } from '../components/TimesheetAddForm';
 
 export function AddTimesheetPage() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export function AddTimesheetPage() {
 
   return (
     <div className="space-y-4">
-      <AddTimesheetForm
+      <TimesheetAddForm
         isPending={add.isPending}
         onSubmit={onSubmit}
         onCancel={() => navigate('/timesheets')}

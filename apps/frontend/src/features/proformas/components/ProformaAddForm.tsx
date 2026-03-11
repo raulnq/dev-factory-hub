@@ -1,10 +1,6 @@
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  addCollectionSchema,
-  type AddCollection,
-} from '#/features/collections/schemas';
-import { FormCard } from '@/components/FormCard';
+import { addProformaSchema } from '#/features/proformas/schemas';
 import {
   Field,
   FieldLabel,
@@ -12,28 +8,30 @@ import {
   FieldGroup,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { ClientCombobox } from '../../clients/components/ClientCombobox';
+import { Textarea } from '@/components/ui/textarea';
+import { ProjectCombobox } from '../../clients/components/ProjectCombobox';
+import type { AddProforma } from '#/features/proformas/schemas';
 import { CurrencySelect } from '@/components/CurrencySelect';
+import { FormCard } from '@/components/FormCard';
 
-type AddCollectionFormProps = {
+type ProformaAddFormProps = {
   isPending: boolean;
-  onSubmit: SubmitHandler<AddCollection>;
+  onSubmit: SubmitHandler<AddProforma>;
   onCancel: () => void;
 };
 
-export function AddCollectionForm({
-  isPending,
+export function ProformaAddForm({
   onSubmit,
   onCancel,
-}: AddCollectionFormProps) {
-  const form = useForm<AddCollection>({
-    resolver: zodResolver(addCollectionSchema),
+  isPending,
+}: ProformaAddFormProps) {
+  const form = useForm<AddProforma>({
+    resolver: zodResolver(addProformaSchema),
     defaultValues: {
-      clientId: '',
       currency: 'USD',
-      total: 0,
-      commission: 0,
-      taxes: 0,
+      startDate: new Date().toISOString().split('T')[0],
+      endDate: new Date().toISOString().split('T')[0],
+      notes: '',
     },
   });
 
@@ -41,22 +39,23 @@ export function AddCollectionForm({
     <FormCard
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
-      saveText="Save Collection"
       isPending={isPending}
-      title="Add Collection"
-      description="Create a new collection."
+      saveText="Save Proforma"
+      title="Add Proforma"
+      description="Create a new proforma."
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Controller
-            name="clientId"
             control={form.control}
+            name="projectId"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Client</FieldLabel>
-                <ClientCombobox
+                <FieldLabel>Project</FieldLabel>
+                <ProjectCombobox
                   value={field.value}
                   onChange={field.onChange}
+                  aria-invalid={fieldState.invalid}
                   disabled={isPending}
                 />
                 {fieldState.invalid && (
@@ -83,25 +82,17 @@ export function AddCollectionForm({
               </Field>
             )}
           />
-        </div>
-
-        <div className="grid grid-cols-3 gap-4">
           <Controller
-            name="total"
+            name="startDate"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="total">Total</FieldLabel>
+                <FieldLabel htmlFor="startDate">Start Date</FieldLabel>
                 <Input
                   {...field}
-                  id="total"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={field.value ?? ''}
-                  onChange={e => field.onChange(Number(e.target.value))}
+                  id="startDate"
+                  type="date"
                   aria-invalid={fieldState.invalid}
-                  placeholder="0.00"
                   disabled={isPending}
                 />
                 {fieldState.invalid && (
@@ -110,48 +101,17 @@ export function AddCollectionForm({
               </Field>
             )}
           />
-
           <Controller
-            name="commission"
+            name="endDate"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="commission">Commission</FieldLabel>
+                <FieldLabel htmlFor="endDate">End Date</FieldLabel>
                 <Input
                   {...field}
-                  id="commission"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={field.value ?? ''}
-                  onChange={e => field.onChange(Number(e.target.value))}
+                  id="endDate"
+                  type="date"
                   aria-invalid={fieldState.invalid}
-                  placeholder="0.00"
-                  disabled={isPending}
-                />
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-
-          <Controller
-            name="taxes"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="taxes">Taxes</FieldLabel>
-                <Input
-                  {...field}
-                  id="taxes"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={field.value ?? ''}
-                  onChange={e => field.onChange(Number(e.target.value))}
-                  aria-invalid={fieldState.invalid}
-                  placeholder="0.00"
                   disabled={isPending}
                 />
                 {fieldState.invalid && (
@@ -161,6 +121,23 @@ export function AddCollectionForm({
             )}
           />
         </div>
+
+        <Controller
+          control={form.control}
+          name="notes"
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel>Notes</FieldLabel>
+              <Textarea
+                {...field}
+                value={field.value ?? ''}
+                aria-invalid={fieldState.invalid}
+                disabled={isPending}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
       </FieldGroup>
     </FormCard>
   );

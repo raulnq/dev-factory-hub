@@ -31,7 +31,7 @@ import { StatusBadge } from '@/components/StatusBadge';
 
 const TRANSACTION_TYPES = ['Income', 'Outcome'];
 
-type EditTransactionFormProps = {
+type TransactionEditFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditTransaction>;
   onCancel: () => void;
@@ -42,7 +42,7 @@ type EditTransactionFormProps = {
   onTransactionDownload: () => void;
 };
 
-export function EditTransactionForm({
+export function TransactionEditForm({
   isPending,
   onSubmit,
   onCancel,
@@ -51,7 +51,7 @@ export function EditTransactionForm({
   onTransactionCancel,
   onTransactionUpload,
   onTransactionDownload,
-}: EditTransactionFormProps) {
+}: TransactionEditFormProps) {
   const isStatusPending = transaction.status === 'Pending';
 
   const form = useForm<EditTransaction>({

@@ -16,7 +16,7 @@ import {
   useUploadTransaction,
   useTransactionDownloadUrl,
 } from '../stores/useTransactions';
-import { EditTransactionForm } from '../components/EditTransactionForm';
+import { TransactionEditForm } from '../components/TransactionEditForm';
 import { TransactionSkeleton } from '../components/TransactionSkeleton';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
@@ -129,7 +129,7 @@ function EditTransactionInner({
     downloadUrl.isPending;
 
   return (
-    <EditTransactionForm
+    <TransactionEditForm
       transaction={transaction}
       isPending={isPending}
       onSubmit={handleSubmit}

@@ -3,7 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { AddPayrollPayment } from '#/features/payroll-payments/schemas';
 import { useAddPayrollPayment } from '../stores/usePayrollPayments';
-import { AddPayrollPaymentForm } from '../components/AddPayrollPaymentForm';
+import { PayrollPaymentAddForm } from '../components/PayrollPaymentAddForm';
 
 export function AddPayrollPaymentPage() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export function AddPayrollPaymentPage() {
 
   return (
     <div className="space-y-4">
-      <AddPayrollPaymentForm
+      <PayrollPaymentAddForm
         isPending={add.isPending}
         onSubmit={onSubmit}
         onCancel={() => navigate('/payroll-payments')}

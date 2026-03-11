@@ -21,7 +21,7 @@ import { MoneyExchangeToolbar } from './MoneyExchangeToolbar';
 import { getStatusVariant } from '../utils/status-variants';
 import { StatusBadge } from '@/components/StatusBadge';
 
-type EditMoneyExchangeFormProps = {
+type MoneyExchangeEditFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditMoneyExchange>;
   onCancel: () => void;
@@ -32,7 +32,7 @@ type EditMoneyExchangeFormProps = {
   onMoneyExchangeDownload: () => void;
 };
 
-export function EditMoneyExchangeForm({
+export function MoneyExchangeEditForm({
   isPending,
   onSubmit,
   onCancel,
@@ -41,7 +41,7 @@ export function EditMoneyExchangeForm({
   onMoneyExchangeCancel,
   onMoneyExchangeUpload,
   onMoneyExchangeDownload,
-}: EditMoneyExchangeFormProps) {
+}: MoneyExchangeEditFormProps) {
   const isStatusPending = moneyExchange.status === 'Pending';
 
   const form = useForm<EditMoneyExchange>({

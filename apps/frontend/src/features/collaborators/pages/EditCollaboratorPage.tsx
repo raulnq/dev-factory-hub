@@ -9,7 +9,7 @@ import {
   useEditCollaborator,
   useCollaboratorSuspense,
 } from '../stores/useCollaborators';
-import { EditCollaboratorForm } from '../components/EditCollaboratorForm';
+import { CollaboratorEditForm } from '../components/CollaboratorEditForm';
 import { CollaboratorSkeleton } from '../components/CollaboratorSkeleton';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
@@ -73,7 +73,7 @@ function InnerCollaborator({
 }: InnerCollaboratorProps) {
   const { data } = useCollaboratorSuspense(collaboratorId);
   return (
-    <EditCollaboratorForm
+    <CollaboratorEditForm
       isPending={isPending}
       onSubmit={onSubmit}
       collaborator={data}

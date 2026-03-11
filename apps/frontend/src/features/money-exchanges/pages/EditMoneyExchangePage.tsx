@@ -16,7 +16,7 @@ import {
   useUploadMoneyExchange,
   useMoneyExchangeDownloadUrl,
 } from '../stores/useMoneyExchanges';
-import { EditMoneyExchangeForm } from '../components/EditMoneyExchangeForm';
+import { MoneyExchangeEditForm } from '../components/MoneyExchangeEditForm';
 import { MoneyExchangeSkeleton } from '../components/MoneyExchangeSkeleton';
 import { ErrorFallback } from '@/components/ErrorFallback';
 export function EditMoneyExchangePage() {
@@ -134,7 +134,7 @@ function EditMoneyExchangeInner({
     downloadUrl.isPending;
 
   return (
-    <EditMoneyExchangeForm
+    <MoneyExchangeEditForm
       moneyExchange={moneyExchange}
       isPending={isPending}
       onSubmit={handleSubmit}

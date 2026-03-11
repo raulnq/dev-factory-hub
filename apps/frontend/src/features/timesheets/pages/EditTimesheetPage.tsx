@@ -12,7 +12,7 @@ import type { CompleteTimesheet } from '#/features/timesheets/schemas';
 import { TimesheetGrid } from '../components/TimesheetGrid';
 import { Card, CardContent } from '@/components/ui/card';
 import { ErrorFallback } from '@/components/ErrorFallback';
-import { EditTimesheetForm } from '../components/EditTimesheetForm';
+import { TimesheetEditForm } from '../components/TimesheetEditForm';
 import { TimesheetSkeleton } from '../components/TimesheetSkeleton';
 import { ListCardHeader } from '@/components/ListCardHeader';
 import { AddProjectAction } from '../components/AddProjectAction';
@@ -85,7 +85,7 @@ function InnerEditTimesheet({
   const navigate = useNavigate();
   return (
     <>
-      <EditTimesheetForm
+      <TimesheetEditForm
         timesheet={ts}
         onCancel={() => navigate('/timesheets')}
         onComplete={onComplete}

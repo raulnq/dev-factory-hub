@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorFallback } from '@/components/ErrorFallback';
-import { EditProformaForm } from '../components/EditProformaForm';
+import { ProformaEditForm } from '../components/ProformaEditForm';
 import { ProformaItemsSection } from '../components/ProformaItemsSection';
 import { ProformaSkeleton } from '../components/ProformaSkeleton';
 import {
@@ -88,7 +88,7 @@ function EditProformaInner({
 
   return (
     <div className="space-y-6">
-      <EditProformaForm
+      <ProformaEditForm
         proforma={proforma}
         onSubmit={handleSubmit}
         onCancel={onCancel}

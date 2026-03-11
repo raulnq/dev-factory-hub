@@ -13,17 +13,17 @@ import {
 } from '#/features/collaborators/schemas';
 import { FormCard } from '@/components/FormCard';
 
-type AddCollaboratorFormProps = {
+type CollaboratorAddFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<AddCollaborator>;
   onCancel: () => void;
 };
 
-export function AddCollaboratorForm({
+export function CollaboratorAddForm({
   isPending,
   onSubmit,
   onCancel,
-}: AddCollaboratorFormProps) {
+}: CollaboratorAddFormProps) {
   const form = useForm<AddCollaborator>({
     resolver: zodResolver(addCollaboratorSchema),
     defaultValues: {

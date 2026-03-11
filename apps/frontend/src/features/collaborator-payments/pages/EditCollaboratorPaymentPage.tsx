@@ -16,7 +16,7 @@ import {
   useConfirmCollaboratorPayment,
   useCancelCollaboratorPayment,
 } from '../stores/useCollaboratorPayments';
-import { EditCollaboratorPaymentForm } from '../components/EditCollaboratorPaymentForm';
+import { CollaboratorPaymentEditForm } from '../components/CollaboratorPaymentEditForm';
 import { CollaboratorPaymentSkeleton } from '../components/CollaboratorPaymentSkeleton';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
@@ -117,7 +117,7 @@ function EditCollaboratorPaymentInner({
     edit.isPending || pay.isPending || confirm.isPending || cancel.isPending;
 
   return (
-    <EditCollaboratorPaymentForm
+    <CollaboratorPaymentEditForm
       collaboratorPayment={payment}
       isPending={isPending}
       onSubmit={handleSubmit}

@@ -1,91 +1,95 @@
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  editCollectionSchema,
-  type Collection,
-  type ConfirmCollection,
-  type EditCollection,
-} from '#/features/collections/schemas';
-import { FormCard } from '@/components/FormCard';
+  editCollaboratorPaymentSchema,
+  type CollaboratorPayment,
+  type ConfirmCollaboratorPayment,
+  type EditCollaboratorPayment,
+  type PayCollaboratorPayment,
+} from '#/features/collaborator-payments/schemas';
 import {
   Field,
-  FieldLabel,
   FieldError,
   FieldGroup,
+  FieldLabel,
   FieldSeparator,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { CurrencySelect } from '@/components/CurrencySelect';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
-import { CollectionToolbar } from './CollectionToolbar';
+import { FormCard } from '@/components/FormCard';
+import { CollaboratorPaymentToolbar } from './CollaboratorPaymentToolbar';
 import { StatusBadge } from '@/components/StatusBadge';
 import { getStatusVariant } from '../utils/status-variants';
 
-type EditCollectionFormProps = {
+type CollaboratorPaymentEditFormProps = {
   isPending: boolean;
-  onSubmit: SubmitHandler<EditCollection>;
+  onSubmit: SubmitHandler<EditCollaboratorPayment>;
   onCancel: () => void;
-  collection: Collection;
-  onCollectionConfirm: (data: ConfirmCollection) => Promise<void> | void;
-  onCollectionCancel: () => Promise<void> | void;
-  onCollectionUpload: (file: File) => Promise<void> | void;
-  onCollectionDownload: () => void;
+  collaboratorPayment: CollaboratorPayment;
+  onCollaboratorPaymentPay: (data: PayCollaboratorPayment) => void;
+  onCollaboratorPaymentConfirm: (data: ConfirmCollaboratorPayment) => void;
+  onCollaboratorPaymentCancel: () => void;
 };
 
-export function EditCollectionForm({
+export function CollaboratorPaymentEditForm({
   isPending,
   onSubmit,
   onCancel,
-  collection,
-  onCollectionConfirm,
-  onCollectionCancel,
-  onCollectionUpload,
-  onCollectionDownload,
-}: EditCollectionFormProps) {
-  const isEditable = collection.status === 'Pending';
+  collaboratorPayment,
+  onCollaboratorPaymentPay,
+  onCollaboratorPaymentConfirm,
+  onCollaboratorPaymentCancel,
+}: CollaboratorPaymentEditFormProps) {
+  const isEditable = collaboratorPayment.status === 'Pending';
 
-  const form = useForm<EditCollection>({
-    resolver: zodResolver(editCollectionSchema),
+  const form = useForm<EditCollaboratorPayment>({
+    resolver: zodResolver(editCollaboratorPaymentSchema),
     defaultValues: {
-      currency: collection.currency,
-      total: Number(collection.total),
-      commission: Number(collection.commission),
-      taxes: Number(collection.taxes),
+      currency: collaboratorPayment.currency,
+      grossSalary: Number(collaboratorPayment.grossSalary),
+      withholding: Number(collaboratorPayment.withholding),
+      taxes: Number(collaboratorPayment.taxes),
     },
   });
+
+  const [grossSalary, withholding] = form.watch(['grossSalary', 'withholding']);
+  const netSalary =
+    Math.round((Number(grossSalary) - Number(withholding)) * 100) / 100;
 
   return (
     <FormCard
       onSubmit={form.handleSubmit(onSubmit)}
       readOnly={!isEditable}
       onCancel={onCancel}
-      saveText="Save Collection"
+      saveText="Save Payment"
       isPending={isPending}
-      title="Edit Collection"
-      description="Update collection details."
+      title="Edit Payment"
+      description="Update payment details."
       renderTitleSuffix={
         <StatusBadge
-          variant={getStatusVariant(collection.status)}
-          status={collection.status}
+          variant={getStatusVariant(collaboratorPayment.status)}
+          status={collaboratorPayment.status}
         />
       }
       renderAction={
-        <CollectionToolbar
-          status={collection.status}
-          filePath={collection.filePath}
+        <CollaboratorPaymentToolbar
+          status={collaboratorPayment.status}
           isPending={isPending}
-          onConfirm={onCollectionConfirm}
-          onCancel={onCollectionCancel}
-          onUpload={onCollectionUpload}
-          onDownload={onCollectionDownload}
+          onPay={onCollaboratorPaymentPay}
+          onConfirm={onCollaboratorPaymentConfirm}
+          onCancel={onCollaboratorPaymentCancel}
         />
       }
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
           <Field>
-            <FieldLabel>Client</FieldLabel>
-            <Input value={collection.clientName ?? ''} disabled />
+            <FieldLabel>Collaborator</FieldLabel>
+            <Input
+              value={collaboratorPayment.collaboratorName ?? ''}
+              disabled
+            />
           </Field>
 
           <Controller
@@ -107,16 +111,16 @@ export function EditCollectionForm({
           />
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           <Controller
-            name="total"
+            name="grossSalary"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="total">Total</FieldLabel>
+                <FieldLabel htmlFor="grossSalary">Gross Salary</FieldLabel>
                 <Input
                   {...field}
-                  id="total"
+                  id="grossSalary"
                   type="number"
                   step="0.01"
                   min="0"
@@ -134,14 +138,14 @@ export function EditCollectionForm({
           />
 
           <Controller
-            name="commission"
+            name="withholding"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="commission">Commission</FieldLabel>
+                <FieldLabel htmlFor="withholding">Withholding</FieldLabel>
                 <Input
                   {...field}
-                  id="commission"
+                  id="withholding"
                   type="number"
                   step="0.01"
                   min="0"
@@ -182,6 +186,16 @@ export function EditCollectionForm({
               </Field>
             )}
           />
+
+          <Field>
+            <FieldLabel htmlFor="netSalary">Net Salary</FieldLabel>
+            <Input
+              id="netSalary"
+              type="number"
+              value={isNaN(netSalary) ? '' : netSalary.toFixed(2)}
+              disabled
+            />
+          </Field>
         </div>
 
         <FieldSeparator />
@@ -189,17 +203,27 @@ export function EditCollectionForm({
         <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel>Created At</FieldLabel>
-            <DateReadOnlyField value={collection.createdAt} />
+            <DateReadOnlyField value={collaboratorPayment.createdAt} />
+          </Field>
+
+          <Field>
+            <FieldLabel>Paid At</FieldLabel>
+            <DateReadOnlyField value={collaboratorPayment.paidAt} />
           </Field>
 
           <Field>
             <FieldLabel>Confirmed At</FieldLabel>
-            <DateReadOnlyField value={collection.confirmedAt} />
+            <DateReadOnlyField value={collaboratorPayment.confirmedAt} />
+          </Field>
+
+          <Field>
+            <FieldLabel>Number</FieldLabel>
+            <Input value={collaboratorPayment.number ?? ''} disabled />
           </Field>
 
           <Field>
             <FieldLabel>Canceled At</FieldLabel>
-            <DateReadOnlyField value={collection.canceledAt} />
+            <DateReadOnlyField value={collaboratorPayment.canceledAt} />
           </Field>
         </div>
       </FieldGroup>

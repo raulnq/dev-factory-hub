@@ -11,102 +11,67 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from '@/components/ui/field';
 import {
-  editPayrollPaymentSchema,
-  type EditPayrollPayment,
-  type PayPayrollPayment,
-  type PayPensionPayrollPayment,
-  type PayrollPayment,
+  addPayrollPaymentSchema,
+  type AddPayrollPayment,
 } from '#/features/payroll-payments/schemas';
-import { DateReadOnlyField } from '@/components/DateReadOnlyField';
-import { CurrencySelect } from '@/components/CurrencySelect';
-import { PayrollPaymentToolbar } from './PayrollPaymentToolbar';
-import { StatusBadge } from '@/components/StatusBadge';
-import { getStatusVariant } from '../utils/status-variants';
 import { FormCard } from '@/components/FormCard';
+import { CollaboratorCombobox } from '../../collaborators/components/CollaboratorCombobox';
+import { CurrencySelect } from '@/components/CurrencySelect';
 
-type EditPayrollPaymentFormProps = {
+type PayrollPaymentAddFormProps = {
   isPending: boolean;
-  onSubmit: SubmitHandler<EditPayrollPayment>;
+  onSubmit: SubmitHandler<AddPayrollPayment>;
   onCancel: () => void;
-  payrollPayment: PayrollPayment;
-  onPayrollPaymentPay: (data: PayPayrollPayment) => Promise<void> | void;
-  onPayrollPaymentPayPension: (
-    data: PayPensionPayrollPayment
-  ) => Promise<void> | void;
-  onPayrollPaymentCancel: () => Promise<void> | void;
-  onPayrollPaymentUpload: (file: File) => Promise<void> | void;
-  onPayrollPaymentDownload: () => void;
 };
 
-export function EditPayrollPaymentForm({
+export function PayrollPaymentAddForm({
   isPending,
   onSubmit,
   onCancel,
-  payrollPayment,
-  onPayrollPaymentPay,
-  onPayrollPaymentPayPension,
-  onPayrollPaymentCancel,
-  onPayrollPaymentUpload,
-  onPayrollPaymentDownload,
-}: EditPayrollPaymentFormProps) {
-  const isStatusPending = payrollPayment.status === 'Pending';
-
-  const form = useForm<EditPayrollPayment>({
-    resolver: zodResolver(editPayrollPaymentSchema),
+}: PayrollPaymentAddFormProps) {
+  const form = useForm<AddPayrollPayment>({
+    resolver: zodResolver(addPayrollPaymentSchema),
     defaultValues: {
-      currency: payrollPayment.currency,
-      netSalary: Number(payrollPayment.netSalary),
-      comission: Number(payrollPayment.comission),
-      taxes: Number(payrollPayment.taxes),
+      currency: 'USD',
+      netSalary: 0,
+      comission: 0,
+      taxes: 0,
     },
   });
 
-  const netSalary =
-    useWatch({ control: form.control, name: 'netSalary' }) ??
-    Number(payrollPayment.netSalary);
-  const grossSalary = Number(netSalary) + Number(payrollPayment.pensionAmount);
+  const netSalary = useWatch({ control: form.control, name: 'netSalary' }) ?? 0;
+  const grossSalary = Number(netSalary);
 
   return (
     <FormCard
       onSubmit={form.handleSubmit(onSubmit)}
-      readOnly={!isStatusPending}
       onCancel={onCancel}
       saveText="Save Payroll Payment"
       isPending={isPending}
-      title="Edit Payroll Payment"
-      description="Update payroll payment details."
-      renderTitleSuffix={
-        <StatusBadge
-          variant={getStatusVariant(payrollPayment.status)}
-          status={payrollPayment.status}
-        />
-      }
-      renderAction={
-        <PayrollPaymentToolbar
-          status={payrollPayment.status}
-          filePath={payrollPayment.filePath}
-          isPending={isPending}
-          onPay={onPayrollPaymentPay}
-          onPayPension={onPayrollPaymentPayPension}
-          onCancel={onPayrollPaymentCancel}
-          onUpload={onPayrollPaymentUpload}
-          onDownload={onPayrollPaymentDownload}
-        />
-      }
+      title="Add Payroll Payment"
+      description="Create a new payroll payment."
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-4">
-          <Field>
-            <FieldLabel>Collaborator</FieldLabel>
-            <Input
-              value={payrollPayment.collaboratorName ?? ''}
-              disabled
-              aria-readonly
-            />
-          </Field>
+          <Controller
+            control={form.control}
+            name="collaboratorId"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel>Collaborator</FieldLabel>
+                <CollaboratorCombobox
+                  value={field.value ?? ''}
+                  onChange={field.onChange}
+                  disabled={isPending}
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
           <Controller
             control={form.control}
             name="currency"
@@ -117,7 +82,7 @@ export function EditPayrollPaymentForm({
                   value={field.value}
                   onValueChange={field.onChange}
                   id="currency"
-                  disabled={isPending || !isStatusPending}
+                  disabled={isPending}
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -144,7 +109,7 @@ export function EditPayrollPaymentForm({
                   onChange={e => field.onChange(Number(e.target.value))}
                   aria-invalid={fieldState.invalid}
                   placeholder="0.00"
-                  disabled={isPending || !isStatusPending}
+                  disabled={isPending}
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -157,7 +122,7 @@ export function EditPayrollPaymentForm({
             <Input
               id="pensionAmount"
               type="number"
-              value={Number(payrollPayment.pensionAmount).toFixed(2)}
+              value="0.00"
               disabled
               aria-readonly
             />
@@ -191,7 +156,7 @@ export function EditPayrollPaymentForm({
                   onChange={e => field.onChange(Number(e.target.value))}
                   aria-invalid={fieldState.invalid}
                   placeholder="0.00"
-                  disabled={isPending || !isStatusPending}
+                  disabled={isPending}
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -215,7 +180,7 @@ export function EditPayrollPaymentForm({
                   onChange={e => field.onChange(Number(e.target.value))}
                   aria-invalid={fieldState.invalid}
                   placeholder="0.00"
-                  disabled={isPending || !isStatusPending}
+                  disabled={isPending}
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -223,27 +188,6 @@ export function EditPayrollPaymentForm({
               </Field>
             )}
           />
-        </div>
-
-        <FieldSeparator />
-
-        <div className="grid grid-cols-4 gap-4">
-          <Field>
-            <FieldLabel>Created At</FieldLabel>
-            <DateReadOnlyField value={payrollPayment.createdAt} />
-          </Field>
-          <Field>
-            <FieldLabel>Paid At</FieldLabel>
-            <DateReadOnlyField value={payrollPayment.paidAt} />
-          </Field>
-          <Field>
-            <FieldLabel>Pension Paid At</FieldLabel>
-            <DateReadOnlyField value={payrollPayment.pensionPaidAt} />
-          </Field>
-          <Field>
-            <FieldLabel>Canceled At</FieldLabel>
-            <DateReadOnlyField value={payrollPayment.canceledAt} />
-          </Field>
         </div>
       </FieldGroup>
     </FormCard>

@@ -3,7 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { AddTransaction } from '#/features/transactions/schemas';
 import { useAddTransaction } from '../stores/useTransactions';
-import { AddTransactionForm } from '../components/AddTransactionForm';
+import { TransactionAddForm } from '../components/TransactionAddForm';
 export function AddTransactionPage() {
   const navigate = useNavigate();
   const add = useAddTransaction();
@@ -22,7 +22,7 @@ export function AddTransactionPage() {
 
   return (
     <div className="space-y-4">
-      <AddTransactionForm
+      <TransactionAddForm
         isPending={add.isPending}
         onSubmit={onSubmit}
         onCancel={() => navigate('/transactions')}

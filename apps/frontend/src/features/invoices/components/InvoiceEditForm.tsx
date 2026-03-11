@@ -21,7 +21,7 @@ import { StatusBadge } from '@/components/StatusBadge';
 import { getStatusVariant } from '../utils/status-variants';
 import { type IssueInvoice } from '#/features/invoices/schemas';
 
-type EditInvoiceFormProps = {
+type InvoiceEditFormProps = {
   isPending: boolean;
   onSubmit: SubmitHandler<EditInvoice>;
   onCancel: () => void;
@@ -30,14 +30,14 @@ type EditInvoiceFormProps = {
   onInvoiceIssue: (data: IssueInvoice) => void;
 };
 
-export function EditInvoiceForm({
+export function InvoiceEditForm({
   isPending,
   onSubmit,
   onCancel,
   invoice,
   onInvoiceCancel,
   onInvoiceIssue,
-}: EditInvoiceFormProps) {
+}: InvoiceEditFormProps) {
   const isStatusPending = invoice.status === 'Pending';
 
   const form = useForm<EditInvoice>({

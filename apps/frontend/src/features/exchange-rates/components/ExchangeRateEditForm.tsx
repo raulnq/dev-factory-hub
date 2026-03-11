@@ -1,59 +1,76 @@
-import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
+import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  addCollaboratorPaymentSchema,
-  type AddCollaboratorPayment,
-} from '#/features/collaborator-payments/schemas';
+import { Input } from '@/components/ui/input';
 import {
   Field,
   FieldError,
   FieldGroup,
   FieldLabel,
 } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { CurrencySelect } from '@/components/CurrencySelect';
-import { CollaboratorCombobox } from '../../collaborators/components/CollaboratorCombobox';
+import {
+  editExchangeRateSchema,
+  type EditExchangeRate,
+  type ExchangeRate,
+} from '#/features/exchange-rates/schemas';
 import { FormCard } from '@/components/FormCard';
+import { CurrencySelect } from '@/components/CurrencySelect';
 
-type AddCollaboratorPaymentFormProps = {
+type ExchangeRateEditFormProps = {
   isPending: boolean;
-  onSubmit: SubmitHandler<AddCollaboratorPayment>;
+  onSubmit: SubmitHandler<EditExchangeRate>;
   onCancel: () => void;
+  exchangeRate: ExchangeRate;
 };
 
-export function AddCollaboratorPaymentForm({
+export function ExchangeRateEditForm({
   isPending,
   onSubmit,
   onCancel,
-}: AddCollaboratorPaymentFormProps) {
-  const form = useForm<AddCollaboratorPayment>({
-    resolver: zodResolver(addCollaboratorPaymentSchema),
-    defaultValues: {
-      currency: 'USD',
-      grossSalary: 0,
-    },
+  exchangeRate,
+}: ExchangeRateEditFormProps) {
+  const form = useForm<EditExchangeRate>({
+    resolver: zodResolver(editExchangeRateSchema),
+    defaultValues: exchangeRate,
   });
 
   return (
     <FormCard
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
-      saveText="Save Payment"
+      saveText="Save Exchange Rate"
       isPending={isPending}
-      title="Add Payment"
-      description="Create a new collaborator payment."
+      title="Edit Exchange Rate"
+      description="Edit an existing exchange rate."
     >
       <FieldGroup>
+        <Controller
+          name="date"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="date">Date</FieldLabel>
+              <Input
+                {...field}
+                id="date"
+                type="date"
+                aria-invalid={fieldState.invalid}
+                disabled={isPending}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
         <div className="grid grid-cols-2 gap-4">
           <Controller
+            name="fromCurrency"
             control={form.control}
-            name="collaboratorId"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Collaborator</FieldLabel>
-                <CollaboratorCombobox
-                  value={field.value ?? ''}
-                  onChange={field.onChange}
+                <FieldLabel htmlFor="fromCurrency">From Currency</FieldLabel>
+                <CurrencySelect
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  id="fromCurrency"
                   disabled={isPending}
                 />
                 {fieldState.invalid && (
@@ -62,16 +79,16 @@ export function AddCollaboratorPaymentForm({
               </Field>
             )}
           />
-
           <Controller
+            name="toCurrency"
             control={form.control}
-            name="currency"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Currency</FieldLabel>
+                <FieldLabel htmlFor="toCurrency">To Currency</FieldLabel>
                 <CurrencySelect
-                  onValueChange={field.onChange}
                   value={field.value}
+                  onValueChange={field.onChange}
+                  id="toCurrency"
                   disabled={isPending}
                 />
                 {fieldState.invalid && (
@@ -81,23 +98,21 @@ export function AddCollaboratorPaymentForm({
             )}
           />
         </div>
-
         <Controller
-          name="grossSalary"
+          name="rate"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="grossSalary">Gross Salary</FieldLabel>
+              <FieldLabel htmlFor="rate">Rate</FieldLabel>
               <Input
                 {...field}
-                id="grossSalary"
+                id="rate"
                 type="number"
-                step="0.01"
-                min="0"
+                step="0.0001"
                 value={field.value ?? ''}
                 onChange={e => field.onChange(Number(e.target.value))}
                 aria-invalid={fieldState.invalid}
-                placeholder="0.00"
+                placeholder="0.0000"
                 disabled={isPending}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

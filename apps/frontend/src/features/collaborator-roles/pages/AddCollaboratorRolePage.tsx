@@ -3,7 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { AddCollaboratorRole } from '#/features/collaborator-roles/schemas';
 import { useAddCollaboratorRole } from '../stores/useCollaboratorRoles';
-import { AddCollaboratorRoleForm } from '../components/AddCollaboratorRoleForm';
+import { CollaboratorRoleAddForm } from '../components/CollaboratorRoleAddForm';
 
 export function AddCollaboratorRolePage() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export function AddCollaboratorRolePage() {
 
   return (
     <div className="space-y-4">
-      <AddCollaboratorRoleForm
+      <CollaboratorRoleAddForm
         isPending={add.isPending}
         onSubmit={onSubmit}
         onCancel={() => navigate('/collaborator-roles')}

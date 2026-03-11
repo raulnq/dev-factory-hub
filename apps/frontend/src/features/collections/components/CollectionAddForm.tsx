@@ -1,121 +1,80 @@
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  addCollectionSchema,
+  type AddCollection,
+} from '#/features/collections/schemas';
+import { FormCard } from '@/components/FormCard';
 import {
   Field,
+  FieldLabel,
   FieldError,
   FieldGroup,
-  FieldLabel,
 } from '@/components/ui/field';
-import {
-  addTransactionSchema,
-  type AddTransaction,
-} from '#/features/transactions/schemas';
-import { FormCard } from '@/components/FormCard';
+import { Input } from '@/components/ui/input';
+import { ClientCombobox } from '../../clients/components/ClientCombobox';
 import { CurrencySelect } from '@/components/CurrencySelect';
 
-const TRANSACTION_TYPES = ['Income', 'Outcome'];
-
-type AddTransactionFormProps = {
+type CollectionAddFormProps = {
   isPending: boolean;
-  onSubmit: SubmitHandler<AddTransaction>;
+  onSubmit: SubmitHandler<AddCollection>;
   onCancel: () => void;
 };
 
-export function AddTransactionForm({
+export function CollectionAddForm({
   isPending,
   onSubmit,
   onCancel,
-}: AddTransactionFormProps) {
-  const form = useForm<AddTransaction>({
-    resolver: zodResolver(addTransactionSchema),
+}: CollectionAddFormProps) {
+  const form = useForm<AddCollection>({
+    resolver: zodResolver(addCollectionSchema),
     defaultValues: {
-      description: '',
+      clientId: '',
       currency: 'USD',
-      type: 'Income',
-      subtotal: 0,
+      total: 0,
+      commission: 0,
       taxes: 0,
     },
   });
-
-  const [subtotal, taxes] = form.watch(['subtotal', 'taxes']);
-  const total = (Number(subtotal) + Number(taxes)).toFixed(2);
 
   return (
     <FormCard
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
-      saveText="Save Transaction"
+      saveText="Save Collection"
       isPending={isPending}
-      title="Add Transaction"
-      description="Create a new transaction."
+      title="Add Collection"
+      description="Create a new collection."
     >
       <FieldGroup>
-        <Controller
-          name="description"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="description">Description</FieldLabel>
-              <Textarea
-                {...field}
-                id="description"
-                rows={3}
-                aria-invalid={fieldState.invalid}
-                placeholder="Transaction description"
-                disabled={isPending}
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
         <div className="grid grid-cols-2 gap-4">
           <Controller
-            name="type"
+            name="clientId"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="type">Type</FieldLabel>
-                <Select
+                <FieldLabel>Client</FieldLabel>
+                <ClientCombobox
                   value={field.value}
-                  onValueChange={field.onChange}
+                  onChange={field.onChange}
                   disabled={isPending}
-                >
-                  <SelectTrigger id="type">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TRANSACTION_TYPES.map(t => (
-                      <SelectItem key={t} value={t}>
-                        {t}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
               </Field>
             )}
           />
+
           <Controller
-            name="currency"
             control={form.control}
+            name="currency"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="currency">Currency</FieldLabel>
+                <FieldLabel>Currency</FieldLabel>
                 <CurrencySelect
-                  value={field.value}
                   onValueChange={field.onChange}
-                  id="currency"
+                  value={field.value}
                   disabled={isPending}
                 />
                 {fieldState.invalid && (
@@ -125,18 +84,20 @@ export function AddTransactionForm({
             )}
           />
         </div>
+
         <div className="grid grid-cols-3 gap-4">
           <Controller
-            name="subtotal"
+            name="total"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="subtotal">Subtotal</FieldLabel>
+                <FieldLabel htmlFor="total">Total</FieldLabel>
                 <Input
                   {...field}
-                  id="subtotal"
+                  id="total"
                   type="number"
                   step="0.01"
+                  min="0"
                   value={field.value ?? ''}
                   onChange={e => field.onChange(Number(e.target.value))}
                   aria-invalid={fieldState.invalid}
@@ -149,6 +110,32 @@ export function AddTransactionForm({
               </Field>
             )}
           />
+
+          <Controller
+            name="commission"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="commission">Commission</FieldLabel>
+                <Input
+                  {...field}
+                  id="commission"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={field.value ?? ''}
+                  onChange={e => field.onChange(Number(e.target.value))}
+                  aria-invalid={fieldState.invalid}
+                  placeholder="0.00"
+                  disabled={isPending}
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+
           <Controller
             name="taxes"
             control={form.control}
@@ -160,6 +147,7 @@ export function AddTransactionForm({
                   id="taxes"
                   type="number"
                   step="0.01"
+                  min="0"
                   value={field.value ?? ''}
                   onChange={e => field.onChange(Number(e.target.value))}
                   aria-invalid={fieldState.invalid}
@@ -172,10 +160,6 @@ export function AddTransactionForm({
               </Field>
             )}
           />
-          <Field>
-            <FieldLabel>Total</FieldLabel>
-            <Input value={total} disabled />
-          </Field>
         </div>
       </FieldGroup>
     </FormCard>

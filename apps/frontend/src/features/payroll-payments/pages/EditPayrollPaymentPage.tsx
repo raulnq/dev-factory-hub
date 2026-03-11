@@ -18,7 +18,7 @@ import {
   useUploadPayrollPayment,
   usePayrollPaymentDownloadUrl,
 } from '../stores/usePayrollPayments';
-import { EditPayrollPaymentForm } from '../components/EditPayrollPaymentForm';
+import { PayrollPaymentEditForm } from '../components/PayrollPaymentEditForm';
 import { PayrollPaymentSkeleton } from '../components/PayrollPaymentSkeleton';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
@@ -150,7 +150,7 @@ function EditPayrollPaymentInner({
     downloadUrl.isPending;
 
   return (
-    <EditPayrollPaymentForm
+    <PayrollPaymentEditForm
       payrollPayment={payrollPayment}
       isPending={isPending}
       onSubmit={handleSubmit}
