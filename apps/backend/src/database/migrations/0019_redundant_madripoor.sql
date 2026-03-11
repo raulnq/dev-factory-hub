@@ -1,0 +1,1 @@
+ALTER TABLE "dev-factory-hub"."invoices" DROP COLUMN "exchangeRate";

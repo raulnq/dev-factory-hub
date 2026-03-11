@@ -34,11 +34,7 @@ export function InvoiceSkeleton() {
           </Field>
         </div>
         <FieldSeparator />
-        <div className="grid grid-cols-3 gap-4">
-          <Field>
-            <FieldLabel>Exchange Rate</FieldLabel>
-            <Skeleton className="h-9 w-full" />
-          </Field>
+        <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel>Number</FieldLabel>
             <Skeleton className="h-9 w-full" />

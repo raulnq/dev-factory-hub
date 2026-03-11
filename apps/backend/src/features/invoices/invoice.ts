@@ -44,9 +44,4 @@ export const invoices = dbSchema.table('invoices', {
     withTimezone: true,
   }),
   number: varchar('number', { length: 20 }),
-  exchangeRate: numeric('exchangeRate', {
-    precision: 10,
-    scale: 4,
-    mode: 'number',
-  }),
 });

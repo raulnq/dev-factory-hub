@@ -21,7 +21,6 @@ describe('Issue Invoice Endpoint', () => {
     const invoice = await addInvoice(await createInvoice());
     const issueData = defaultIssueData({
       issuedAt: todayDate(),
-      exchangeRate: 3.75,
       number: 'INV-001',
     });
 
@@ -29,7 +28,6 @@ describe('Issue Invoice Endpoint', () => {
     assertInvoice(issued)
       .hasStatus('Issued')
       .hasIssuedAt(issueData.issuedAt)
-      .hasExchangeRate(3.75)
       .hasNumber('INV-001');
   });
 
@@ -78,17 +76,6 @@ describe('Issue Invoice Endpoint', () => {
         },
         expectedError: createValidationError([
           validationError.requiredString('issuedAt'),
-        ]),
-      },
-      {
-        name: 'should reject negative exchangeRate',
-        input: { ...defaultIssueData(), exchangeRate: -1 },
-        expectedError: createValidationError([
-          {
-            path: 'exchangeRate',
-            message: 'Too small: expected number to be >=0',
-            code: 'too_small',
-          },
         ]),
       },
       {

@@ -41,7 +41,6 @@ export function getInvoiceWithRelations() {
       createdAt: invoices.createdAt,
       canceledAt: invoices.canceledAt,
       number: invoices.number,
-      exchangeRate: invoices.exchangeRate,
     })
     .from(invoices)
     .innerJoin(clients, eq(invoices.clientId, clients.clientId));

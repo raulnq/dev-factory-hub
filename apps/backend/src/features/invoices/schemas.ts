@@ -14,7 +14,6 @@ export const invoiceSchema = z.object({
   createdAt: z.date(),
   canceledAt: z.date().nullable(),
   number: z.string().max(20).nullable(),
-  exchangeRate: z.number().min(0).nullable(),
 });
 
 export type Invoice = z.infer<typeof invoiceSchema>;
@@ -38,7 +37,6 @@ export type EditInvoice = z.infer<typeof editInvoiceSchema>;
 
 export const issueInvoiceSchema = z.object({
   issuedAt: z.iso.date(),
-  exchangeRate: z.number().min(0),
   number: z.string().min(1).max(20),
 });
 

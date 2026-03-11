@@ -27,7 +27,6 @@ export function InvoiceIssueAction({
       schema={issueInvoiceSchema}
       defaultValues={{
         issuedAt: new Date().toISOString().split('T')[0],
-        exchangeRate: 1,
         number: '',
       }}
       onSubmit={onIssue}
@@ -48,29 +47,6 @@ export function InvoiceIssueAction({
                   id="issuedAt"
                   type="date"
                   aria-invalid={fieldState.invalid}
-                  disabled={isPending}
-                />
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-          <Controller
-            name="exchangeRate"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="exchangeRate">Exchange Rate</FieldLabel>
-                <Input
-                  {...field}
-                  id="exchangeRate"
-                  type="number"
-                  step="0.0001"
-                  value={field.value ?? ''}
-                  onChange={e => field.onChange(Number(e.target.value))}
-                  aria-invalid={fieldState.invalid}
-                  placeholder="1.0000"
                   disabled={isPending}
                 />
                 {fieldState.invalid && (

@@ -153,18 +153,7 @@ export function InvoiceEditForm({
           </Field>
         </div>
         <FieldSeparator />
-        <div className="grid grid-cols-3 gap-4">
-          <Field>
-            <FieldLabel>Exchange Rate</FieldLabel>
-            <Input
-              value={
-                invoice.exchangeRate != null
-                  ? invoice.exchangeRate.toFixed(4)
-                  : '—'
-              }
-              disabled
-            />
-          </Field>
+        <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel>Number</FieldLabel>
             <Input value={invoice.number ?? '—'} disabled />

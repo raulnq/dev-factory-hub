@@ -40,7 +40,6 @@ export const issueRoute = new Hono().post(
       .set({
         status: 'Issued',
         issuedAt: data.issuedAt,
-        exchangeRate: data.exchangeRate,
         number: data.number,
       })
       .where(eq(invoices.invoiceId, invoiceId));

@@ -134,6 +134,13 @@
       "when": 1772646852471,
       "tag": "0018_aspiring_bushwacker",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1773269981586,
+      "tag": "0019_redundant_madripoor",
+      "breakpoints": true
     }
   ]
 }

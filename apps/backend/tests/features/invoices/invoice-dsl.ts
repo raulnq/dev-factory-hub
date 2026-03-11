@@ -43,7 +43,6 @@ export const defaultIssueData = (
   overrides?: Partial<IssueInvoice>
 ): IssueInvoice => ({
   issuedAt: todayDate(),
-  exchangeRate: 3.75,
   number: `INV-${faker.string.numeric(6)}`,
   ...overrides,
 });
@@ -320,10 +319,6 @@ export const assertInvoice = (item: Invoice) => ({
   },
   hasCanceledAt() {
     assert.ok(item.canceledAt, 'Expected canceledAt to be set');
-    return this;
-  },
-  hasExchangeRate(expected: number) {
-    assert.strictEqual(Number(item.exchangeRate), expected);
     return this;
   },
   isTheSameOf(expected: Invoice) {
