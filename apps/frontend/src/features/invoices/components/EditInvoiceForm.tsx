@@ -16,8 +16,7 @@ import {
 import { FormCard } from '@/components/FormCard';
 import { DateReadOnlyField } from '@/components/DateReadOnlyField';
 import { CurrencySelect } from '@/components/CurrencySelect';
-import { IssueInvoiceButton } from './IssueInvoiceButton';
-import { CancelInvoiceButton } from './CancelInvoiceButton';
+import { InvoiceToolbar } from './InvoiceToolbar';
 import { StatusBadge } from '@/components/StatusBadge';
 import { getStatusVariant } from '../utils/status-variants';
 import { type IssueInvoice } from '#/features/invoices/schemas';
@@ -71,16 +70,13 @@ export function EditInvoiceForm({
         />
       }
       renderAction={
-        <>
-          <IssueInvoiceButton
-            disabled={isPending || !isStatusPending}
-            onIssue={onInvoiceIssue}
-          />
-          <CancelInvoiceButton
-            disabled={isPending || invoice.status === 'Canceled'}
-            onCancel={onInvoiceCancel}
-          />
-        </>
+        <InvoiceToolbar
+          status={invoice.status}
+          isPending={isPending}
+          onIssue={onInvoiceIssue}
+          onCancel={onInvoiceCancel}
+          total={Number(total)}
+        />
       }
     >
       <FieldGroup>

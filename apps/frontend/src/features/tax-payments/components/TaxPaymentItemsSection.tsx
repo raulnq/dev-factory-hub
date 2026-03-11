@@ -136,7 +136,7 @@ function ItemsSkeleton() {
         <TableRow>
           <TableHead>Type</TableHead>
           <TableHead>Amount</TableHead>
-          <TableHead className="w-[100px]">Actions</TableHead>
+          <TableHead className="w-25">Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -179,7 +179,7 @@ function ItemsTable({ taxPaymentId, onDelete, canDelete }: ItemsTableProps) {
           <TableRow>
             <TableHead>Type</TableHead>
             <TableHead className="text-right">Amount</TableHead>
-            <TableHead className="w-[100px]">Actions</TableHead>
+            <TableHead className="w-25">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

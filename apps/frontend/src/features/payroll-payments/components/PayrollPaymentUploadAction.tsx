@@ -1,20 +1,20 @@
 import { UncontrolledFileUploadDialog } from '@/components/UncontrolledFileUploadDialog';
 
-type CollectionUploadActionProps = {
+type PayrollPaymentUploadActionProps = {
   disabled: boolean;
   isPending: boolean;
-  onUpload: (file: File) => void;
+  onUpload: (file: File) => Promise<void> | void;
 };
 
-export function CollectionUploadAction({
+export function PayrollPaymentUploadAction({
   disabled,
   isPending,
   onUpload,
-}: CollectionUploadActionProps) {
+}: PayrollPaymentUploadActionProps) {
   return (
     <UncontrolledFileUploadDialog
       title="Upload File"
-      description="Upload a PDF or image file for this collection."
+      description="Upload a PDF or image file for this payroll payment."
       label="Upload"
       disabled={disabled}
       isPending={isPending}

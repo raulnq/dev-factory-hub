@@ -17,6 +17,7 @@ import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 import { getStatusVariant } from '../utils/status-variants';
+import { ActionTableCell } from '@/components/ActionTableCell';
 
 function InnerTableHeader() {
   return (
@@ -82,11 +83,11 @@ export function PayrollPaymentTable() {
               <BadgeTableCell variant={getStatusVariant(item.status)}>
                 {item.status}
               </BadgeTableCell>
-              <TableCell>
+              <ActionTableCell>
                 <EditCellButton
                   link={`/payroll-payments/${item.payrollPaymentId}/edit`}
                 />
-              </TableCell>
+              </ActionTableCell>
             </TableRow>
           ))}
         </TableBody>

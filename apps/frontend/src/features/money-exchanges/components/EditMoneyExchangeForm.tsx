@@ -26,9 +26,9 @@ type EditMoneyExchangeFormProps = {
   onSubmit: SubmitHandler<EditMoneyExchange>;
   onCancel: () => void;
   moneyExchange: MoneyExchange;
-  onMoneyExchangeIssue: (data: IssueMoneyExchange) => void;
-  onMoneyExchangeCancel: () => void;
-  onMoneyExchangeUpload: (file: File) => void;
+  onMoneyExchangeIssue: (data: IssueMoneyExchange) => Promise<void> | void;
+  onMoneyExchangeCancel: () => Promise<void> | void;
+  onMoneyExchangeUpload: (file: File) => Promise<void> | void;
   onMoneyExchangeDownload: () => void;
 };
 

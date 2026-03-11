@@ -36,9 +36,9 @@ type EditTransactionFormProps = {
   onSubmit: SubmitHandler<EditTransaction>;
   onCancel: () => void;
   transaction: Transaction;
-  onTransactionIssue: (data: IssueTransaction) => void;
-  onTransactionCancel: () => void;
-  onTransactionUpload: (file: File) => void;
+  onTransactionIssue: (data: IssueTransaction) => Promise<void> | void;
+  onTransactionCancel: () => Promise<void> | void;
+  onTransactionUpload: (file: File) => Promise<void> | void;
   onTransactionDownload: () => void;
 };
 

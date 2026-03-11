@@ -17,6 +17,7 @@ import { DateTableCell } from '@/components/DateTableCell';
 import { BadgeTableCell } from '@/components/BadgeTableCell';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
+import { ActionTableCell } from '@/components/ActionTableCell';
 
 const currentYear = new Date().getFullYear();
 
@@ -83,11 +84,11 @@ export function TaxPaymentTable() {
               <BadgeTableCell variant={getStatusVariant(item.status)}>
                 {item.status}
               </BadgeTableCell>
-              <TableCell>
+              <ActionTableCell>
                 <EditCellButton
                   link={`/tax-payments/${item.taxPaymentId}/edit`}
                 />
-              </TableCell>
+              </ActionTableCell>
             </TableRow>
           ))}
         </TableBody>

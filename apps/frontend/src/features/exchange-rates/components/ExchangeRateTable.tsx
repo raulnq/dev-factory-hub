@@ -13,6 +13,8 @@ import { Pagination } from '@/components/Pagination';
 import { NoMatchingItems } from '@/components/NoMatchingItems';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
+import { ActionTableCell } from '@/components/ActionTableCell';
+import { NumberTableCell } from '@/components/NumberTableCell';
 
 function InnerTableHeader() {
   return (
@@ -66,12 +68,16 @@ export function ExchangeRateTable() {
               <TextTableCell className="font-medium" value={item.date} />
               <TextTableCell value={item.fromCurrency} />
               <TextTableCell value={item.toCurrency} />
-              <TableCell>{item.rate.toFixed(4)}</TableCell>
-              <TableCell>
+              <NumberTableCell
+                value={item.rate}
+                minimumFractionDigits={4}
+                maximumFractionDigits={4}
+              />
+              <ActionTableCell>
                 <EditCellButton
                   link={`/exchange-rates/${item.exchangeRateId}/edit`}
                 />
-              </TableCell>
+              </ActionTableCell>
             </TableRow>
           ))}
         </TableBody>

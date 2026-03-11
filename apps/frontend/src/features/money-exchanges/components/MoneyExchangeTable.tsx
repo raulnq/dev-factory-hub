@@ -17,6 +17,7 @@ import { DateTableCell } from '@/components/DateTableCell';
 import { EditCellButton } from '@/components/EditCellButton';
 import { TextTableCell } from '@/components/TextTableCell';
 import { getStatusVariant } from '../utils/status-variants';
+import { ActionTableCell } from '@/components/ActionTableCell';
 
 function InnerTableHeader() {
   return (
@@ -96,11 +97,11 @@ export function MoneyExchangeTable() {
               <BadgeTableCell variant={getStatusVariant(item.status)}>
                 {item.status}
               </BadgeTableCell>
-              <TableCell>
+              <ActionTableCell>
                 <EditCellButton
                   link={`/money-exchanges/${item.moneyExchangeId}/edit`}
                 />
-              </TableCell>
+              </ActionTableCell>
             </TableRow>
           ))}
         </TableBody>

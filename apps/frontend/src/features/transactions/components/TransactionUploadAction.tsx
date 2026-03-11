@@ -1,20 +1,20 @@
 import { UncontrolledFileUploadDialog } from '@/components/UncontrolledFileUploadDialog';
 
-type CollectionUploadActionProps = {
+type TransactionUploadActionProps = {
   disabled: boolean;
   isPending: boolean;
-  onUpload: (file: File) => void;
+  onUpload: (file: File) => Promise<void> | void;
 };
 
-export function CollectionUploadAction({
+export function TransactionUploadAction({
   disabled,
   isPending,
   onUpload,
-}: CollectionUploadActionProps) {
+}: TransactionUploadActionProps) {
   return (
     <UncontrolledFileUploadDialog
       title="Upload File"
-      description="Upload a PDF or image file for this collection."
+      description="Upload a PDF or image file for this transaction."
       label="Upload"
       disabled={disabled}
       isPending={isPending}

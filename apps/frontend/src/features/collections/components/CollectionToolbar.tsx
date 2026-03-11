@@ -53,7 +53,6 @@ export function CollectionToolbar({
         type="button"
         onClick={onDownload}
         disabled={isPending || !canDownload}
-        variant="outline"
         size="sm"
       >
         <Download className="h-4 w-4 mr-2" />

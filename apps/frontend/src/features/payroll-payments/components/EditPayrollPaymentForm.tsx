@@ -32,10 +32,12 @@ type EditPayrollPaymentFormProps = {
   onSubmit: SubmitHandler<EditPayrollPayment>;
   onCancel: () => void;
   payrollPayment: PayrollPayment;
-  onPayrollPaymentPay: (data: PayPayrollPayment) => void;
-  onPayrollPaymentPayPension: (data: PayPensionPayrollPayment) => void;
-  onPayrollPaymentCancel: () => void;
-  onPayrollPaymentUpload: (file: File) => void;
+  onPayrollPaymentPay: (data: PayPayrollPayment) => Promise<void> | void;
+  onPayrollPaymentPayPension: (
+    data: PayPensionPayrollPayment
+  ) => Promise<void> | void;
+  onPayrollPaymentCancel: () => Promise<void> | void;
+  onPayrollPaymentUpload: (file: File) => Promise<void> | void;
   onPayrollPaymentDownload: () => void;
 };
 
