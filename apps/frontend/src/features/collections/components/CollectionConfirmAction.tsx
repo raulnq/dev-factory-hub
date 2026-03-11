@@ -25,7 +25,6 @@ export function CollectionConfirmAction({
     <UncontrolledFormDialog
       schema={confirmCollectionSchema}
       defaultValues={{ confirmedAt: today }}
-      formId="confirm-collection-form"
       onSubmit={onConfirm}
       isPending={isPending}
       disabled={disabled}

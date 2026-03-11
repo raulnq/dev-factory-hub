@@ -19,12 +19,12 @@ import {
 import type { ZodType } from 'zod';
 import type { ReactNode } from 'react';
 import type { Resolver } from 'react-hook-form';
+import { useId } from 'react';
 
 type ControlledFormDialogProps<TData extends FieldValues> = {
   schema: ZodType<TData, TData>;
   defaultValues: DefaultValues<TData>;
   open: boolean;
-  formId?: string;
   isPending: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: (data: TData) => Promise<void> | void;
@@ -45,7 +45,6 @@ export function ControlledFormDialog<TData extends FieldValues>({
   saveLabel,
   description,
   children,
-  formId = 'form-dialog',
 }: ControlledFormDialogProps<TData>) {
   const form = useForm<TData>({
     resolver: zodResolver(schema) as Resolver<TData>,
@@ -63,7 +62,7 @@ export function ControlledFormDialog<TData extends FieldValues>({
     await onSubmit(data);
     handleOpenChange(false);
   };
-
+  const formId = useId();
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>

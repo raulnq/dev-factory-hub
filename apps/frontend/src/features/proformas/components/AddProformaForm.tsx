@@ -37,7 +37,6 @@ export function AddProformaForm({
 
   return (
     <FormCard
-      formId="proforma-form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       isPending={isPending}

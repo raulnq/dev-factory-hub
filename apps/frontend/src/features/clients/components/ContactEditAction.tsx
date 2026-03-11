@@ -40,7 +40,6 @@ export function ContactEditAction({
       label="Edit Contact"
       saveLabel="Save Contact"
       description="Update the contact details."
-      formId="edit-contact-form"
     >
       {form => (
         <FieldGroup>

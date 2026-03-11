@@ -25,7 +25,6 @@ export function ContactAddAction({ onAdd, isPending }: ContactAddActionProps) {
       label="Add Contact"
       saveLabel="Save Contact"
       description="Add a new contact to this client."
-      formId="add-contact-form"
       icon={<Plus className="h-4 w-4 mr-1" />}
     >
       {form => (

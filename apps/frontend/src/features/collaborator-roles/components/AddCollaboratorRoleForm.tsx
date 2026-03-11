@@ -37,7 +37,6 @@ export function AddCollaboratorRoleForm({
 
   return (
     <FormCard
-      formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Role"

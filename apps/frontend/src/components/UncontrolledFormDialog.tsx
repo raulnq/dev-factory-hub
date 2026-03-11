@@ -21,11 +21,11 @@ import {
 import type { ZodType } from 'zod';
 import type { ReactNode } from 'react';
 import type { Resolver } from 'react-hook-form';
+import { useId } from 'react';
 
 type UncontrolledFormDialogProps<TData extends FieldValues> = {
   schema: ZodType<TData, TData>;
   defaultValues: DefaultValues<TData>;
-  formId?: string;
   onSubmit: (data: TData) => Promise<void> | void;
   isPending: boolean;
   label: string;
@@ -45,7 +45,6 @@ export function UncontrolledFormDialog<TData extends FieldValues>({
   description,
   children,
   saveLabel,
-  formId = 'form-dialog',
   icon,
   disabled,
 }: UncontrolledFormDialogProps<TData>) {
@@ -67,7 +66,7 @@ export function UncontrolledFormDialog<TData extends FieldValues>({
     }
     setDialogOpen(open);
   };
-
+  const formId = useId();
   return (
     <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>

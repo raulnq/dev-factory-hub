@@ -25,7 +25,6 @@ export function ProformaIssueAction({
     <UncontrolledFormDialog
       schema={issueProformaSchema}
       defaultValues={{ issuedAt: today }}
-      formId="issue-proforma-form"
       onSubmit={onIssue}
       isPending={isPending}
       disabled={disabled}

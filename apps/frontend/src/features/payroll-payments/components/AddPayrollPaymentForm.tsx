@@ -46,7 +46,6 @@ export function AddPayrollPaymentForm({
 
   return (
     <FormCard
-      formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Payroll Payment"

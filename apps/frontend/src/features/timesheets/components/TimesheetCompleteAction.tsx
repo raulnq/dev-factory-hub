@@ -25,7 +25,6 @@ export function TimesheetCompleteAction({
     <UncontrolledFormDialog
       schema={completeTimesheetSchema}
       defaultValues={{ completedAt: today }}
-      formId="complete-timesheet-form"
       onSubmit={onComplete}
       isPending={isPending}
       disabled={disabled}

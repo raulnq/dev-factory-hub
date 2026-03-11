@@ -9,12 +9,12 @@ import {
 import { Field } from './ui/field';
 import { Button } from './ui/button';
 import { Skeleton } from './ui/skeleton';
+import { useId } from 'react';
 
 type FormCardProps = {
   onSubmit?: React.FormEventHandler<HTMLFormElement>;
   readOnly?: boolean;
   children: React.ReactNode;
-  formId?: string;
   isPending?: boolean;
   saveText?: string;
   cancelText?: string;
@@ -35,10 +35,10 @@ export function FormCard({
   renderTitleSuffix,
   renderAction,
   isPending = false,
-  formId = 'form',
   cancelText = 'Cancel',
   saveText = 'Save',
 }: FormCardProps) {
+  const formId = useId();
   return (
     <Card>
       <CardHeader className="border-b">

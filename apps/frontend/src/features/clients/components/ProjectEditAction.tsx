@@ -38,7 +38,6 @@ export function ProjectEditAction({
       label="Edit Project"
       saveLabel="Save Project"
       description="Update the project details."
-      formId="edit-project-form"
     >
       {form => (
         <FieldGroup>

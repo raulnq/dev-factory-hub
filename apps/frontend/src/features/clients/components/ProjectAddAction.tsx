@@ -25,7 +25,6 @@ export function ProjectAddAction({ onAdd, isPending }: ProjectAddActionProps) {
       label="Add Project"
       saveLabel="Save Project"
       description="Add a new project to this client."
-      formId="add-project-form"
       icon={<Plus className="h-4 w-4 mr-1" />}
     >
       {form => (

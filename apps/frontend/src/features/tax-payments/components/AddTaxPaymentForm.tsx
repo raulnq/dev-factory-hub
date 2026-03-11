@@ -48,7 +48,6 @@ export function AddTaxPaymentForm({
 
   return (
     <FormCard
-      formId="tax-payment-form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       isPending={isPending}

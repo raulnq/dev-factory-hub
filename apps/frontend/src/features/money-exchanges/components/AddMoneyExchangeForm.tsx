@@ -40,7 +40,6 @@ export function AddMoneyExchangeForm({
 
   return (
     <FormCard
-      formId="form"
       onSubmit={form.handleSubmit(onSubmit)}
       onCancel={onCancel}
       saveText="Save Money Exchange"

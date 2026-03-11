@@ -25,7 +25,6 @@ export function CollaboratorPaymentPayAction({
     <UncontrolledFormDialog
       schema={payCollaboratorPaymentSchema}
       defaultValues={{ paidAt: today }}
-      formId="pay-collaborator-payments-form"
       onSubmit={onPay}
       isPending={isPending}
       disabled={disabled}

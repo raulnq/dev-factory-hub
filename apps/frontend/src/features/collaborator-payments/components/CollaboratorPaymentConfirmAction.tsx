@@ -25,7 +25,6 @@ export function CollaboratorPaymentConfirmAction({
     <UncontrolledFormDialog
       schema={confirmCollaboratorPaymentSchema}
       defaultValues={{ confirmedAt: today, number: '' }}
-      formId="confirm-collaborator-payment-form"
       onSubmit={onConfirm}
       isPending={isPending}
       disabled={disabled}
