@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { useCollaboratorRoleSuspense } from '../stores/useCollaboratorRoles';
-import { ViewCollaboratorRoleCard } from '../components/ViewCollaboratorRoleCard';
+import { CollaboratorRoleViewCard } from '../components/CollaboratorRoleViewCard';
 import { CollaboratorRoleSkeleton } from '../components/CollaboratorRoleSkeleton';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
@@ -48,6 +48,6 @@ function InnerCollaboratorRole({
 }: InnerCollaboratorRoleProps) {
   const { data } = useCollaboratorRoleSuspense(collaboratorRoleId);
   return (
-    <ViewCollaboratorRoleCard collaboratorRole={data} onCancel={onCancel} />
+    <CollaboratorRoleViewCard collaboratorRole={data} onCancel={onCancel} />
   );
 }

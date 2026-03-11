@@ -4,15 +4,15 @@ import type { Collaborator } from '#/features/collaborators/schemas';
 import { FormCard } from '@/components/FormCard';
 import { EditButton } from '@/components/EditButton';
 
-type ViewCollaboratorCardProps = {
+type CollaboratorViewCardProps = {
   collaborator: Collaborator;
   onCancel: () => void;
 };
 
-export function ViewCollaboratorCard({
+export function CollaboratorViewCard({
   collaborator,
   onCancel,
-}: ViewCollaboratorCardProps) {
+}: CollaboratorViewCardProps) {
   return (
     <FormCard
       onCancel={onCancel}

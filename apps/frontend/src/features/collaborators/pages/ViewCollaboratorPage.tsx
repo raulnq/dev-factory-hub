@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { useCollaboratorSuspense } from '../stores/useCollaborators';
-import { ViewCollaboratorCard } from '../components/ViewCollaboratorCard';
+import { CollaboratorViewCard } from '../components/CollaboratorViewCard';
 import { CollaboratorSkeleton } from '../components/CollaboratorSkeleton';
 import { ErrorFallback } from '@/components/ErrorFallback';
 
@@ -47,5 +47,5 @@ function InnerCollaborator({
   onCancel,
 }: InnerCollaboratorProps) {
   const { data } = useCollaboratorSuspense(collaboratorId);
-  return <ViewCollaboratorCard collaborator={data} onCancel={onCancel} />;
+  return <CollaboratorViewCard collaborator={data} onCancel={onCancel} />;
 }
