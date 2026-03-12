@@ -8,6 +8,8 @@ interface ThemeStore {
   setTheme: (theme: Theme) => void;
 }
 
+const APP_NAME = import.meta.env.VITE_APP_NAME || 'app';
+
 export const useThemeStore = create<ThemeStore>()(
   persist(
     set => ({
@@ -18,7 +20,7 @@ export const useThemeStore = create<ThemeStore>()(
       },
     }),
     {
-      name: 'app-theme',
+      name: APP_NAME,
     }
   )
 );

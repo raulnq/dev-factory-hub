@@ -8,6 +8,7 @@ const ENVSchema = z.object({
     .default('development'),
   PORT: z.coerce.number().default(5000),
   DATABASE_URL: z.string(),
+  DATABASE_SCHEMA: z.string(),
   SEQ_URL: z.string().optional(),
   LOG_LEVEL: z
     .enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal'])

@@ -29,6 +29,8 @@
     "storage:up": "docker-compose up storage -d",
     "storage:down": "docker-compose down storage",
     "storage:stop": "docker-compose stop storage",
+    "env:up": "npm run database:up && npm run storage:up",
+    "env:stop": "npm run database:stop && npm run storage:stop",
     "seq:up": "docker-compose up seq -d"
   },
   "devDependencies": {

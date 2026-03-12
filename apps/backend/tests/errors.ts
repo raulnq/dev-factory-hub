@@ -62,15 +62,35 @@ export const validationError = {
     message: 'Too small: expected number to be >0',
     code: 'too_small',
   }),
+  requiredNumber: (path: string): ValidationError => ({
+    path,
+    message: 'Invalid input: expected number, received undefined',
+    code: 'invalid_type',
+  }),
+  invalidEmail: (path: string): ValidationError => ({
+    path,
+    message: 'Invalid email address',
+    code: 'invalid_format',
+  }),
   nonNegative: (path: string): ValidationError => ({
     path,
     message: 'Too small: expected number to be >=0',
     code: 'too_small',
   }),
-  requiredNumber: (path: string): ValidationError => ({
+  invalidEnum: (path: string, options: string[]): ValidationError => ({
     path,
-    message: 'Invalid input: expected number, received undefined',
-    code: 'invalid_type',
+    message: `Invalid option: expected one of ${options.map(o => `"${o}"`).join('|')}`,
+    code: 'invalid_value',
+  }),
+  tooSmallNumber: (path: string, min: number): ValidationError => ({
+    path,
+    message: `Too small: expected number to be >=${min}`,
+    code: 'too_small',
+  }),
+  tooBigNumber: (path: string, max: number): ValidationError => ({
+    path,
+    message: `Too big: expected number to be <=${max}`,
+    code: 'too_big',
   }),
 };
 

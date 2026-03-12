@@ -17,7 +17,7 @@ RUN chown -R nodejs:nodejs /app
 USER nodejs
 
 FROM base AS api
-EXPOSE 3000
+EXPOSE 5000
 CMD ["node", "/app/dist/index.js"]
 
 FROM base AS migrator

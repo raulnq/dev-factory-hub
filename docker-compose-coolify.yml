@@ -8,6 +8,7 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=${DATABASE_URL:?}
+      - DATABASE_SCHEMA=dev-factory-hub
   api:
     build:
       context: .
@@ -31,6 +32,7 @@ services:
       - S3_TRANSACTIONS_BUCKET_NAME=${S3_TRANSACTIONS_BUCKET_NAME:?}
       - S3_MONEY_EXCHANGES_BUCKET_NAME=${S3_MONEY_EXCHANGES_BUCKET_NAME:?}
       - S3_PAYROLL_PAYMENTS_BUCKET_NAME=${S3_PAYROLL_PAYMENTS_BUCKET_NAME:?}
+      - DATABASE_SCHEMA=dev-factory-hub
     healthcheck:
       test:
         [
