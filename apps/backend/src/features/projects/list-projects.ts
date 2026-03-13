@@ -5,7 +5,7 @@ import { clients } from '../clients/client.js';
 import { createPage } from '#/pagination.js';
 import { zValidator } from '#/validator.js';
 import { client } from '#/database/client.js';
-import { eq, count, and, ilike } from 'drizzle-orm';
+import { eq, count, and, ilike, SQL } from 'drizzle-orm';
 import { listProjectsQuerySchema } from './schemas.js';
 
 export const listProjectsRoute = new Hono().get(
@@ -15,7 +15,7 @@ export const listProjectsRoute = new Hono().get(
     const { pageNumber, pageSize, name, clientId } = c.req.valid('query');
     const offset = (pageNumber - 1) * pageSize;
 
-    const filters = [];
+    const filters: SQL<unknown>[] = [];
     if (name) {
       filters.push(ilike(projects.name, `%${name}%`));
     }

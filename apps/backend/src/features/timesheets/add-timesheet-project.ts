@@ -49,7 +49,12 @@ export const addProjectRoute = new Hono().post(
       // Generate worklogs
       const start = new Date(timesheet.startDate);
       const end = new Date(timesheet.endDate);
-      const logs = [];
+      const logs: {
+        timesheetId: string;
+        projectId: string;
+        date: string;
+        hours: number;
+      }[] = [];
 
       for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
         logs.push({

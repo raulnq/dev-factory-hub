@@ -5,6 +5,7 @@
     "skipLibCheck": true,
     "verbatimModuleSyntax": true,
     "strict": true,
+    "noImplicitAny": false,
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
