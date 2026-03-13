@@ -20,6 +20,9 @@ import { EditProformaPage } from './features/proformas/pages/EditProformaPage';
 import { ListCollaboratorPaymentPage } from './features/collaborator-payments/pages/ListCollaboratorPaymentPage';
 import { AddCollaboratorPaymentPage } from './features/collaborator-payments/pages/AddCollaboratorPaymentPage';
 import { EditCollaboratorPaymentPage } from './features/collaborator-payments/pages/EditCollaboratorPaymentPage';
+import { ListCollaboratorChargePage } from './features/collaborator-charges/pages/ListCollaboratorChargePage';
+import { AddCollaboratorChargePage } from './features/collaborator-charges/pages/AddCollaboratorChargePage';
+import { EditCollaboratorChargePage } from './features/collaborator-charges/pages/EditCollaboratorChargePage';
 import { ListCollectionPage } from './features/collections/pages/ListCollectionPage';
 import { AddCollectionPage } from './features/collections/pages/AddCollectionPage';
 import { EditCollectionPage } from './features/collections/pages/EditCollectionPage';
@@ -107,6 +110,17 @@ export const router = createBrowserRouter([
           {
             path: ':collaboratorPaymentId/edit',
             element: <EditCollaboratorPaymentPage />,
+          },
+        ],
+      },
+      {
+        path: 'collaborator-charges',
+        children: [
+          { index: true, element: <ListCollaboratorChargePage /> },
+          { path: 'new', element: <AddCollaboratorChargePage /> },
+          {
+            path: ':collaboratorChargeId/edit',
+            element: <EditCollaboratorChargePage />,
           },
         ],
       },

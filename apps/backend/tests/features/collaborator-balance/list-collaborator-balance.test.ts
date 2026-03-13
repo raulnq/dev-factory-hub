@@ -17,6 +17,12 @@ import {
   addExchangeRate,
   usdToEur,
 } from '../exchange-rates/exchange-rate-dsl.js';
+import {
+  addCollaboratorCharge,
+  payCollaboratorCharge,
+  chargeInput,
+  payInput as payChargeInput,
+} from '../collaborator-charges/collaborator-charge-dsl.js';
 
 describe('GET /collaborator-balance', () => {
   describe('without exchangeCurrencyTo', () => {
@@ -45,6 +51,64 @@ describe('GET /collaborator-balance', () => {
       assert.strictEqual(data.finalConvertedBalance, undefined);
       assert.strictEqual(data.entries[0].convertedAmount, undefined);
       assert.strictEqual(data.entries[0].convertedBalance, undefined);
+    });
+
+    test('includes issued collaborator charges', async () => {
+      const collaborator = await addCollaborator(alice());
+      const charge = await addCollaboratorCharge(
+        chargeInput(collaborator.collaboratorId, {
+          currency: 'USD',
+          amount: 150,
+          description: 'Bonus charge',
+        })
+      );
+      await payCollaboratorCharge(
+        charge.collaboratorChargeId,
+        payChargeInput({ issuedAt: '2002-04-20' })
+      );
+
+      const data = await getCollaboratorBalance({
+        currency: 'USD',
+        collaboratorId: collaborator.collaboratorId,
+        startDate: '2002-01-01',
+        endDate: '2002-12-31',
+      });
+
+      const entry = data.entries.find(e => e.issuedAt === '2002-04-20');
+      assert.ok(entry, 'Expected entry for 2002-04-20');
+      assert.strictEqual(entry.type, 'Income');
+      assert.strictEqual(entry.amount, 150);
+      assert.strictEqual(entry.description, 'Bonus charge');
+      assertBalance(data).hasFinalBalance(150);
+    });
+
+    test('includes negative issued collaborator charges as outcomes', async () => {
+      const collaborator = await addCollaborator(alice());
+      const charge = await addCollaboratorCharge(
+        chargeInput(collaborator.collaboratorId, {
+          currency: 'USD',
+          amount: -75,
+          description: 'Penalty charge',
+        })
+      );
+      await payCollaboratorCharge(
+        charge.collaboratorChargeId,
+        payChargeInput({ issuedAt: '2002-05-10' })
+      );
+
+      const data = await getCollaboratorBalance({
+        currency: 'USD',
+        collaboratorId: collaborator.collaboratorId,
+        startDate: '2002-01-01',
+        endDate: '2002-12-31',
+      });
+
+      const entry = data.entries.find(e => e.issuedAt === '2002-05-10');
+      assert.ok(entry, 'Expected entry for 2002-05-10');
+      assert.strictEqual(entry.type, 'Outcome');
+      assert.strictEqual(entry.amount, -75);
+      assert.strictEqual(entry.description, 'Penalty charge');
+      assertBalance(data).hasFinalBalance(-75);
     });
   });
 

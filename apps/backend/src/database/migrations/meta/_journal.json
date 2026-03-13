@@ -141,6 +141,13 @@
       "when": 1773269981586,
       "tag": "0019_redundant_madripoor",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1773411707845,
+      "tag": "0020_condemned_smasher",
+      "breakpoints": true
     }
   ]
 }

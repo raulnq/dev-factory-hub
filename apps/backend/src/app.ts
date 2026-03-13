@@ -6,6 +6,7 @@ import { collaboratorRoleRoute } from './features/collaborator-roles/routes.js';
 import { timesheetRoute } from './features/timesheets/routes.js';
 import { proformaRoute } from './features/proformas/routes.js';
 import { collaboratorPaymentRoute } from './features/collaborator-payments/routes.js';
+import { collaboratorChargeRoute } from './features/collaborator-charges/routes.js';
 import { collectionRoute } from './features/collections/routes.js';
 import { invoiceRoute } from './features/invoices/routes.js';
 import { transactionRoute } from './features/transactions/routes.js';
@@ -50,6 +51,7 @@ export const app = new Hono({ strict: false })
   .route('/api', timesheetRoute)
   .route('/api', proformaRoute)
   .route('/api', collaboratorPaymentRoute)
+  .route('/api', collaboratorChargeRoute)
   .route('/api', collectionRoute)
   .route('/api', invoiceRoute)
   .route('/api', transactionRoute)

@@ -20,6 +20,7 @@ import { collaborators } from '#/features/collaborators/collaborator.js';
 import { collaboratorRoles } from '#/features/collaborator-roles/collaborator-role.js';
 import { collaboratorPayments } from '#/features/collaborator-payments/collaborator-payment.js';
 import { payrollPayments } from '#/features/payroll-payments/payroll-payment.js';
+import { collaboratorCharges } from '#/features/collaborator-charges/collaborator-charge.js';
 import { exchangeRates } from '#/features/exchange-rates/exchange-rate.js';
 
 type RawEntry = {
@@ -212,6 +213,42 @@ export const listRoute = new Hono().get(
         name: collaboratorName,
         description: `Payroll pension payment for ${collaboratorName}`,
         amount: -Math.abs(pp.pensionAmount),
+      });
+    }
+
+    // 5. CollaboratorCharges (Issued)
+    const ccFilters: SQL[] = [
+      eq(collaboratorCharges.status, 'Issued'),
+      eq(collaboratorCharges.collaboratorId, collaboratorId),
+      eq(collaboratorCharges.currency, currency),
+      isNotNull(collaboratorCharges.issuedAt),
+    ];
+    if (startDate) ccFilters.push(gte(collaboratorCharges.issuedAt, startDate));
+    if (endDate) ccFilters.push(lte(collaboratorCharges.issuedAt, endDate));
+
+    const ccRows = await client
+      .select({
+        collaboratorName: collaborators.name,
+        amount: collaboratorCharges.amount,
+        description: collaboratorCharges.description,
+        issuedAt: collaboratorCharges.issuedAt,
+      })
+      .from(collaboratorCharges)
+      .leftJoin(
+        collaborators,
+        eq(collaboratorCharges.collaboratorId, collaborators.collaboratorId)
+      )
+      .where(and(...ccFilters));
+
+    for (const cc of ccRows) {
+      if (!cc.issuedAt) continue;
+      const collaboratorName = cc.collaboratorName ?? 'Unknown';
+      entries.push({
+        issuedAt: cc.issuedAt,
+        type: cc.amount < 0 ? 'Outcome' : 'Income',
+        name: collaboratorName,
+        description: cc.description,
+        amount: cc.amount,
       });
     }
 

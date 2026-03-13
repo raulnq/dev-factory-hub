@@ -37,6 +37,11 @@ export const NAV_ITEMS: NavItem[] = [
     to: '/collaborator-payments',
     icon: Wallet,
   },
+  {
+    title: 'Collaborator Charges',
+    to: '/collaborator-charges',
+    icon: Receipt,
+  },
   { title: 'Collections', to: '/collections', icon: CircleDollarSign },
   { title: 'Invoices', to: '/invoices', icon: Receipt },
   { title: 'Transactions', to: '/transactions', icon: ArrowLeftRight },

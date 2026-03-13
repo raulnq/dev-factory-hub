@@ -48,7 +48,7 @@ export function TimesheetGrid({
   const dates = useMemo(() => {
     const start = new Date(startDate);
     const end = new Date(endDate);
-    const result = [];
+    const result: string[] = [];
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
       result.push(d.toISOString().split('T')[0]);
     }

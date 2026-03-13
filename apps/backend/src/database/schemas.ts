@@ -10,6 +10,7 @@ export {
 } from '#/features/timesheets/timesheet.js';
 export { proformas, proformaItems } from '#/features/proformas/proforma.js';
 export { collaboratorPayments } from '#/features/collaborator-payments/collaborator-payment.js';
+export { collaboratorCharges } from '#/features/collaborator-charges/collaborator-charge.js';
 export { collections } from '#/features/collections/collection.js';
 export { invoices } from '#/features/invoices/invoice.js';
 export { transactions } from '#/features/transactions/transaction.js';
