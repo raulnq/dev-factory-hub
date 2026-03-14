@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { DashboardPage } from './features/dashboard/pages/DashboardPage';
 import { ListClientPage } from './features/clients/pages/ListClientPage';
 import { AddClientPage } from './features/clients/pages/AddClientPage';
 import { EditClientPage } from './features/clients/pages/EditClientPage';
@@ -53,7 +54,7 @@ export const router = createBrowserRouter([
     path: '/',
     element: <AppLayout />,
     children: [
-      { index: true, element: <div>Hello World!!</div> },
+      { index: true, element: <DashboardPage /> },
       {
         path: 'clients',
         children: [

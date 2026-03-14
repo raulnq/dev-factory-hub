@@ -43,3 +43,34 @@ export const collaboratorBalanceSchema = z.object({
 });
 
 export type CollaboratorBalance = z.infer<typeof collaboratorBalanceSchema>;
+
+import { paginationSchema } from '#/pagination.js';
+
+export const collaboratorBalanceSummaryQuerySchema = paginationSchema
+  .partial()
+  .extend({
+    currency: z.string().min(1).max(3).optional(),
+    date: z.string().optional(),
+    collaboratorId: z.union([z.uuidv7(), z.array(z.uuidv7())]).optional(),
+  });
+
+export type CollaboratorBalanceSummaryQuery = z.infer<
+  typeof collaboratorBalanceSummaryQuerySchema
+>;
+
+export const collaboratorBalanceSummarySchema = z.array(
+  z.object({
+    collaboratorId: z.string().uuid(),
+    collaboratorName: z.string(),
+    balances: z.array(
+      z.object({
+        currency: z.string(),
+        balance: z.number(),
+      })
+    ),
+  })
+);
+
+export type CollaboratorBalanceSummary = z.infer<
+  typeof collaboratorBalanceSummarySchema
+>;

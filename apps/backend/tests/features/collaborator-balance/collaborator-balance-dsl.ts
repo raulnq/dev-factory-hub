@@ -4,12 +4,58 @@ import type { ProblemDocument } from 'http-problem-details';
 import { StatusCodes } from 'http-status-codes';
 import assert from 'node:assert';
 import { assertStrictEqualProblemDocument } from '../../assertions.js';
+import type { Page } from '#/pagination.js';
 import type {
   CollaboratorBalance,
+  CollaboratorBalanceSummary,
+  CollaboratorBalanceSummaryQuery,
   ListCollaboratorBalance,
 } from '#/features/collaborator-balance/schemas.js';
 
 // --- Action functions ---
+
+export async function getCollaboratorBalanceSummary(
+  params: CollaboratorBalanceSummaryQuery
+): Promise<Page<CollaboratorBalanceSummary[number]>>;
+export async function getCollaboratorBalanceSummary(
+  params: CollaboratorBalanceSummaryQuery,
+  expectedProblemDocument: ProblemDocument
+): Promise<ProblemDocument>;
+
+export async function getCollaboratorBalanceSummary(
+  params: CollaboratorBalanceSummaryQuery,
+  expectedProblemDocument?: ProblemDocument
+): Promise<Page<CollaboratorBalanceSummary[number]> | ProblemDocument> {
+  const hono = testClient(app);
+  const response = await hono.api['collaborator-balance'].summary.$get({
+    query: {
+      currency: params.currency,
+      collaboratorId: params.collaboratorId,
+      date: params.date,
+      pageNumber: params.pageNumber ?? 1,
+      pageSize: params.pageSize ?? 10,
+    },
+  });
+
+  if (response.status === StatusCodes.OK) {
+    assert.ok(
+      !expectedProblemDocument,
+      'Expected a problem document but received OK status'
+    );
+    const data = await response.json();
+    assert.ok(data);
+    return data;
+  } else {
+    const problemDocument = await response.json();
+    assert.ok(problemDocument);
+    assert.ok(
+      expectedProblemDocument,
+      `Expected OK status but received ${response.status}`
+    );
+    assertStrictEqualProblemDocument(problemDocument, expectedProblemDocument);
+    return problemDocument;
+  }
+}
 
 export async function getCollaboratorBalance(
   params: ListCollaboratorBalance
