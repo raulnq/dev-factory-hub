@@ -25,3 +25,22 @@ export const bankBalanceSchema = z.object({
 });
 
 export type BankBalance = z.infer<typeof bankBalanceSchema>;
+
+import { paginationSchema } from '#/pagination.js';
+
+export const bankBalanceSummaryQuerySchema = paginationSchema.partial().extend({
+  date: z.string().optional(),
+});
+
+export type BankBalanceSummaryQuery = z.infer<
+  typeof bankBalanceSummaryQuerySchema
+>;
+
+export const bankBalanceSummarySchema = z.array(
+  z.object({
+    currency: z.string(),
+    balance: z.number(),
+  })
+);
+
+export type BankBalanceSummary = z.infer<typeof bankBalanceSummarySchema>;

@@ -1,7 +1,21 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { getBankBalance } from './bankBalanceClient';
+import { getBankBalance, getBankBalanceSummary } from './bankBalanceClient';
 import { useAuth } from '@clerk/clerk-react';
-import type { ListBankBalance } from '#/features/bank-balance/schemas';
+import type {
+  BankBalanceSummaryQuery,
+  ListBankBalance,
+} from '#/features/bank-balance/schemas';
+
+export function useBankBalanceSummarySuspense(params: BankBalanceSummaryQuery) {
+  const { getToken } = useAuth();
+  return useSuspenseQuery({
+    queryKey: ['bank-balance-summary', params],
+    queryFn: async () => {
+      const token = await getToken();
+      return getBankBalanceSummary(params, token);
+    },
+  });
+}
 
 export function useBankBalanceSuspense(params: ListBankBalance) {
   const { getToken } = useAuth();
