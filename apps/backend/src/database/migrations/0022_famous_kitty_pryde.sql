@@ -1,0 +1,5 @@
+CREATE INDEX "collaborator_charges_balance_idx" ON "dev-factory-hub"."collaborator_charges" USING btree ("collaboratorId","status","currency","issuedAt");--> statement-breakpoint
+CREATE INDEX "collaborator_payments_balance_idx" ON "dev-factory-hub"."collaborator_payments" USING btree ("collaboratorId","status","currency","paidAt");--> statement-breakpoint
+CREATE INDEX "payroll_payments_balance_idx" ON "dev-factory-hub"."payroll_payments" USING btree ("collaboratorId","status","currency","paidAt");--> statement-breakpoint
+CREATE INDEX "payroll_payments_pension_balance_idx" ON "dev-factory-hub"."payroll_payments" USING btree ("collaboratorId","status","currency","pensionPaidAt");--> statement-breakpoint
+CREATE INDEX "timesheets_balance_idx" ON "dev-factory-hub"."timesheets" USING btree ("collaboratorId","status","currency","completedAt");

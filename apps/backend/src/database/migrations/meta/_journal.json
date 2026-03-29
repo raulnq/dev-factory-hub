@@ -155,6 +155,13 @@
       "when": 1774748850726,
       "tag": "0021_clever_lockheed",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1774794139874,
+      "tag": "0022_famous_kitty_pryde",
+      "breakpoints": true
     }
   ]
 }

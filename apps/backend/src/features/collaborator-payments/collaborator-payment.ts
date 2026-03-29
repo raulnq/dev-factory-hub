@@ -5,48 +5,60 @@ import {
   numeric,
   date,
   timestamp,
+  index,
 } from 'drizzle-orm/pg-core';
 import { collaborators } from '#/features/collaborators/collaborator.js';
 
 const dbSchema = pgSchema('dev-factory-hub');
 
-export const collaboratorPayments = dbSchema.table('collaborator_payments', {
-  collaboratorPaymentId: uuid('collaboratorPaymentId').primaryKey(),
-  collaboratorId: uuid('collaboratorId')
-    .notNull()
-    .references(() => collaborators.collaboratorId),
-  currency: varchar('currency', { length: 3 }).notNull(),
-  grossSalary: numeric('grossSalary', {
-    precision: 10,
-    scale: 2,
-    mode: 'number',
-  }).notNull(),
-  withholding: numeric('withholding', {
-    precision: 10,
-    scale: 2,
-    mode: 'number',
-  }).notNull(),
-  netSalary: numeric('netSalary', {
-    precision: 10,
-    scale: 2,
-    mode: 'number',
-  }).notNull(),
-  taxes: numeric('taxes', {
-    precision: 10,
-    scale: 2,
-    mode: 'number',
+export const collaboratorPayments = dbSchema.table(
+  'collaborator_payments',
+  {
+    collaboratorPaymentId: uuid('collaboratorPaymentId').primaryKey(),
+    collaboratorId: uuid('collaboratorId')
+      .notNull()
+      .references(() => collaborators.collaboratorId),
+    currency: varchar('currency', { length: 3 }).notNull(),
+    grossSalary: numeric('grossSalary', {
+      precision: 10,
+      scale: 2,
+      mode: 'number',
+    }).notNull(),
+    withholding: numeric('withholding', {
+      precision: 10,
+      scale: 2,
+      mode: 'number',
+    }).notNull(),
+    netSalary: numeric('netSalary', {
+      precision: 10,
+      scale: 2,
+      mode: 'number',
+    }).notNull(),
+    taxes: numeric('taxes', {
+      precision: 10,
+      scale: 2,
+      mode: 'number',
+    })
+      .notNull()
+      .default(0),
+    status: varchar('status', { length: 25 }).notNull().default('Pending'),
+    paidAt: date('paidAt', { mode: 'string' }),
+    confirmedAt: date('confirmedAt', { mode: 'string' }),
+    canceledAt: timestamp('canceledAt', { mode: 'date', withTimezone: true }),
+    createdAt: timestamp('createdAt', {
+      mode: 'date',
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
+    number: varchar('number', { length: 20 }),
+  },
+  t => ({
+    balanceIdx: index('collaborator_payments_balance_idx').on(
+      t.collaboratorId,
+      t.status,
+      t.currency,
+      t.paidAt
+    ),
   })
-    .notNull()
-    .default(0),
-  status: varchar('status', { length: 25 }).notNull().default('Pending'),
-  paidAt: date('paidAt', { mode: 'string' }),
-  confirmedAt: date('confirmedAt', { mode: 'string' }),
-  canceledAt: timestamp('canceledAt', { mode: 'date', withTimezone: true }),
-  createdAt: timestamp('createdAt', {
-    mode: 'date',
-    withTimezone: true,
-  })
-    .notNull()
-    .defaultNow(),
-  number: varchar('number', { length: 20 }),
-});
+);
