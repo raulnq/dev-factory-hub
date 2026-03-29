@@ -4,6 +4,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import prettierConfig from 'eslint-config-prettier';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 import globals from 'globals';
 
 export default defineConfig(
@@ -33,7 +34,11 @@ export default defineConfig(
   },
   {
     files: ['apps/frontend/src/**/*.{ts,tsx}'],
-    extends: [reactHooks.configs.flat.recommended, reactRefresh.configs.vite],
+    extends: [
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+      pluginQuery.configs['flat/recommended'],
+    ],
     languageOptions: {
       globals: globals.browser,
       parserOptions: {
