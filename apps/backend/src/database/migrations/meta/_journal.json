@@ -169,6 +169,20 @@
       "when": 1774795798892,
       "tag": "0023_collaborator_balance_entries_view",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1774800785852,
+      "tag": "0024_keen_iron_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1774800799916,
+      "tag": "0025_bank_balance_entries_view",
+      "breakpoints": true
     }
   ]
 }

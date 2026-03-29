@@ -10,7 +10,7 @@ export type ListBankBalance = z.infer<typeof listBankBalanceSchema>;
 
 export const bankBalanceEntrySchema = z.object({
   issuedAt: z.string(),
-  type: z.enum(['Income', 'Outcome']),
+  type: z.string(),
   description: z.string(),
   total: z.number(),
   taxes: z.number(),
