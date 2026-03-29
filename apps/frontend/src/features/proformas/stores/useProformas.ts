@@ -13,10 +13,12 @@ import {
   listProformaItems,
   addProformaItem,
   deleteProformaItem,
+  getProformaDownloadUrl,
 } from './proformasClient';
 import { useAuth } from '@clerk/clerk-react';
 import type {
   AddProforma,
+  DownloadUrlResponse,
   EditProforma,
   IssueProforma,
   ListProforma,
@@ -165,6 +167,16 @@ export function useDeleteProformaItem(proformaId: string) {
       });
       queryClient.invalidateQueries({ queryKey: ['proforma', proformaId] });
       queryClient.invalidateQueries({ queryKey: ['proformas'] });
+    },
+  });
+}
+
+export function useProformaDownloadUrl(proformaId: string) {
+  const { getToken } = useAuth();
+  return useMutation({
+    mutationFn: async (): Promise<DownloadUrlResponse> => {
+      const token = await getToken();
+      return getProformaDownloadUrl(proformaId, token);
     },
   });
 }

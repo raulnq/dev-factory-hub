@@ -27,6 +27,7 @@ type ProformaEditFormProps = {
   proforma: Proforma;
   onProformaCancel: () => void;
   onProformaIssue: (data: IssueProforma) => void;
+  onProformaDownload: () => void;
 };
 
 export function ProformaEditForm({
@@ -36,6 +37,7 @@ export function ProformaEditForm({
   isPending,
   onProformaCancel,
   onProformaIssue,
+  onProformaDownload,
 }: ProformaEditFormProps) {
   const isEditable = proforma.status === 'Pending';
   const form = useForm<EditProforma>({
@@ -67,9 +69,11 @@ export function ProformaEditForm({
         <ProformaToolbar
           onCancel={onProformaCancel}
           onIssue={onProformaIssue}
+          onDownload={onProformaDownload}
           total={proforma.total}
           isPending={isPending}
           status={proforma.status}
+          filePath={proforma.filePath}
         />
       }
     >

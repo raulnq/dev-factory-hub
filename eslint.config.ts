@@ -39,6 +39,9 @@ export default defineConfig(
       reactRefresh.configs.vite,
       pluginQuery.configs['flat/recommended'],
     ],
+    rules: {
+      '@tanstack/query/exhaustive-deps': 'warn',
+    },
     languageOptions: {
       globals: globals.browser,
       parserOptions: {

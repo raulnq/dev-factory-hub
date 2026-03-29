@@ -11,6 +11,7 @@ import {
   useEditProforma,
   useIssueProforma,
   useCancelProforma,
+  useProformaDownloadUrl,
 } from '../stores/useProformas';
 import { toast } from 'sonner';
 import type { EditProforma, IssueProforma } from '#/features/proformas/schemas';
@@ -56,6 +57,7 @@ function EditProformaInner({
   const edit = useEditProforma(proformaId);
   const issue = useIssueProforma(proformaId);
   const cancel = useCancelProforma(proformaId);
+  const downloadUrl = useProformaDownloadUrl(proformaId);
 
   const handleSubmit = async (data: EditProforma) => {
     try {
@@ -84,7 +86,22 @@ function EditProformaInner({
     }
   };
 
-  const isPending = edit.isPending || issue.isPending || cancel.isPending;
+  const handleDownload = async () => {
+    try {
+      const result = await downloadUrl.mutateAsync();
+      window.open(result.url, '_blank');
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : 'Failed to download PDF'
+      );
+    }
+  };
+
+  const isPending =
+    edit.isPending ||
+    issue.isPending ||
+    cancel.isPending ||
+    downloadUrl.isPending;
 
   return (
     <div className="space-y-6">
@@ -95,6 +112,7 @@ function EditProformaInner({
         isPending={isPending}
         onProformaCancel={handleCancel}
         onProformaIssue={handleIssue}
+        onProformaDownload={handleDownload}
       />
 
       <ProformaItemsSection proformaId={proformaId} status={proforma.status} />

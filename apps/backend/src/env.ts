@@ -35,6 +35,12 @@ const ENVSchema = z.object({
     .string()
     .optional()
     .default('payroll-payments'),
+  S3_PROFORMA_BUCKET_NAME: z.string().optional().default('proformas'),
+  COMPANY_NAME: z.string().optional().default('COMPANY'),
+  COMPANY_ADDRESS: z.string().optional().default('ADDRESS'),
+  COMPANY_STATE: z.string().optional().default('STATE'),
+  COMPANY_COUNTRY: z.string().optional().default('COUNTRY'),
+  COMPANY_LOGO_PATH: z.string().optional(),
 });
 
 expand(config());

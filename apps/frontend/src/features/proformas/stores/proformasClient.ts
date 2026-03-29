@@ -2,6 +2,7 @@ import { client } from '@/client';
 import type { Page } from '#/pagination';
 import type {
   AddProforma,
+  DownloadUrlResponse,
   EditProforma,
   IssueProforma,
   Proforma,
@@ -187,4 +188,21 @@ export async function deleteProformaItem(
     const error = await response.json();
     throw new Error(error.detail || 'Failed to delete proforma item');
   }
+}
+
+export async function getProformaDownloadUrl(
+  proformaId: string,
+  token?: string | null
+): Promise<DownloadUrlResponse> {
+  const response = await client.api.proformas[':proformaId'][
+    'download-url'
+  ].$get(
+    { param: { proformaId } },
+    { headers: token ? { Authorization: `Bearer ${token}` } : {} }
+  );
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.detail || 'Failed to get download URL');
+  }
+  return response.json() as Promise<DownloadUrlResponse>;
 }

@@ -148,6 +148,13 @@
       "when": 1773411707845,
       "tag": "0020_condemned_smasher",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1774748850726,
+      "tag": "0021_clever_lockheed",
+      "breakpoints": true
     }
   ]
 }

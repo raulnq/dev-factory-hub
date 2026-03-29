@@ -20,6 +20,8 @@ export const proformaSchema = z.object({
   cancelledAt: z.date().nullable(),
   createdAt: z.date(),
   notes: z.string().nullable(),
+  filePath: z.string().nullable(),
+  contentType: z.string().nullable(),
 });
 
 export const addProformaSchema = z.object({
@@ -67,3 +69,10 @@ export type AddProformaItem = z.infer<typeof addProformaItemSchema>;
 export type IssueProforma = z.infer<typeof issueProformaSchema>;
 export type ListProforma = z.infer<typeof listProformaSchema>;
 export type ListProformaItems = z.infer<typeof listProformaItemsSchema>;
+
+export const downloadUrlResponseSchema = z.object({
+  url: z.string(),
+  expiresIn: z.number(),
+});
+
+export type DownloadUrlResponse = z.infer<typeof downloadUrlResponseSchema>;

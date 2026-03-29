@@ -8,6 +8,7 @@ import { cancelRoute } from './cancel-proforma.js';
 import { addItemRoute } from './add-item.js';
 import { deleteItemRoute } from './delete-item.js';
 import { listItemsRoute } from './list-items.js';
+import { getDownloadUrlRoute } from './get-download-url.js';
 
 export const proformaRoute = new Hono()
   .basePath('/proformas')
@@ -19,4 +20,5 @@ export const proformaRoute = new Hono()
   .route('/', cancelRoute)
   .route('/', addItemRoute)
   .route('/', deleteItemRoute)
-  .route('/', listItemsRoute);
+  .route('/', listItemsRoute)
+  .route('/', getDownloadUrlRoute);

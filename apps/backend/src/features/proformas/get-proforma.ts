@@ -46,6 +46,8 @@ export function getProformaWithRelations() {
       issuedAt: proformas.issuedAt,
       cancelledAt: proformas.cancelledAt,
       notes: proformas.notes,
+      filePath: proformas.filePath,
+      contentType: proformas.contentType,
     })
     .from(proformas)
     .innerJoin(projects, eq(proformas.projectId, projects.projectId));

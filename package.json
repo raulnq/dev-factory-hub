@@ -14,6 +14,7 @@
     "build:backend": "npm run build -w @node-monorepo/backend",
     "build:frontend": "npm run build -w @node-monorepo/frontend",
     "build": "npm run build:backend && npm run build:frontend",
+    "test:backend": "npm run test -w @node-monorepo/backend",
     "start:backend": "npm run start -w @node-monorepo/backend",
     "preview:frontend": "npm run preview -w @node-monorepo/frontend",
     "format": "prettier --write .",
@@ -31,6 +32,7 @@
     "storage:stop": "docker-compose stop storage",
     "env:up": "npm run database:up && npm run storage:up",
     "env:stop": "npm run database:stop && npm run storage:stop",
+    "env:down": "npm run database:down && npm run storage:down",
     "seq:up": "docker-compose up seq -d"
   },
   "devDependencies": {
@@ -38,6 +40,7 @@
     "@commitlint/config-conventional": "^20.3.1",
     "@commitlint/prompt-cli": "^20.3.1",
     "@eslint/js": "^9.18.0",
+    "@tanstack/eslint-plugin-query": "^5.95.2",
     "concurrently": "^9.1.2",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",

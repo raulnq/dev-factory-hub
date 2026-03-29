@@ -55,6 +55,8 @@ export const proformas = dbSchema.table('proformas', {
     .notNull()
     .defaultNow(),
   notes: text('notes'),
+  filePath: varchar('filePath', { length: 500 }),
+  contentType: varchar('contentType', { length: 100 }),
 });
 
 export const proformaItems = dbSchema.table('proforma_items', {
