@@ -26,7 +26,8 @@
       "Bash(npm ci*)",
       "Bash(docker compose:*)",
       "Bash(ls c:/Source/dev-factory-hub/apps/frontend/src/features/*/pages/View*)",
-      "Read(//c/Source/node-hono-react-monorepo/**)"
+      "Read(//c/Source/node-hono-react-monorepo/**)",
+      "Bash(docker ps:*)"
     ],
     "additionalDirectories": [
       "C:\\Source\\node-hono-react-monorepo\\apps\\frontend\\src\\components",

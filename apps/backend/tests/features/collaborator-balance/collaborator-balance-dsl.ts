@@ -32,8 +32,8 @@ export async function getCollaboratorBalanceSummary(
       currency: params.currency,
       collaboratorId: params.collaboratorId,
       date: params.date,
-      pageNumber: params.pageNumber ?? 1,
-      pageSize: params.pageSize ?? 10,
+      pageNumber: params.pageNumber?.toString(),
+      pageSize: params.pageSize?.toString(),
     },
   });
 

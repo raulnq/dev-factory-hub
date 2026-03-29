@@ -162,6 +162,13 @@
       "when": 1774794139874,
       "tag": "0022_famous_kitty_pryde",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1774795798892,
+      "tag": "0023_collaborator_balance_entries_view",
+      "breakpoints": true
     }
   ]
 }

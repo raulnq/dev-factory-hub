@@ -8,6 +8,7 @@
     "build": "tsc -p tsconfig.app.json && tsc-alias -p tsconfig.app.json",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "database:generate": "tsx ../../node_modules/drizzle-kit/bin.cjs generate",
+    "database:custom": "tsx ../../node_modules/drizzle-kit/bin.cjs generate --custom",
     "database:migrate": "tsx ../../node_modules/drizzle-kit/bin.cjs migrate",
     "database:studio": "tsx ../../node_modules/drizzle-kit/bin.cjs studio",
     "test": "cross-env NODE_ENV=test tsx --import ./tests/setup.ts --test ./tests/**/*.test.ts"

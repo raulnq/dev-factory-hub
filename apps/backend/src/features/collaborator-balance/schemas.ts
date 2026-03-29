@@ -23,7 +23,7 @@ export type ListCollaboratorBalance = z.infer<
 
 export const collaboratorBalanceEntrySchema = z.object({
   issuedAt: z.string(),
-  type: z.enum(['Income', 'Outcome']),
+  type: z.string(),
   name: z.string(),
   description: z.string(),
   amount: z.number(),

@@ -26,15 +26,18 @@ export const getCollaboratorChargeWithRelations = () =>
       eq(collaboratorCharges.collaboratorId, collaborators.collaboratorId)
     );
 
-export const getRoute = new Hono().get('/:id', async c => {
-  const id = c.req.param('id');
+export const getRoute = new Hono().get('/:collaboratorChargeId', async c => {
+  const collaboratorChargeId = c.req.param('collaboratorChargeId');
 
   const [item] = await getCollaboratorChargeWithRelations()
-    .where(eq(collaboratorCharges.collaboratorChargeId, id))
+    .where(eq(collaboratorCharges.collaboratorChargeId, collaboratorChargeId))
     .limit(1);
 
   if (!item) {
-    return notFoundError(c, `Collaborator Charge ${id} not found`);
+    return notFoundError(
+      c,
+      `Collaborator Charge ${collaboratorChargeId} not found`
+    );
   }
 
   return c.json(item, StatusCodes.OK);
