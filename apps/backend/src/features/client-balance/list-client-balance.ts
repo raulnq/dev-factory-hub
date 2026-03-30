@@ -2,20 +2,9 @@ import { Hono } from 'hono';
 import { StatusCodes } from 'http-status-codes';
 import { zValidator } from '#/validator.js';
 import { client } from '#/database/client.js';
-import { and, eq, gte, isNotNull, lte, SQL } from 'drizzle-orm';
+import { and, asc, eq, gte, lte, SQL } from 'drizzle-orm';
 import { listClientBalanceSchema } from './schemas.js';
-import { proformas } from '#/features/proformas/proforma.js';
-import { collections } from '#/features/collections/collection.js';
-import { clients } from '#/features/clients/client.js';
-import { projects } from '#/features/clients/project.js';
-
-type RawEntry = {
-  issuedAt: string;
-  type: 'Income' | 'Outcome';
-  name: string;
-  description: string;
-  amount: number;
-};
+import { clientBalanceEntries } from './client-balance-view.js';
 
 export const listRoute = new Hono().get(
   '/',
@@ -23,88 +12,37 @@ export const listRoute = new Hono().get(
   async c => {
     const { currency, clientId, startDate, endDate } = c.req.valid('query');
 
-    const entries: RawEntry[] = [];
-
-    // 1. Proformas (Issued, total > 0) → Income
-    const pfFilters: SQL[] = [
-      eq(proformas.status, 'Issued'),
-      eq(proformas.currency, currency),
-      eq(projects.clientId, clientId),
-      isNotNull(proformas.issuedAt),
+    const filters: SQL[] = [
+      eq(clientBalanceEntries.clientId, clientId),
+      eq(clientBalanceEntries.currency, currency),
     ];
 
-    if (startDate) {
-      pfFilters.push(gte(proformas.issuedAt, startDate));
-    }
-    if (endDate) {
-      pfFilters.push(lte(proformas.issuedAt, endDate));
-    }
+    if (startDate) filters.push(gte(clientBalanceEntries.issuedAt, startDate));
+    if (endDate) filters.push(lte(clientBalanceEntries.issuedAt, endDate));
 
-    const pfRows = await client
+    const rows = await client
       .select({
-        clientName: clients.name,
-        startDate: proformas.startDate,
-        endDate: proformas.endDate,
-        total: proformas.total,
-        issuedAt: proformas.issuedAt,
+        issuedAt: clientBalanceEntries.issuedAt,
+        type: clientBalanceEntries.entryType,
+        name: clientBalanceEntries.clientName,
+        description: clientBalanceEntries.description,
+        amount: clientBalanceEntries.amount,
       })
-      .from(proformas)
-      .innerJoin(projects, eq(proformas.projectId, projects.projectId))
-      .innerJoin(clients, eq(projects.clientId, clients.clientId))
-      .where(and(...pfFilters));
-
-    for (const pf of pfRows) {
-      if (!pf.issuedAt || pf.total <= 0) continue;
-      const clientName = pf.clientName ?? 'Unknown';
-      entries.push({
-        issuedAt: pf.issuedAt,
-        type: 'Income',
-        name: clientName,
-        description: `Proforma for ${clientName} from ${pf.startDate} to ${pf.endDate}`,
-        amount: pf.total,
-      });
-    }
-
-    // 2. Collections (Confirmed, total > 0) → Outcome
-    const colFilters: SQL[] = [
-      eq(collections.status, 'Confirmed'),
-      eq(collections.currency, currency),
-      eq(collections.clientId, clientId),
-      isNotNull(collections.confirmedAt),
-    ];
-
-    if (startDate) colFilters.push(gte(collections.confirmedAt, startDate));
-    if (endDate) colFilters.push(lte(collections.confirmedAt, endDate));
-
-    const colRows = await client
-      .select({
-        clientName: clients.name,
-        total: collections.total,
-        confirmedAt: collections.confirmedAt,
-      })
-      .from(collections)
-      .innerJoin(clients, eq(collections.clientId, clients.clientId))
-      .where(and(...colFilters));
-
-    for (const col of colRows) {
-      if (!col.confirmedAt || col.total <= 0) continue;
-      const clientName = col.clientName ?? 'Unknown';
-      entries.push({
-        issuedAt: col.confirmedAt,
-        type: 'Outcome',
-        name: clientName,
-        description: `Collection for ${clientName}`,
-        amount: -Math.abs(col.total),
-      });
-    }
-
-    // Sort by issuedAt ascending, compute running balance
-    entries.sort((a, b) => a.issuedAt.localeCompare(b.issuedAt));
+      .from(clientBalanceEntries)
+      .where(and(...filters))
+      .orderBy(asc(clientBalanceEntries.issuedAt));
 
     let runningBalance = 0;
-    const result = entries.map(entry => {
+    const result = rows.map(entry => {
       runningBalance = Math.round((runningBalance + entry.amount) * 100) / 100;
-      return { ...entry, balance: runningBalance };
+      return {
+        issuedAt: entry.issuedAt,
+        type: entry.type,
+        name: entry.name ?? 'Unknown',
+        description: entry.description,
+        amount: entry.amount,
+        balance: runningBalance,
+      };
     });
 
     return c.json(

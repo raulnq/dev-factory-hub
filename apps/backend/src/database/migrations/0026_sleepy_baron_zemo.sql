@@ -1,0 +1,2 @@
+CREATE INDEX "collections_client_balance_idx" ON "dev-factory-hub"."collections" USING btree ("clientId","status","currency","confirmedAt");--> statement-breakpoint
+CREATE INDEX "proformas_balance_idx" ON "dev-factory-hub"."proformas" USING btree ("projectId","status","currency","issuedAt");

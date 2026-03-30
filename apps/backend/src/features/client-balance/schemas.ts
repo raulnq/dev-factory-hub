@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { paginationSchema } from '#/pagination.js';
 
 export const listClientBalanceSchema = z.object({
   currency: z.string().min(1).max(3),
@@ -26,3 +27,30 @@ export const clientBalanceSchema = z.object({
 });
 
 export type ClientBalance = z.infer<typeof clientBalanceSchema>;
+
+export const clientBalanceSummaryQuerySchema = paginationSchema
+  .partial()
+  .extend({
+    currency: z.string().min(1).max(3).optional(),
+    date: z.string().optional(),
+    clientId: z.union([z.uuidv7(), z.array(z.uuidv7())]).optional(),
+  });
+
+export type ClientBalanceSummaryQuery = z.infer<
+  typeof clientBalanceSummaryQuerySchema
+>;
+
+export const clientBalanceSummarySchema = z.array(
+  z.object({
+    clientId: z.string().uuid(),
+    clientName: z.string(),
+    balances: z.array(
+      z.object({
+        currency: z.string(),
+        balance: z.number(),
+      })
+    ),
+  })
+);
+
+export type ClientBalanceSummary = z.infer<typeof clientBalanceSummarySchema>;

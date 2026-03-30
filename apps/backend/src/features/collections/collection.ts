@@ -49,5 +49,11 @@ export const collections = dbSchema.table(
       t.currency,
       t.confirmedAt
     ),
+    clientBalanceIdx: index('collections_client_balance_idx').on(
+      t.clientId,
+      t.status,
+      t.currency,
+      t.confirmedAt
+    ),
   })
 );

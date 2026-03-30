@@ -3,6 +3,10 @@ import {
   CollaboratorBalanceSummarySkeleton,
 } from '@/features/collaborator-balance/components/CollaboratorBalanceSummaryTable';
 import {
+  ClientBalanceSummaryTable,
+  ClientBalanceSummarySkeleton,
+} from '@/features/client-balance/components/ClientBalanceSummaryTable';
+import {
   BankBalanceSummaryTable,
   BankBalanceSummarySkeleton,
 } from '@/features/bank-balance/components/BankBalanceSummaryTable';
@@ -21,6 +25,17 @@ export function DashboardPage() {
         <CardContent>
           <Suspense fallback={<CollaboratorBalanceSummarySkeleton />}>
             <CollaboratorBalanceSummaryTable />
+          </Suspense>
+        </CardContent>
+      </Card>
+      <Card>
+        <ListCardHeader
+          title="Client Balances"
+          description="View income and outcome entries for a client by currency"
+        />
+        <CardContent>
+          <Suspense fallback={<ClientBalanceSummarySkeleton />}>
+            <ClientBalanceSummaryTable />
           </Suspense>
         </CardContent>
       </Card>
