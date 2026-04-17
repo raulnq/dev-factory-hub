@@ -10,10 +10,13 @@ import {
   editInvoice,
   issueInvoice,
   cancelInvoice,
+  uploadInvoiceFile,
+  getInvoiceDownloadUrl,
 } from './invoicesClient';
 import { useAuth } from '@clerk/clerk-react';
 import type {
   AddInvoice,
+  DownloadUrlResponse,
   EditInvoice,
   IssueInvoice,
   ListInvoices,
@@ -105,6 +108,31 @@ export function useCancelInvoice(invoiceId: string) {
     onSuccess: data => {
       queryClient.invalidateQueries({ queryKey: ['invoices'] });
       queryClient.setQueryData(['invoice', invoiceId], data);
+    },
+  });
+}
+
+export function useUploadInvoice(invoiceId: string) {
+  const queryClient = useQueryClient();
+  const { getToken } = useAuth();
+  return useMutation({
+    mutationFn: async (file: File) => {
+      const token = await getToken();
+      return uploadInvoiceFile(invoiceId, file, token);
+    },
+    onSuccess: data => {
+      queryClient.invalidateQueries({ queryKey: ['invoices'] });
+      queryClient.setQueryData(['invoice', invoiceId], data);
+    },
+  });
+}
+
+export function useInvoiceDownloadUrl(invoiceId: string) {
+  const { getToken } = useAuth();
+  return useMutation({
+    mutationFn: async (): Promise<DownloadUrlResponse> => {
+      const token = await getToken();
+      return getInvoiceDownloadUrl(invoiceId, token);
     },
   });
 }

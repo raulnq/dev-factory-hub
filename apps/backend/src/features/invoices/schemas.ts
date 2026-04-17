@@ -14,9 +14,18 @@ export const invoiceSchema = z.object({
   createdAt: z.date(),
   canceledAt: z.date().nullable(),
   number: z.string().max(20).nullable(),
+  filePath: z.string().max(500).nullable(),
+  contentType: z.string().max(100).nullable(),
 });
 
 export type Invoice = z.infer<typeof invoiceSchema>;
+
+export const downloadUrlResponseSchema = z.object({
+  url: z.string(),
+  expiresIn: z.number(),
+});
+
+export type DownloadUrlResponse = z.infer<typeof downloadUrlResponseSchema>;
 
 export const addInvoiceSchema = z.object({
   clientId: z.uuidv7(),

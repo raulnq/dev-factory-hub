@@ -1,6 +1,6 @@
 {
-  "id": "9e82a548-235b-442f-8e67-da469acffd32",
-  "prevId": "29431f3a-46f3-4b0a-9434-59f2726aad59",
+  "id": "918a2920-0778-469e-a310-9d2cb69c52b8",
+  "prevId": "9e82a548-235b-442f-8e67-da469acffd32",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -711,6 +711,18 @@
         "number": {
           "name": "number",
           "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "filePath": {
+          "name": "filePath",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contentType": {
+          "name": "contentType",
+          "type": "varchar(100)",
           "primaryKey": false,
           "notNull": false
         }

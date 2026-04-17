@@ -28,6 +28,8 @@ type InvoiceEditFormProps = {
   invoice: Invoice;
   onInvoiceCancel: () => void;
   onInvoiceIssue: (data: IssueInvoice) => void;
+  onInvoiceUpload: (file: File) => Promise<void> | void;
+  onInvoiceDownload: () => void;
 };
 
 export function InvoiceEditForm({
@@ -37,6 +39,8 @@ export function InvoiceEditForm({
   invoice,
   onInvoiceCancel,
   onInvoiceIssue,
+  onInvoiceUpload,
+  onInvoiceDownload,
 }: InvoiceEditFormProps) {
   const isStatusPending = invoice.status === 'Pending';
 
@@ -72,9 +76,12 @@ export function InvoiceEditForm({
       renderAction={
         <InvoiceToolbar
           status={invoice.status}
+          filePath={invoice.filePath ?? null}
           isPending={isPending}
           onIssue={onInvoiceIssue}
           onCancel={onInvoiceCancel}
+          onUpload={onInvoiceUpload}
+          onDownload={onInvoiceDownload}
           total={Number(total)}
         />
       }

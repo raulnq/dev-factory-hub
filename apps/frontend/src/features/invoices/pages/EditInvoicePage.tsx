@@ -9,6 +9,8 @@ import {
   useEditInvoice,
   useIssueInvoice,
   useCancelInvoice,
+  useUploadInvoice,
+  useInvoiceDownloadUrl,
 } from '../stores/useInvoices';
 import { InvoiceEditForm } from '../components/InvoiceEditForm';
 import { InvoiceSkeleton } from '../components/InvoiceSkeleton';
@@ -57,6 +59,8 @@ function EditInvoiceInner({
   const edit = useEditInvoice(invoiceId);
   const issue = useIssueInvoice(invoiceId);
   const cancel = useCancelInvoice(invoiceId);
+  const upload = useUploadInvoice(invoiceId);
+  const downloadUrl = useInvoiceDownloadUrl(invoiceId);
 
   const handleSubmit: SubmitHandler<EditInvoice> = async data => {
     try {
@@ -91,7 +95,34 @@ function EditInvoiceInner({
     }
   };
 
-  const isPending = edit.isPending || issue.isPending || cancel.isPending;
+  const handleUpload = async (file: File) => {
+    try {
+      await upload.mutateAsync(file);
+      toast.success('File uploaded successfully');
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : 'Failed to upload file'
+      );
+    }
+  };
+
+  const handleDownload = async () => {
+    try {
+      const result = await downloadUrl.mutateAsync();
+      window.open(result.url, '_blank');
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : 'Failed to get download URL'
+      );
+    }
+  };
+
+  const isPending =
+    edit.isPending ||
+    issue.isPending ||
+    cancel.isPending ||
+    upload.isPending ||
+    downloadUrl.isPending;
 
   return (
     <InvoiceEditForm
@@ -101,6 +132,8 @@ function EditInvoiceInner({
       onCancel={onCancel}
       onInvoiceCancel={handleCancel}
       onInvoiceIssue={handleIssue}
+      onInvoiceUpload={handleUpload}
+      onInvoiceDownload={handleDownload}
     />
   );
 }

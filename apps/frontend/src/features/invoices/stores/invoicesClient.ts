@@ -2,11 +2,15 @@ import { client } from '@/client';
 import type { Page } from '#/pagination';
 import type {
   AddInvoice,
+  DownloadUrlResponse,
   EditInvoice,
   Invoice,
   IssueInvoice,
   ListInvoices,
 } from '#/features/invoices/schemas';
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapInvoice(item: any): Invoice {
@@ -125,4 +129,46 @@ export async function cancelInvoice(
   }
   const item = await response.json();
   return mapInvoice(item);
+}
+
+export async function uploadInvoiceFile(
+  invoiceId: string,
+  file: File,
+  token?: string | null
+): Promise<Invoice> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const response = await fetch(
+    `${API_BASE_URL}/api/invoices/${invoiceId}/upload`,
+    {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: formData,
+    }
+  );
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(
+      (error as { detail?: string }).detail || 'Failed to upload file'
+    );
+  }
+  const result = await response.json();
+  return mapInvoice(result);
+}
+
+export async function getInvoiceDownloadUrl(
+  invoiceId: string,
+  token?: string | null
+): Promise<DownloadUrlResponse> {
+  const response = await client.api.invoices[':invoiceId']['download-url'].$get(
+    { param: { invoiceId } },
+    { headers: token ? { Authorization: `Bearer ${token}` } : {} }
+  );
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(
+      (error as { detail?: string }).detail || 'Failed to get download URL'
+    );
+  }
+  return response.json();
 }

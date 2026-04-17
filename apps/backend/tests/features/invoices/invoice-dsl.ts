@@ -8,6 +8,7 @@ import { assertStrictEqualProblemDocument } from '../../assertions.js';
 import type { Page } from '#/pagination.js';
 import type {
   AddInvoice,
+  DownloadUrlResponse,
   EditInvoice,
   Invoice,
   IssueInvoice,
@@ -282,6 +283,111 @@ export async function cancelInvoice(
   }
 }
 
+// --- Mock file helpers ---
+
+export const createMockFile = (overrides?: {
+  name?: string;
+  type?: string;
+  size?: number;
+}): File => {
+  const name = overrides?.name ?? 'invoice.pdf';
+  const type = overrides?.type ?? 'application/pdf';
+  const size = overrides?.size ?? 1024;
+  const blob = new Blob(['x'.repeat(size)], { type });
+  return new File([blob], name, { type });
+};
+
+export const pdfFile = (): File =>
+  createMockFile({ name: 'invoice.pdf', type: 'application/pdf' });
+
+export const oversizedFile = (): File =>
+  createMockFile({
+    name: 'huge.pdf',
+    type: 'application/pdf',
+    size: 51 * 1024 * 1024,
+  });
+
+export const invalidTypeFile = (): File =>
+  createMockFile({ name: 'script.exe', type: 'application/x-msdownload' });
+
+// --- Upload / download action functions ---
+
+export async function uploadInvoice(
+  invoiceId: string,
+  file: File
+): Promise<Invoice>;
+export async function uploadInvoice(
+  invoiceId: string,
+  file: File,
+  expectedProblemDocument: ProblemDocument
+): Promise<ProblemDocument>;
+export async function uploadInvoice(
+  invoiceId: string,
+  file: File,
+  expectedProblemDocument?: ProblemDocument
+): Promise<Invoice | ProblemDocument> {
+  const api = testClient(app);
+  const response = await api.api.invoices[':invoiceId'].upload.$post({
+    param: { invoiceId },
+    form: { file },
+  });
+
+  if (response.status === StatusCodes.OK) {
+    assert.ok(
+      !expectedProblemDocument,
+      'Expected a problem document but received OK status'
+    );
+    const item = await response.json();
+    assert.ok(item);
+    return mapInvoice(item);
+  } else {
+    const problemDocument = await response.json();
+    assert.ok(problemDocument);
+    assert.ok(
+      expectedProblemDocument,
+      `Expected OK status but received ${response.status}`
+    );
+    assertStrictEqualProblemDocument(problemDocument, expectedProblemDocument);
+    return problemDocument;
+  }
+}
+
+export async function getInvoiceDownloadUrl(
+  invoiceId: string
+): Promise<DownloadUrlResponse>;
+export async function getInvoiceDownloadUrl(
+  invoiceId: string,
+  expectedProblemDocument: ProblemDocument
+): Promise<ProblemDocument>;
+export async function getInvoiceDownloadUrl(
+  invoiceId: string,
+  expectedProblemDocument?: ProblemDocument
+): Promise<DownloadUrlResponse | ProblemDocument> {
+  const api = testClient(app);
+  const response = await api.api.invoices[':invoiceId']['download-url'].$get({
+    param: { invoiceId },
+  });
+
+  if (response.status === StatusCodes.OK) {
+    assert.ok(
+      !expectedProblemDocument,
+      'Expected a problem document but received OK status'
+    );
+    const data = await response.json();
+    assert.ok(data);
+    return data;
+  } else {
+    const problemDocument = await response.json();
+    assert.ok(problemDocument);
+    assert.ok(
+      expectedProblemDocument,
+      `Expected OK status but received ${response.status}`
+    );
+    assertStrictEqualProblemDocument(problemDocument, expectedProblemDocument);
+    return problemDocument;
+  }
+}
+
 // --- Assertion builder ---
 
 export const assertInvoice = (item: Invoice) => ({
@@ -319,6 +425,19 @@ export const assertInvoice = (item: Invoice) => ({
   },
   hasCanceledAt() {
     assert.ok(item.canceledAt, 'Expected canceledAt to be set');
+    return this;
+  },
+  hasFilePath() {
+    assert.ok(item.filePath, 'Expected filePath to be set');
+    return this;
+  },
+  hasContentType(expected: string) {
+    assert.strictEqual(item.contentType, expected);
+    return this;
+  },
+  hasNoFile() {
+    assert.strictEqual(item.filePath, null);
+    assert.strictEqual(item.contentType, null);
     return this;
   },
   isTheSameOf(expected: Invoice) {

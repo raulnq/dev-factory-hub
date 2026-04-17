@@ -44,4 +44,6 @@ export const invoices = dbSchema.table('invoices', {
     withTimezone: true,
   }),
   number: varchar('number', { length: 20 }),
+  filePath: varchar('filePath', { length: 500 }),
+  contentType: varchar('contentType', { length: 100 }),
 });
