@@ -40,6 +40,9 @@ services:
       - COMPANY_COUNTRY=${COMPANY_COUNTRY:?}
       - COMPANY_LOGO_KEY=${COMPANY_LOGO_KEY:?}
       - DATABASE_SCHEMA=dev-factory-hub
+      - POSTMARK_API_KEY=${POSTMARK_API_KEY:?}
+      - POSTMARK_TEMPLATE_ALIAS=${POSTMARK_TEMPLATE_ALIAS:?}
+      - API_KEY=${API_KEY:?}
     healthcheck:
       test:
         [
