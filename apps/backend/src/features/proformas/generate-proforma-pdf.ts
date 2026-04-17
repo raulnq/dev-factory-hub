@@ -1,7 +1,6 @@
 import PDFDocument from 'pdfkit';
-import * as fs from 'node:fs';
-import * as path from 'node:path';
 import { ENV } from '#/env.js';
+import { getFileBuffer } from './s3-client.js';
 
 type ClientData = {
   name: string;
@@ -44,6 +43,10 @@ export async function generateProformaPdf(
   clientData: ClientData,
   items: ProformaItemData[]
 ): Promise<Buffer> {
+  const logoBuffer = ENV.COMPANY_LOGO_KEY
+    ? await getFileBuffer(ENV.COMPANY_LOGO_KEY)
+    : null;
+
   return new Promise((resolve, reject) => {
     const doc = new PDFDocument({ size: 'A4', margin: 50 });
     const chunks: Buffer[] = [];
@@ -54,7 +57,7 @@ export async function generateProformaPdf(
 
     const cur = proforma.currency;
 
-    drawHeader(doc, proforma);
+    drawHeader(doc, proforma, logoBuffer);
     const afterClient = drawClientSection(doc, clientData);
     const afterTable = drawItemsTable(doc, items, cur, afterClient);
     drawTotals(doc, proforma, cur, afterTable);
@@ -65,13 +68,15 @@ export async function generateProformaPdf(
 
 // ─── HEADER: Logo + Company info + Proforma info ────────────────────────────
 
-function drawHeader(doc: PDFKit.PDFDocument, proforma: ProformaData) {
+function drawHeader(
+  doc: PDFKit.PDFDocument,
+  proforma: ProformaData,
+  logoBuffer: Buffer | null
+) {
   const logoWidth = 115;
-  if (ENV.COMPANY_LOGO_PATH) {
-    const logoPath = path.resolve(ENV.COMPANY_LOGO_PATH);
-    if (fs.existsSync(logoPath)) {
-      doc.image(logoPath, LEFT + 5, 30, { width: logoWidth });
-    }
+
+  if (logoBuffer) {
+    doc.image(logoBuffer, LEFT + 5, 30, { width: logoWidth });
   }
 
   // Company name — centered between logo and proforma info

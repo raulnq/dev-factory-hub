@@ -40,7 +40,7 @@ const ENVSchema = z.object({
   COMPANY_ADDRESS: z.string().optional().default('ADDRESS'),
   COMPANY_STATE: z.string().optional().default('STATE'),
   COMPANY_COUNTRY: z.string().optional().default('COUNTRY'),
-  COMPANY_LOGO_PATH: z.string().optional(),
+  COMPANY_LOGO_KEY: z.string().optional(),
 });
 
 expand(config());

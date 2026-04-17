@@ -45,3 +45,15 @@ export async function getPresignedDownloadUrl(
   });
   return await getSignedUrl(s3Client, command, { expiresIn });
 }
+
+export async function getFileBuffer(key: string): Promise<Buffer> {
+  const command = new GetObjectCommand({ Bucket: BUCKET_NAME, Key: key });
+  const response = await s3Client.send(command);
+  const stream = response.Body as import('stream').Readable;
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    stream.on('data', (chunk: Buffer) => chunks.push(chunk));
+    stream.on('end', () => resolve(Buffer.concat(chunks)));
+    stream.on('error', reject);
+  });
+}
