@@ -44,6 +44,7 @@ const ENVSchema = z.object({
   COMPANY_LOGO_KEY: z.string().optional(),
   POSTMARK_API_KEY: z.string().optional().default(''),
   POSTMARK_TEMPLATE_ALIAS: z.string().optional().default(''),
+  POSTMARK_YEARLY_TEMPLATE_ALIAS: z.string().optional().default(''),
   API_KEY: z.string().optional().default(''),
 });
 

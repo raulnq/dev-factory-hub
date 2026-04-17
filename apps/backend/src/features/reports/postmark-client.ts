@@ -37,6 +37,32 @@ export async function downloadFileFromS3(
   }
 }
 
+export async function sendYearlyStatementEmail(params: {
+  fromEmail: string;
+  toEmail: string;
+  ccEmails: string[];
+  type: string;
+  year: number;
+  attachments: Attachment[];
+}): Promise<void> {
+  const postmarkClient = new ServerClient(ENV.POSTMARK_API_KEY);
+
+  await postmarkClient.sendEmailWithTemplate({
+    From: params.fromEmail,
+    To: params.toEmail,
+    ...(params.ccEmails.length > 0 ? { Cc: params.ccEmails.join(',') } : {}),
+    TemplateAlias: ENV.POSTMARK_YEARLY_TEMPLATE_ALIAS,
+    TemplateModel: {
+      type: params.type,
+      year: params.year,
+      project_name: ENV.COMPANY_NAME,
+      company_name: ENV.COMPANY_NAME,
+      company_address: ENV.COMPANY_ADDRESS,
+    },
+    Attachments: params.attachments,
+  });
+}
+
 export async function sendMonthlyStatementEmail(params: {
   fromEmail: string;
   toEmail: string;
