@@ -14,8 +14,8 @@ import {
   downloadFileFromS3,
   sendYearlyStatementEmail,
 } from './postmark-client.js';
-import type { EmailAttachment } from './postmark-client.js';
 import { ENV } from '#/env.js';
+import type { Attachment } from 'postmark';
 
 type FileRecord = { filePath: string | null; contentType: string | null };
 
@@ -104,7 +104,7 @@ async function buildAttachments(
   records: FileRecord[],
   bucket: string,
   prefix: string
-): Promise<EmailAttachment[]> {
+): Promise<Attachment[]> {
   const results = await Promise.all(
     records
       .filter(r => r.filePath)
@@ -116,10 +116,10 @@ async function buildAttachments(
           Name: `${prefix}-${idx + 1}.${ext}`,
           Content: buffer.toString('base64'),
           ContentType: r.contentType ?? 'application/octet-stream',
-        } satisfies EmailAttachment;
+        };
       })
   );
-  return results.filter((a): a is EmailAttachment => a !== null);
+  return results.filter((a): a is Attachment => a !== null);
 }
 
 export const sendYearlyStatementRoute = new Hono().post(
