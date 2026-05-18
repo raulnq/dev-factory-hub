@@ -4,7 +4,7 @@
 
 - `apps/backend/` — Hono API (`@node-monorepo/backend`), ESM, `module: "NodeNext"`
 - `apps/frontend/` — React 19 (`@node-monorepo/frontend`), ESM, `moduleResolution: "bundler"`
-- npm workspaces, `"type": "module"` everywhere
+- pnpm workspaces, `"type": "module"` everywhere
 
 ## Skills
 
@@ -37,7 +37,7 @@ Backend uses NodeNext — every import MUST end with `.js`. Frontend uses bundle
 
 - Prettier: `singleQuote: true`, `trailingComma: 'es5'`, `arrowParens: 'avoid'`, `endOfLine: 'crlf'` (Windows line endings)
 - ESLint: flat config, TS recommended + Prettier
-- Run: `npm run lint:format`
+- Run: `pnpm lint:format`
 
 ## Commits
 
@@ -84,17 +84,17 @@ Frontend features: `apps/frontend/src/features/<entities>/` — three subdirs: `
 1. Edit table in `apps/backend/src/features/<entities>/<entity>.ts`
 2. Re-export from `apps/backend/src/database/schemas.ts` (required for Drizzle Kit discovery)
 3. Update Zod schemas in `schemas.ts` to stay in sync
-4. Generate: `npm run database:generate -w @node-monorepo/backend`
-5. Migrate: `npm run database:migrate -w @node-monorepo/backend`
+4. Generate: `pnpm --filter @node-monorepo/backend database:generate`
+5. Migrate: `pnpm --filter @node-monorepo/backend database:migrate`
 
 ## Common commands
 
 ```bash
-npm run dev                  # Start both apps
-npm test -w @node-monorepo/backend  # Run backend tests (node:test)
-npm run database:generate -w @node-monorepo/backend  # Generate migrations
-npm run database:migrate -w @node-monorepo/backend   # Apply migrations
-npm run lint:format          # Fix lint + format
+pnpm dev                                              # Start both apps
+pnpm --filter @node-monorepo/backend test             # Run backend tests (node:test)
+pnpm --filter @node-monorepo/backend database:generate  # Generate migrations
+pnpm --filter @node-monorepo/backend database:migrate   # Apply migrations
+pnpm lint:format                                      # Fix lint + format
 ```
 
 ## Docker

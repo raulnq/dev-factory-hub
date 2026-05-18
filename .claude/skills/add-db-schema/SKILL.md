@@ -157,7 +157,7 @@ See **Step: Run Migrations** below.
 ### Generate migration
 
 ```bash
-npm run database:generate -w @node-monorepo/backend
+pnpm --filter @node-monorepo/backend database:generate
 ```
 
 This runs `drizzle-kit generate` which reads `drizzle.config.ts` → `schemas.ts` → all table definitions and produces SQL migration files in `apps/backend/src/database/migrations/`.
@@ -165,7 +165,7 @@ This runs `drizzle-kit generate` which reads `drizzle.config.ts` → `schemas.ts
 ### Apply migration
 
 ```bash
-npm run database:migrate -w @node-monorepo/backend
+pnpm --filter @node-monorepo/backend database:migrate
 ```
 
 This runs `drizzle-kit migrate` which applies pending migrations to the database.
@@ -173,7 +173,7 @@ This runs `drizzle-kit migrate` which applies pending migrations to the database
 ### Verify with Drizzle Studio (optional)
 
 ```bash
-npm run database:studio -w @node-monorepo/backend
+pnpm --filter @node-monorepo/backend database:studio
 ```
 
 ---
@@ -264,8 +264,8 @@ date('deadline', {
 - [ ] `drizzle.config.ts` updated if new schema name
 - [ ] Zod schemas updated to match table changes
 - [ ] Endpoints updated if column affects request/response
-- [ ] Migration generated: `npm run database:generate -w @node-monorepo/backend`
-- [ ] Migration applied: `npm run database:migrate -w @node-monorepo/backend`
+- [ ] Migration generated: `pnpm --filter @node-monorepo/backend database:generate`
+- [ ] Migration applied: `pnpm --filter @node-monorepo/backend database:migrate`
 
 ## Critical rules
 

@@ -57,7 +57,7 @@ Use this skill to review code (staged changes, a PR, or specific files) against 
 - [ ] Primary keys use `uuid` column + `v7()` from `uuid` package
 - [ ] Table re-exported from `apps/backend/src/database/schemas.ts`
 - [ ] Zod schemas in `schemas.ts` mirror Drizzle columns
-- [ ] Migration generated if table changed (`npm run database:generate`)
+- [ ] Migration generated if table changed (`pnpm --filter @node-monorepo/backend database:generate`)
 
 ### Backend advanced patterns
 

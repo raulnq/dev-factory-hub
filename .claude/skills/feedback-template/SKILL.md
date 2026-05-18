@@ -104,10 +104,10 @@ If any new files were promoted to template in Steps 4–5:
 
 After applying changes:
 
-1. Run `npx tsc --noEmit -p apps/backend/tsconfig.app.json`
-2. Run `npx tsc --noEmit -p apps/frontend/tsconfig.app.json`
-3. Run `npm run lint:format`
-4. Build frontend: `npm run build:ci -w @node-monorepo/frontend`
+1. Run `pnpm exec tsc --noEmit -p apps/backend/tsconfig.app.json`
+2. Run `pnpm exec tsc --noEmit -p apps/frontend/tsconfig.app.json`
+3. Run `pnpm lint:format`
+4. Build frontend: `pnpm --filter @node-monorepo/frontend build:ci`
 
 ## Step 8 — Summary
 

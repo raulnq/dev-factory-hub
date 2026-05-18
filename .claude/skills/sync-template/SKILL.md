@@ -98,12 +98,12 @@ Note: `CLAUDE.md` is NOT synced — child projects maintain their own version.
 
 Present to the user:
 
-- [ ] Run `npm install` in child project (deps may have changed)
-- [ ] Run `npx tsc --noEmit -p apps/backend/tsconfig.app.json` to verify backend
-- [ ] Run `npx tsc --noEmit -p apps/frontend/tsconfig.app.json` to verify frontend
+- [ ] Run `pnpm install` in child project (deps may have changed)
+- [ ] Run `pnpm exec tsc --noEmit -p apps/backend/tsconfig.app.json` to verify backend
+- [ ] Run `pnpm exec tsc --noEmit -p apps/frontend/tsconfig.app.json` to verify frontend
 - [ ] If `docker-compose.yml` changed, review and restart containers
-- [ ] If DB infra changed, run `npm run database:generate` + `database:migrate`
-- [ ] Run `npm run lint:format` to fix any formatting differences
+- [ ] If DB infra changed, run `pnpm --filter @node-monorepo/backend database:generate` + `pnpm --filter @node-monorepo/backend database:migrate`
+- [ ] Run `pnpm lint:format` to fix any formatting differences
 
 ## Step 7 — Save sync checkpoint
 

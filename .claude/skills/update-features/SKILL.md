@@ -151,10 +151,10 @@ For each finding the user approves:
 
 After applying fixes:
 
-1. Run `npx tsc --noEmit -p apps/backend/tsconfig.app.json`
-2. Run `npx tsc --noEmit -p apps/frontend/tsconfig.app.json`
-3. Run `npm run lint:format`
-4. If tests exist: `npm test -w @node-monorepo/backend`
+1. Run `pnpm exec tsc --noEmit -p apps/backend/tsconfig.app.json`
+2. Run `pnpm exec tsc --noEmit -p apps/frontend/tsconfig.app.json`
+3. Run `pnpm lint:format`
+4. If tests exist: `pnpm --filter @node-monorepo/backend test`
 
 Report any remaining errors and iterate.
 

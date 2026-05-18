@@ -7,10 +7,10 @@
     "dev": "cross-env NODE_ENV=development tsx watch src/index.ts",
     "build": "tsc -p tsconfig.app.json && tsc-alias -p tsconfig.app.json",
     "start": "cross-env NODE_ENV=production node dist/index.js",
-    "database:generate": "tsx ../../node_modules/drizzle-kit/bin.cjs generate",
+    "database:generate": "node --import tsx/esm ./node_modules/drizzle-kit/bin.cjs generate",
     "database:custom": "tsx ../../node_modules/drizzle-kit/bin.cjs generate --custom",
-    "database:migrate": "tsx ../../node_modules/drizzle-kit/bin.cjs migrate",
-    "database:studio": "tsx ../../node_modules/drizzle-kit/bin.cjs studio",
+    "database:migrate": "node --import tsx/esm ./node_modules/drizzle-kit/bin.cjs migrate",
+    "database:studio": "node --import tsx/esm ./node_modules/drizzle-kit/bin.cjs studio",
     "test": "cross-env NODE_ENV=test tsx --import ./tests/setup.ts --test ./tests/**/*.test.ts"
   },
   "dependencies": {
@@ -35,7 +35,8 @@
     "pino-seq": "^3.0.0",
     "postmark": "^4.0.7",
     "tsx": "^4.21.0",
-    "uuid": "^13.0.0"
+    "uuid": "^13.0.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.3.0",

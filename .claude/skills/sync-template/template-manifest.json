@@ -140,7 +140,7 @@
     "apps/backend/tests/features/**",
     "node_modules/**",
     "dist/**",
-    "package-lock.json",
+    "pnpm-lock.yaml",
     "*.tsbuildinfo",
     ".claude/settings.json",
     "apps/frontend/src/vite-env.d.ts",

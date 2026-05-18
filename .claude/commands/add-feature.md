@@ -45,8 +45,8 @@ First, check if the feature already exists by looking for `apps/backend/src/feat
 2. Read `.claude/skills/add-db-schema/SKILL.md` in full and follow its instructions.
 3. For a **new feature**: create the table file, update `schemas.ts`, create Zod schemas.
 4. For an **existing feature**: modify the table file, update Zod schemas to match.
-5. Run: `npm run database:generate -w @node-monorepo/backend`
-6. Run: `npm run database:migrate -w @node-monorepo/backend`
+5. Run: `pnpm --filter @node-monorepo/backend database:generate`
+6. Run: `pnpm --filter @node-monorepo/backend database:migrate`
 
 **Gate:** The database container is healthy and both the generate and migrate commands complete successfully.
 
@@ -60,7 +60,7 @@ First, check if the feature already exists by looking for `apps/backend/src/feat
 2. For a **new feature**: create one file per endpoint, a `routes.ts` aggregator, and wire it into the app router.
 3. For an **existing feature**: create only the new endpoint files, update the existing `routes.ts` to include them, and update `schemas.ts` if new request/response schemas are needed.
 4. **If file storage is needed**: create an `s3-client.ts` in the feature directory (see S3 client pattern in the backend skill). Also create file upload and/or download URL endpoints.
-5. Run: `npx tsc --noEmit -p apps/backend/tsconfig.app.json`
+5. Run: `pnpm exec tsc --noEmit -p apps/backend/tsconfig.app.json`
 
 **Gate:** TypeScript compilation passes with zero errors. If it fails, fix the errors and re-run until it passes.
 
@@ -88,7 +88,7 @@ Present the user with a list of planned test scenarios **for the new/modified en
 1. Read `.claude/skills/add-backend-tests/SKILL.md` in full and follow its instructions.
 2. For a **new feature**: create the test DSL (factory, actions, assertions) and test files for each endpoint.
 3. For an **existing feature**: extend the existing DSL if needed and add test files for the new endpoints only.
-4. Run: `npm test -w @node-monorepo/backend`
+4. Run: `pnpm --filter @node-monorepo/backend test`
 
 **Gate:** All tests pass (including pre-existing ones). If any test fails, diagnose the failure, fix the code or test, and re-run. Loop until all tests pass.
 
@@ -103,7 +103,7 @@ Present the user with a list of planned test scenarios **for the new/modified en
 1. Read `.claude/skills/add-frontend-feature/SKILL.md` in full and follow its instructions (including `stores-templates.md`, `components-templates.md`, and `pages-templates.md`).
 2. For a **new feature**: create stores, components (form, columns, dialogs), and pages (list + add/edit). Wire pages into `routes.tsx` and add navigation.
 3. For an **existing feature**: add only the new stores/components/pages needed. Update existing files (e.g., add columns, form fields, or navigation links) as required.
-4. Run: `npx tsc --noEmit -p apps/frontend/tsconfig.app.json`
+4. Run: `pnpm exec tsc --noEmit -p apps/frontend/tsconfig.app.json`
 
 **Gate:** TypeScript compilation passes with zero errors. If it fails, fix the errors and re-run until it passes.
 

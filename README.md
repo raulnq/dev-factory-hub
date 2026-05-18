@@ -43,11 +43,13 @@ dev-factory-hub/
 │           ├── features/       # Feature modules (pages, components, stores)
 │           ├── stores/         # React Query hooks and API clients
 │           └── routes.tsx      # React Router config
-├── .gemini/
-│   └── skills/                 # Gemini CLI skills for code generation
+├── .claude/
+│   ├── skills/                 # Claude Code skills for code generation
+│   └── commands/               # Claude Code slash commands
 ├── docker-compose.yml          # Dev environment (PostgreSQL, Seq)
 ├── docker-compose-coolify.yml  # Production deployment config
-└── package.json                # Root workspace config
+├── pnpm-workspace.yaml         # pnpm workspace config
+└── package.json                # Root package config
 ```
 
 ## Getting Started
@@ -55,7 +57,7 @@ dev-factory-hub/
 ### Prerequisites
 
 - Node.js 22+
-- npm 10+
+- pnpm 9+
 - Docker (for PostgreSQL)
 - A [Clerk](https://clerk.com) account (for authentication)
 - S3-compatible storage (e.g., AWS S3, Cloudflare R2, or MinIO)
@@ -63,7 +65,7 @@ dev-factory-hub/
 ### Installation
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Environment Setup
@@ -90,13 +92,13 @@ cp apps/frontend/.env.example apps/frontend/.env
 Start PostgreSQL via Docker:
 
 ```bash
-npm run database:up
+pnpm database:up
 ```
 
 Apply migrations:
 
 ```bash
-npm run database:migrate -w @node-monorepo/backend
+pnpm --filter @node-monorepo/backend database:migrate
 ```
 
 ### Development
@@ -104,21 +106,21 @@ npm run database:migrate -w @node-monorepo/backend
 Run both backend and frontend concurrently:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 ## Available Scripts
 
-| Script              | Description                                                   |
-| ------------------- | ------------------------------------------------------------- |
-| `dev`               | Start both backend and frontend concurrently                  |
-| `build`             | Build both apps                                               |
-| `lint`              | Run ESLint across the monorepo                                |
-| `format`            | Format code with Prettier                                     |
-| `database:up`       | Start PostgreSQL container                                    |
-| `database:generate` | Generate Drizzle migrations (use `-w @node-monorepo/backend`) |
-| `database:migrate`  | Apply Drizzle migrations (use `-w @node-monorepo/backend`)    |
-| `test`              | Run backend integration tests (110+ tests)                    |
+| Script              | Description                                                           |
+| ------------------- | --------------------------------------------------------------------- |
+| `dev`               | Start both backend and frontend concurrently                          |
+| `build`             | Build both apps                                                       |
+| `lint`              | Run ESLint across the monorepo                                        |
+| `format`            | Format code with Prettier                                             |
+| `database:up`       | Start PostgreSQL container                                            |
+| `database:generate` | Generate Drizzle migrations (use `--filter @node-monorepo/backend`)   |
+| `database:migrate`  | Apply Drizzle migrations (use `--filter @node-monorepo/backend`)      |
+| `test`              | Run backend integration tests (use `--filter @node-monorepo/backend`) |
 
 ## Tech Stack
 

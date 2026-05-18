@@ -24,7 +24,7 @@ The code templates below are the canonical patterns for DSL and test files — f
 
 - **Test runner:** `node:test` module (`describe`, `test`, `assert`) — NOT Jest/Vitest/Mocha
 - **HTTP client:** `testClient(app)` from `hono/testing` — NOT supertest or raw fetch
-- **Run command:** `npm test -w @node-monorepo/backend`
+- **Run command:** `pnpm --filter @node-monorepo/backend test`
 - **File structure:** `apps/backend/tests/features/<entities>/`
 
 ## Step 1 — Create the DSL file (`<entity>-dsl.ts`)

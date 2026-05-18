@@ -1,17 +1,17 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run lint*)",
-      "Bash(npm run format*)",
-      "Bash(npm run build*)",
-      "Bash(npm run dev*)",
-      "Bash(npm run test*)",
-      "Bash(npm run database:generate*)",
-      "Bash(npm run database:migrate*)",
-      "Bash(npm run database:studio*)",
-      "Bash(npx drizzle-kit*)",
-      "Bash(npx prettier*)",
-      "Bash(npx tsc*)",
+      "Bash(pnpm run lint*)",
+      "Bash(pnpm run format*)",
+      "Bash(pnpm run build*)",
+      "Bash(pnpm run dev*)",
+      "Bash(pnpm run test*)",
+      "Bash(pnpm run database:generate*)",
+      "Bash(pnpm run database:migrate*)",
+      "Bash(pnpm run database:studio*)",
+      "Bash(pnpm exec drizzle-kit*)",
+      "Bash(pnpm exec prettier*)",
+      "Bash(pnpm exec tsc*)",
       "Bash(git status*)",
       "Bash(git log*)",
       "Bash(git diff*)",
@@ -22,8 +22,8 @@
       "Bash(git push*)",
       "Bash(gh pr *)",
       "Bash(gh issue *)",
-      "Bash(npm install*)",
-      "Bash(npm ci*)",
+      "Bash(pnpm install*)",
+      "Bash(pnpm add*)",
       "Bash(docker compose:*)",
       "Bash(ls c:/Source/dev-factory-hub/apps/frontend/src/features/*/pages/View*)",
       "Read(//c/Source/node-hono-react-monorepo/**)",
@@ -42,6 +42,17 @@
           {
             "type": "command",
             "command": "powershell -ExecutionPolicy Bypass -File \".claude\\work_complete.ps1\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && pnpm exec prettier --write \"$CLAUDE_FILE_PATH\""
           }
         ]
       }
