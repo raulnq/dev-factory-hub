@@ -25,6 +25,7 @@ const ITEM_TYPES = [
   'REGIMENMYPE',
   'CUARTACATEGORIA',
   'RENTA',
+  'IGV',
 ] as const;
 
 type AddTaxPaymentItemButtonProps = {
