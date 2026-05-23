@@ -48,6 +48,7 @@ import { ClientBalancePage } from './features/client-balance/pages/ClientBalance
 import { ListExchangeRatePage } from './features/exchange-rates/pages/ListExchangeRatePage';
 import { AddExchangeRatePage } from './features/exchange-rates/pages/AddExchangeRatePage';
 import { EditExchangeRatePage } from './features/exchange-rates/pages/EditExchangeRatePage';
+import { DocumentStatusPage } from './features/reports/pages/DocumentStatusPage';
 
 export const router = createBrowserRouter([
   {
@@ -198,6 +199,10 @@ export const router = createBrowserRouter([
           { path: 'new', element: <AddExchangeRatePage /> },
           { path: ':exchangeRateId/edit', element: <EditExchangeRatePage /> },
         ],
+      },
+      {
+        path: 'reports',
+        children: [{ index: true, element: <DocumentStatusPage /> }],
       },
     ],
   },

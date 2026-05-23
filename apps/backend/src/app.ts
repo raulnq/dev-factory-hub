@@ -18,6 +18,7 @@ import { collaboratorBalanceRoute } from './features/collaborator-balance/routes
 import { clientBalanceRoute } from './features/client-balance/routes.js';
 import { exchangeRateRoute } from './features/exchange-rates/routes.js';
 import { reportsRoute } from './features/reports/routes.js';
+import { reportsApiRoute } from './features/reports/api-routes.js';
 import { onError } from './middlewares/on-error.js';
 import { onNotFound } from './middlewares/on-not-found.js';
 import { conditionalClerkMiddleware, requireAuth } from './middlewares/auth.js';
@@ -63,6 +64,7 @@ export const app = new Hono({ strict: false })
   .route('/api', collaboratorBalanceRoute)
   .route('/api', clientBalanceRoute)
   .route('/api', exchangeRateRoute)
+  .route('/api', reportsApiRoute)
   .route('/', reportsRoute)
   .get('/live', c =>
     c.json({

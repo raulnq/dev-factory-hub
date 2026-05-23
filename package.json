@@ -10,7 +10,7 @@
     "build:backend": "pnpm --filter @node-monorepo/backend build",
     "build:frontend": "pnpm --filter @node-monorepo/frontend build",
     "build": "pnpm run build:backend && pnpm run build:frontend",
-    "test:backend": "pnpm run test -w @node-monorepo/backend",
+    "test:backend": "pnpm --filter @node-monorepo/backend test",
     "start:backend": "pnpm --filter @node-monorepo/backend start",
     "preview:frontend": "pnpm --filter @node-monorepo/frontend preview",
     "format": "prettier --write .",

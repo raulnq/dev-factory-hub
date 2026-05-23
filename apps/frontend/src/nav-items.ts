@@ -16,6 +16,7 @@ import {
   Scale,
   BarChart2,
   TrendingUp,
+  FileCheck,
 } from 'lucide-react';
 
 type NavItem = {
@@ -52,4 +53,5 @@ export const NAV_ITEMS: NavItem[] = [
   { title: 'Collaborator Balance', to: '/collaborator-balance', icon: Scale },
   { title: 'Client Balance', to: '/client-balance', icon: BarChart2 },
   { title: 'Exchange Rates', to: '/exchange-rates', icon: TrendingUp },
+  { title: 'Reports', to: '/reports', icon: FileCheck },
 ];
