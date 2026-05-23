@@ -4,6 +4,8 @@ interface ImportMetaEnv {
   readonly VITE_CLERK_PUBLISHABLE_KEY: string;
   readonly VITE_API_BASE_URL: string;
   readonly VITE_APP_NAME: string;
+  readonly VITE_DEFAULT_FROM_EMAIL: string;
+  readonly VITE_DEFAULT_CC_EMAILS: string;
   // Add more env variables as needed
   // readonly VITE_API_URL: string;
   // readonly VITE_OTHER_VAR: string;

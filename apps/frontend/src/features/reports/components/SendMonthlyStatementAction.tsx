@@ -30,10 +30,8 @@ export function SendMonthlyStatementAction({
 }: SendMonthlyStatementActionProps) {
   const send = useSendMonthlyStatement();
 
-  const defaultFromEmail =
-    (import.meta.env['VITE_DEFAULT_FROM_EMAIL'] as string | undefined) ?? '';
-  const defaultCcEmails =
-    (import.meta.env['VITE_DEFAULT_CC_EMAILS'] as string | undefined) ?? '';
+  const defaultFromEmail = import.meta.env.VITE_DEFAULT_FROM_EMAIL ?? '';
+  const defaultCcEmails = import.meta.env.VITE_DEFAULT_CC_EMAILS ?? '';
 
   const handleSubmit = async (data: SendMonthlyStatementForm) => {
     const ccEmailsList = data.ccEmails
