@@ -11,6 +11,15 @@ export const sendMonthlyStatementSchema = z.object({
 
 export type SendMonthlyStatement = z.infer<typeof sendMonthlyStatementSchema>;
 
+export const monthlyStatementResponseSchema = z.object({
+  sent: z.boolean(),
+  attachmentCount: z.number().int(),
+});
+
+export type MonthlyStatementResponse = z.infer<
+  typeof monthlyStatementResponseSchema
+>;
+
 export const documentTypeSchema = z.enum([
   'collections',
   'transactions',

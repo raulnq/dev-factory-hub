@@ -7,13 +7,17 @@ import { collections } from '#/features/collections/collection.js';
 import { transactions } from '#/features/transactions/transaction.js';
 import { moneyExchanges } from '#/features/money-exchanges/money-exchange.js';
 import { payrollPayments } from '#/features/payroll-payments/payroll-payment.js';
-import { sendMonthlyStatementSchema } from './schemas.js';
+import {
+  sendMonthlyStatementSchema,
+  type SendMonthlyStatement,
+  type MonthlyStatementResponse,
+} from './schemas.js';
 import { unauthorizedError } from '#/extensions.js';
 import {
   downloadFileFromS3,
   sendMonthlyStatementEmail,
 } from './postmark-client.js';
-import { Attachment } from 'postmark';
+import type { Attachment } from 'postmark';
 import { ENV } from '#/env.js';
 
 function buildDateRange(
@@ -52,6 +56,111 @@ async function buildAttachments(
   return results.filter((a): a is Attachment => a !== null);
 }
 
+export async function executeMonthlyStatement(
+  params: SendMonthlyStatement
+): Promise<MonthlyStatementResponse> {
+  const { fromEmail, toEmail, ccEmails, month, year } = params;
+  const { startDate, endDate } = buildDateRange(month, year);
+
+  const [
+    confirmedCollections,
+    issuedTransactions,
+    issuedMoneyExchanges,
+    paidPayrollPayments,
+  ] = await Promise.all([
+    client
+      .select()
+      .from(collections)
+      .where(
+        and(
+          eq(collections.status, 'Confirmed'),
+          gte(collections.confirmedAt, startDate),
+          lt(collections.confirmedAt, endDate)
+        )
+      ),
+    client
+      .select()
+      .from(transactions)
+      .where(
+        and(
+          eq(transactions.status, 'Issued'),
+          gte(transactions.issuedAt, startDate),
+          lt(transactions.issuedAt, endDate)
+        )
+      ),
+    client
+      .select()
+      .from(moneyExchanges)
+      .where(
+        and(
+          eq(moneyExchanges.status, 'Issued'),
+          gte(moneyExchanges.issuedAt, startDate),
+          lt(moneyExchanges.issuedAt, endDate)
+        )
+      ),
+    client
+      .select()
+      .from(payrollPayments)
+      .where(
+        and(
+          inArray(payrollPayments.status, ['Paid', 'Confirmed']),
+          gte(payrollPayments.paidAt, startDate),
+          lt(payrollPayments.paidAt, endDate)
+        )
+      ),
+  ]);
+
+  const [
+    collectionAttachments,
+    transactionAttachments,
+    moneyExchangeAttachments,
+    payrollAttachments,
+  ] = await Promise.all([
+    buildAttachments(
+      confirmedCollections,
+      ENV.S3_COLLECTIONS_BUCKET_NAME,
+      'collection'
+    ),
+    buildAttachments(
+      issuedTransactions,
+      ENV.S3_TRANSACTIONS_BUCKET_NAME,
+      'transaction'
+    ),
+    buildAttachments(
+      issuedMoneyExchanges,
+      ENV.S3_MONEY_EXCHANGES_BUCKET_NAME,
+      'money-exchange'
+    ),
+    buildAttachments(
+      paidPayrollPayments,
+      ENV.S3_PAYROLL_PAYMENTS_BUCKET_NAME,
+      'payroll-payment'
+    ),
+  ]);
+
+  const attachments = [
+    ...collectionAttachments,
+    ...transactionAttachments,
+    ...moneyExchangeAttachments,
+    ...payrollAttachments,
+  ];
+
+  if (attachments.length === 0) {
+    return { sent: false, attachmentCount: 0 };
+  }
+
+  await sendMonthlyStatementEmail({
+    fromEmail,
+    toEmail,
+    ccEmails,
+    month,
+    year,
+    attachments,
+  });
+
+  return { sent: true, attachmentCount: attachments.length };
+}
+
 export const sendMonthlyStatementRoute = new Hono().post(
   '/monthly-statement',
   async (c, next) => {
@@ -63,108 +172,18 @@ export const sendMonthlyStatementRoute = new Hono().post(
   },
   zValidator('json', sendMonthlyStatementSchema),
   async c => {
-    const { fromEmail, toEmail, ccEmails, month, year } = c.req.valid('json');
-    const { startDate, endDate } = buildDateRange(month, year);
+    const params = c.req.valid('json');
+    const result = await executeMonthlyStatement(params);
+    return c.json(result, StatusCodes.OK);
+  }
+);
 
-    const [
-      confirmedCollections,
-      issuedTransactions,
-      issuedMoneyExchanges,
-      paidPayrollPayments,
-    ] = await Promise.all([
-      client
-        .select()
-        .from(collections)
-        .where(
-          and(
-            eq(collections.status, 'Confirmed'),
-            gte(collections.confirmedAt, startDate),
-            lt(collections.confirmedAt, endDate)
-          )
-        ),
-      client
-        .select()
-        .from(transactions)
-        .where(
-          and(
-            eq(transactions.status, 'Issued'),
-            gte(transactions.issuedAt, startDate),
-            lt(transactions.issuedAt, endDate)
-          )
-        ),
-      client
-        .select()
-        .from(moneyExchanges)
-        .where(
-          and(
-            eq(moneyExchanges.status, 'Issued'),
-            gte(moneyExchanges.issuedAt, startDate),
-            lt(moneyExchanges.issuedAt, endDate)
-          )
-        ),
-      client
-        .select()
-        .from(payrollPayments)
-        .where(
-          and(
-            inArray(payrollPayments.status, ['Paid', 'Confirmed']),
-            gte(payrollPayments.paidAt, startDate),
-            lt(payrollPayments.paidAt, endDate)
-          )
-        ),
-    ]);
-
-    const [
-      collectionAttachments,
-      transactionAttachments,
-      moneyExchangeAttachments,
-      payrollAttachments,
-    ] = await Promise.all([
-      buildAttachments(
-        confirmedCollections,
-        ENV.S3_COLLECTIONS_BUCKET_NAME,
-        'collection'
-      ),
-      buildAttachments(
-        issuedTransactions,
-        ENV.S3_TRANSACTIONS_BUCKET_NAME,
-        'transaction'
-      ),
-      buildAttachments(
-        issuedMoneyExchanges,
-        ENV.S3_MONEY_EXCHANGES_BUCKET_NAME,
-        'money-exchange'
-      ),
-      buildAttachments(
-        paidPayrollPayments,
-        ENV.S3_PAYROLL_PAYMENTS_BUCKET_NAME,
-        'payroll-payment'
-      ),
-    ]);
-
-    const attachments = [
-      ...collectionAttachments,
-      ...transactionAttachments,
-      ...moneyExchangeAttachments,
-      ...payrollAttachments,
-    ];
-
-    if (attachments.length === 0) {
-      return c.json({ sent: false, attachmentCount: 0 }, StatusCodes.OK);
-    }
-
-    await sendMonthlyStatementEmail({
-      fromEmail,
-      toEmail,
-      ccEmails,
-      month,
-      year,
-      attachments,
-    });
-
-    return c.json(
-      { sent: true, attachmentCount: attachments.length },
-      StatusCodes.OK
-    );
+export const sendMonthlyStatementApiRoute = new Hono().post(
+  '/monthly-statement',
+  zValidator('json', sendMonthlyStatementSchema),
+  async c => {
+    const params = c.req.valid('json');
+    const result = await executeMonthlyStatement(params);
+    return c.json(result, StatusCodes.OK);
   }
 );
