@@ -3,6 +3,8 @@ import type { Page } from '#/pagination';
 import type {
   DocumentStatusItem,
   ListDocumentStatus,
+  MonthlyStatementResponse,
+  SendMonthlyStatement,
 } from '#/features/reports/schemas';
 
 export async function listDocumentStatus(
@@ -26,6 +28,24 @@ export async function listDocumentStatus(
     throw new Error(
       (error as { detail?: string }).detail ||
         'Failed to fetch document status report'
+    );
+  }
+  return response.json();
+}
+
+export async function sendMonthlyStatement(
+  data: SendMonthlyStatement,
+  token?: string | null
+): Promise<MonthlyStatementResponse> {
+  const response = await client.api.reports['monthly-statement'].$post(
+    { json: data },
+    { headers: token ? { Authorization: `Bearer ${token}` } : {} }
+  );
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(
+      (error as { detail?: string }).detail ||
+        'Failed to send monthly statement'
     );
   }
   return response.json();

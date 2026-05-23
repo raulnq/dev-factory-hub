@@ -12,18 +12,11 @@ import {
   FieldGroup,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { CurrencySelect } from '@/components/CurrencySelect';
+import { MonthSelect } from '@/components/MonthSelect';
+import { YearSelect } from '@/components/YearSelect';
 
 const currentYear = new Date().getFullYear();
-const YEARS = Array.from({ length: 26 }, (_, i) => currentYear - 20 + i);
-const MONTHS = Array.from({ length: 13 }, (_, i) => i + 1);
 
 type TaxPaymentAddFormProps = {
   isPending: boolean;
@@ -63,22 +56,11 @@ export function TaxPaymentAddForm({
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>Year</FieldLabel>
-                <Select
-                  onValueChange={v => field.onChange(Number(v))}
+                <YearSelect
                   value={String(field.value)}
+                  onValueChange={v => field.onChange(Number(v))}
                   disabled={isPending}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select year" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {YEARS.map(y => (
-                      <SelectItem key={y} value={String(y)}>
-                        {y}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
@@ -92,22 +74,11 @@ export function TaxPaymentAddForm({
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>Month</FieldLabel>
-                <Select
-                  onValueChange={v => field.onChange(Number(v))}
+                <MonthSelect
                   value={String(field.value)}
+                  onValueChange={v => field.onChange(Number(v))}
                   disabled={isPending}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select month" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {MONTHS.map(m => (
-                      <SelectItem key={m} value={String(m)}>
-                        {m}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}

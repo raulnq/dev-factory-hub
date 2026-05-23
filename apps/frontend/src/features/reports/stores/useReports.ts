@@ -1,7 +1,10 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { listDocumentStatus } from './reportsClient';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import { listDocumentStatus, sendMonthlyStatement } from './reportsClient';
 import { useAuth } from '@clerk/clerk-react';
-import type { ListDocumentStatus } from '#/features/reports/schemas';
+import type {
+  ListDocumentStatus,
+  SendMonthlyStatement,
+} from '#/features/reports/schemas';
 
 export function useDocumentStatusSuspense(
   params: Pick<ListDocumentStatus, 'month' | 'year'> &
@@ -13,6 +16,16 @@ export function useDocumentStatusSuspense(
     queryFn: async () => {
       const token = await getToken();
       return listDocumentStatus(params, token);
+    },
+  });
+}
+
+export function useSendMonthlyStatement() {
+  const { getToken } = useAuth();
+  return useMutation({
+    mutationFn: async (data: SendMonthlyStatement) => {
+      const token = await getToken();
+      return sendMonthlyStatement(data, token);
     },
   });
 }

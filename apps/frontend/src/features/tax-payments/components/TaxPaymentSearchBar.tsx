@@ -1,21 +1,13 @@
 import { useSearchParams } from 'react-router';
 import { useState } from 'react';
 import { SearchBar } from '@/components/SearchBar';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { YearSelect } from '@/components/YearSelect';
 
-const currentYear = new Date().getFullYear();
-const YEARS = Array.from({ length: 26 }, (_, i) => currentYear - 20 + i);
+const currentYear = String(new Date().getFullYear());
 
 export function TaxPaymentSearchBar() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialYear = searchParams.get('year') ?? String(currentYear);
-  const [year, setYear] = useState(initialYear);
+  const [year, setYear] = useState(searchParams.get('year') ?? currentYear);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,9 +23,9 @@ export function TaxPaymentSearchBar() {
   };
 
   const handleClear = () => {
-    setYear(String(currentYear));
+    setYear(currentYear);
     setSearchParams(prev => {
-      prev.set('year', String(currentYear));
+      prev.set('year', currentYear);
       prev.set('page', '1');
       return prev;
     });
@@ -42,21 +34,10 @@ export function TaxPaymentSearchBar() {
   return (
     <SearchBar
       onSearch={handleSearch}
-      showClearButton={year !== String(currentYear)}
+      showClearButton={year !== currentYear}
       onClear={handleClear}
     >
-      <Select value={year} onValueChange={setYear}>
-        <SelectTrigger>
-          <SelectValue placeholder="Select year" />
-        </SelectTrigger>
-        <SelectContent>
-          {YEARS.map(y => (
-            <SelectItem key={y} value={String(y)}>
-              {y}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <YearSelect value={year} onValueChange={setYear} />
     </SearchBar>
   );
 }
